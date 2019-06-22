@@ -79,4 +79,15 @@ public class UIViewController {
         ModelAndView modelAndView = new ModelAndView("/user/register");
         return modelAndView;
     }
+
+    @GetMapping(value = "/documentAuth")
+    public ModelAndView getDocumentAuthPage() {
+        ModelAndView modelAndView = new ModelAndView("/ui/document-auth");
+        return modelAndView;
+    }
+    @GetMapping(value = "/documentResubmit")
+    public ModelAndView getDocumentRejectedPage() {
+        ModelAndView modelAndView = new ModelAndView("/ui/document-resubmit");
+        return modelAndView;
+    }
 }

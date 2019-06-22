@@ -3,6 +3,7 @@ package edu.esoft.finalproject.DocMe.dto;
 public class DocAuthDto {
     private int docId;
     private String docName;
+    private String catagoryName;
     private String authorizeButton;
     private String rejectButton;
     private String viewButton;
@@ -67,5 +68,13 @@ public class DocAuthDto {
 
     public void setViewButton(String viewButton) {
         this.viewButton = viewButton;
+    }
+
+    public String getCatagoryName() {
+        return catagoryName;
+    }
+
+    public void setCatagoryName(String catagoryName) {
+        this.catagoryName = catagoryName;
     }
 }

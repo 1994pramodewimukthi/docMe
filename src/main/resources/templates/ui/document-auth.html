@@ -28,7 +28,7 @@
         <!-- end: sidebar -->
         <section role="main" class="content-body pb-0">
             <header class="page-header ">
-                <h2 class="">Category Creation</h2>
+                <h2 class="">Approve / Reject Documents</h2>
                 <div class="right-wrapper text-right">
                     <ol class="breadcrumbs ">
 
@@ -71,122 +71,40 @@
 </script>
 
 <script th:inline="javascript">
-    function athorized(category_id) {
-        swal({
-            title: 'Are you sure you want to authorize this category?',
-            text: "",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Authorize'
-        }).then(function () {
-            jQuery.ajax({
-                url: CONTEXT_PATH + "/documentManagement/authorized_category?category_id=" + category_id,
-                type: 'GET',
-                success: function (data) {
-                    if (data.isSucsess == 1) {
-                        swal({
-                            title: data.message,
-                            type: 'success',
-                            showConfirmButton: true,
-                            allowOutsideClick: false,
-                            closeOnClickOutside: false
-                        }).then(function () {
-                            location.reload();
-                        });
-                    } else {
-                        swal({
-                            title: data.message,
-                            type: 'error',
-                            showConfirmButton: true,
-                            allowOutsideClick: false,
-                            closeOnClickOutside: false
-                        }).then(function () {
-                            location.reload();
-                        });
-                    }
-                },
-                error: function (data) {
-                    console.log(data);
-                }
+    $(document).ready(function () {
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+        if (isSucsess) {
+            swal({
+                title: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/documentUploadController/documentAuth');
             });
-        });
-    }
-
-
-    function reject(category_id) {
-        swal({
-            title: 'Please Enter Reject Reason',
-            input: 'text',
-            showCancelButton: true,
-            confirmButtonText: 'Reject',
-            showLoaderOnConfirm: true,
-            preConfirm: function (reason) {
-                return new Promise(function (resolve, reject) {
-                    setTimeout(function () {
-                        if (!reason) {
-                            swal.showValidationError('Reject reason is required and cannot be empty.')
-                            reject();
-                        }
-                        resolve();
-                    }, 2000)
-                })
-            },
-            allowOutsideClick: false
-        }).then(function (reason) {
-            jQuery.ajax({
-                url: CONTEXT_PATH + "/documentManagement/reject_category/" + category_id + "/" + reason,
-                type: 'GET',
-                success: function (data) {
-                    if (data.isSucsess == 1) {
-                        swal({
-                            title: data.message,
-                            type: 'success',
-                            showConfirmButton: true,
-                            allowOutsideClick: false,
-                            closeOnClickOutside: false
-                        }).then(function () {
-                            location.reload();
-                        });
-                    } else {
-                        swal({
-                            title: data.message,
-                            type: 'error',
-                            showConfirmButton: true,
-                            allowOutsideClick: false,
-                            closeOnClickOutside: false
-                        }).then(function () {
-                            location.reload();
-                        });
-                    }
-                },
-                error: function (data) {
-                    console.log(data);
-                }
+        } else if (isSucsess == false) {
+            swal({
+                title: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/documentUploadController/documentAuth');
             });
-        });
-    }
+        }
+    });
+    /*]]>*/
+</script>
 
-
-    function modalAuthorization() {
-        $('#authViwerModal').modal('hide');
-        setTimeout(function () {
-            var catId = $("#tempId").val();
-            athorized(catId);
-        }, 300);
-    }
-    function modalReject() {
-        $('#authViwerModal').modal('hide');
-        setTimeout(function () {
-            var catId = $("#tempId").val();
-            reject(catId);
-        }, 300);
-    }
-
-    function authRejectViwer(category_id) {
+<script>
+    function authRejectViwer(docId) {
         $.ajax({
-            url: CONTEXT_PATH + "/documentManagement/authRejectModalViwer?category_id=" + category_id,
+            url: CONTEXT_PATH + "/documentManagement/authRejectDocModalViwer?docId=" + docId,
             type: 'GET',
             cache: false,
             dataType: 'html',
@@ -196,8 +114,116 @@
                 return false;
             },
             error: function (result) {
-                console.log(result);
+                alert(result);
             }
+
+        });
+
+    }
+
+    function modalAuthorization() {
+        $('#authViwerModal').modal('hide');
+        setTimeout(function () {
+            var catId = $("#tempDocId").val();
+            authRec(catId);
+        }, 300);
+
+    }
+
+    function modalReject() {
+        $('#authViwerModal').modal('hide');
+        var catId = $("#tempDocId").val();
+        rejectRec(catId);
+    }
+
+
+    function modalDelete() {
+        $('#authViwerModal').modal('hide');
+        var docId = $("#tempDocId").val();
+        swal({
+            title: 'Are you sure you want to delete this Document?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then(function () {
+            jQuery.ajax({
+                url: CONTEXT_PATH + "/documentUploadController/delete_master_document?docID=" + docId,
+                type: 'GET',
+                success: function (data) {
+                    if (data.isSucsess == 1) {
+                        swal({
+                            title: data.message,
+                            type: 'success',
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            closeOnClickOutside: false
+                        }).then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentAuth');
+                        });
+                    } else {
+                        swal({
+                            title: data.message,
+                            type: 'error',
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            closeOnClickOutside: false
+                        }).then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentAuth');
+                        });
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    }
+
+    function modalDeleteReject() {
+        swal({
+            title: 'Are you sure you want to reject this deletion ?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Reject'
+        }).then(function () {
+            $('#authViwerModal').modal('hide');
+            var document_id = $("#tempDocId").val();
+            jQuery.ajax({
+                url: CONTEXT_PATH + "/documentUploadController/delete_reject_doc?document_id=" + document_id,
+                type: 'GET',
+                success: function (data) {
+                    if (data.isSucsess == 1) {
+                        swal({
+                            title: data.message,
+                            type: 'success',
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            closeOnClickOutside: false
+                        }).then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentAuth');
+                        });
+                    } else {
+                        swal({
+                            title: data.message,
+                            type: 'error',
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            closeOnClickOutside: false
+                        }).then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentAuth');
+                        });
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
         });
     }
 </script>

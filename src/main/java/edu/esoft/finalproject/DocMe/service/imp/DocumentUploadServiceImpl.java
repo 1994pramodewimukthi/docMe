@@ -1,16 +1,18 @@
 package edu.esoft.finalproject.DocMe.service.imp;
 
+import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.DocCategoryMasterWebixComparator;
+import edu.esoft.finalproject.DocMe.dto.DocAuthDto;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.dto.RejectedDocumentDto;
 import edu.esoft.finalproject.DocMe.entity.*;
-import edu.esoft.finalproject.DocMe.repository.DocCategoryMasterRepository;
-import edu.esoft.finalproject.DocMe.repository.DocumentUploadMasterRepository;
-import edu.esoft.finalproject.DocMe.repository.DocumentUploadRepository;
+import edu.esoft.finalproject.DocMe.repository.*;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +55,12 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     private DocumentUploadRepository documentUploadRepository;
     @Autowired
     private SystemRoleDockUpService systemRoleDockUpService;
+    @Autowired
+    private DocumentUploadTempSystemRoleRepository documentUploadTempSystemRoleRepository;
+    @Autowired
+    private DocumentUploadMasterSystemRoleRepository documentUploadMasterSystemRoleRepository;
+    @Autowired
+    private DocumentUploadHistoryRepository documentUploadHistoryRepository;
 
     @Override
     public List<DocCategoryMasterWebix> createCategoryWebixTableWithUploadDocumentAll(User user) throws Exception {
@@ -145,7 +153,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
                         List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = new ArrayList<>();
 
-                        documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
+                        documentUploadTemp.setDocumentUploadTempId(documentUploadDto.getDocumentUploadTempId() == null ? getCategoryNextId() : documentUploadDto.getDocumentUploadTempId());
                         documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
                         documentUploadTemp.setDocumentDescription(documentUploadDto.getDocumentDescription());
                         documentUploadTemp.setHeadline(documentUploadDto.getHeadLine());
@@ -218,43 +226,263 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     }
 
-/*
     @Override
-    public List<DocAuthDto> getAllTempDock(User user) throws MisynJDBCException {
+    public List<DocAuthDto> getAllTempDock(User user) throws Exception {
         List<DocAuthDto> dockAuthDtos = new ArrayList<>();
         Iterable<DocumentUploadTemp> all;
-        if (null != user.getSelectedAgent().getAgentCode()) {
-            all = documentUploadRepository.findAllByRecordStatusPendingDeletByChanel(user.getSelectedAgent().getChannel().getChannelType().name());
-        } else {
-            all = documentUploadRepository.findAllByRecordStatusPendingDelet();
-        }
+        all = documentUploadRepository.findAllByRecordStatusPendingDelet();
+
         for (DocumentUploadTemp documentUploadTemp : all) {
             DocAuthDto dto = new DocAuthDto();
             dto.setDocId(documentUploadTemp.getDocumentUploadTempId());
             dto.setDocName(documentUploadTemp.getDocumentName());
             dto.setInputuser(documentUploadTemp.getInputUserId());
             if (documentUploadTemp.getRecordStatus().getStatusId() == AppConstant.DELETE) {
-                if (systemRoleSystemMenuItem.isOptionDelete()) {
-                    dto.setAuthorizeButton(DELETE_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
-                } else {
-                    dto.setAuthorizeButton(DELETE_BUTTON_DISSABLE.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
-                }
-
+                dto.setAuthorizeButton(DELETE_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
             } else {
-                if (systemRoleSystemMenuItem.isOptionAuthorize()) {
-                    dto.setAuthorizeButton(AUTH_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
-                } else {
-                    dto.setAuthorizeButton(AUTH_BUTTON_DISABLE.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
-                }
+                dto.setAuthorizeButton(AUTH_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
             }
-
+            dto.setCatagoryName(documentUploadTemp.getDocCategoryMaster().getDocCategoryName());
             Date inpDateTime = documentUploadTemp.getInpDateTime();
-            dto.setInputtime(new SimpleDateFormat(com.misyn.datamiddle.commondto.utility.AppConstant.CAPS_DATE_FORMAT).format(inpDateTime));
+            dto.setInputtime(new SimpleDateFormat(AppConstant.DATE_FORMAT).format(inpDateTime));
             dockAuthDtos.add(dto);
         }
 
         return dockAuthDtos;
     }
-*/
 
+    @Override
+    public DocumentUploadTemp searchTempDocumentById(int id) throws Exception {
+
+        DocumentUploadTemp byDocumentUploadTempId = documentUploadRepository.findByDocumentUploadTempId(id);
+        byDocumentUploadTempId.setDocumentUploadTempSystemRoles(findTempSystemRolesByDocId(id));
+
+        return byDocumentUploadTempId;
+    }
+
+    public List<DocumentUploadTempSystemRole> findTempSystemRolesByDocId(int docId) {
+
+        return documentUploadTempSystemRoleRepository.findByDocumentUploadTempDocumentUploadTempId(docId);
+    }
+
+    @Override
+    public boolean authDocument(int docId, User user) throws Exception {
+        try {
+            DocumentUploadMaster documentUploadMaster = new DocumentUploadMaster();
+            List<DocumentUploadMasterSystemRole> documentUploadMasterSystemRoles = new ArrayList<>();
+            DocumentUploadTemp documentUploadTemp = searchTempDocumentById(docId);
+            DocumentUploadHistory documentUploadHistory = new DocumentUploadHistory();
+            BeanUtils.copyProperties(documentUploadTemp, documentUploadHistory);
+            documentUploadHistory.setActionUserId(user.getUserName());
+            documentUploadHistory.setActionDateTime(new Date());
+            documentUploadHistory.setTableType(TEMP);
+            documentUploadHistory.setDocumentUploadId(documentUploadTemp.getDocumentUploadTempId());
+            documentUploadMaster = documentUploadMasterRepository.findByDocumentUploadMstId(docId);
+            documentUploadMaster = null != documentUploadMaster ? documentUploadMaster : new DocumentUploadMaster();
+            List<DocumentUploadMasterSystemRole> allByDocumentUploadMasterDocumentUploadMstId = documentUploadMasterSystemRoleRepository.findAllByDocumentUploadMasterDocumentUploadMstId(docId);
+
+            if (null != allByDocumentUploadMasterDocumentUploadMstId && !allByDocumentUploadMasterDocumentUploadMstId.isEmpty()) {
+                documentUploadMasterSystemRoleRepository.deleteAllByDocumentUploadMasterDocumentUploadMstId(docId);
+                documentUploadMaster.setDocumentUploadMstId(docId);
+            }
+            BeanUtils.copyProperties(documentUploadTemp, documentUploadMaster);
+            //TODO Set USer
+//            documentUploadMaster.setAuthUserId(user.getUserId() + AppConstant.STRING_EMPTY);
+            documentUploadMaster.setAuthDateTime(new Date());
+            documentUploadMaster.setRecordStatus(new RecordStatus(7));
+            documentUploadMaster.setDocumentUploadMstId(documentUploadTemp.getDocumentUploadTempId());
+            documentUploadMaster.setDocumentUploadMasterSystemRoles(documentUploadMasterSystemRoles);
+            DocumentUploadMaster save = documentUploadMasterRepository.save(documentUploadMaster);
+            List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = documentUploadTempSystemRoleRepository.findByDocumentUploadTempDocumentUploadTempId(docId);
+            for (DocumentUploadTempSystemRole documentUploadTempSystemRole : documentUploadTempSystemRoles) {
+                DocumentUploadMasterSystemRole documentUploadMasterSystemRole = new DocumentUploadMasterSystemRole();
+                SystemRole systemRoleById = documentUploadTempSystemRole.getSystemRole();
+                documentUploadMasterSystemRole.setDocumentUploadMaster(save);
+                documentUploadMasterSystemRole.setSystemRole(systemRoleById);
+                documentUploadMasterSystemRoles.add(documentUploadMasterSystemRole);
+            }
+            save.setDocumentUploadMasterSystemRoles(documentUploadMasterSystemRoles);
+
+            documentUploadMasterRepository.save(documentUploadMaster);
+            documentUploadHistoryRepository.save(documentUploadHistory);
+            documentUploadTempSystemRoleRepository.deleteAllByDocumentUploadTempDocumentUploadTempId(docId);
+            documentUploadRepository.deleteByDocumentUploadTempId(docId);
+
+            return true;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public void rejectDocument(String reson, int id, User user) throws Exception {
+        try {
+            DocumentUploadHistory documentUploadHistory = new DocumentUploadHistory();
+            DocumentUploadTemp documentUploadTemp = searchTempDocumentById(id);
+            BeanUtils.copyProperties(documentUploadTemp, documentUploadHistory);
+            documentUploadTemp.setReason(reson);
+            documentUploadHistory.setActionDateTime(new Date());
+            documentUploadHistory.setTableType(TEMP);
+            documentUploadTemp.setRecordStatus(new RecordStatus(8));
+            documentUploadTemp.setActionUserId(user.getUserName());
+            documentUploadTemp.setActionDateTime(new Date());
+            documentUploadRepository.save(documentUploadTemp);
+            documentUploadHistoryRepository.save(documentUploadHistory);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public int deleteRejectDocument(int document_id, User user) throws Exception {
+        try {
+            DocumentUploadHistory documentUploadHistory = new DocumentUploadHistory();
+            DocumentUploadTemp temp = documentUploadRepository.findByDocumentUploadTempId(document_id);
+            if (null != temp) {
+                BeanUtils.copyProperties(temp, documentUploadHistory);
+                documentUploadHistory.setActionUserId(user.getUserName());
+                documentUploadHistory.setActionDateTime(new Date());
+                documentUploadHistory.setTableType(DELETE_REJECT);
+                documentUploadHistory.setDocumentUploadId(temp.getDocumentUploadTempId());
+                documentUploadTempSystemRoleRepository.deleteAllByDocumentUploadTempDocumentUploadTempId(document_id);
+                documentUploadRepository.deleteByDocumentUploadTempId(document_id);
+                documentUploadHistoryRepository.save(documentUploadHistory);
+                return SUCSESS;
+            } else {
+                return ERROR;
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean deleteMsterDocument(int id, User user) throws Exception {
+        try {
+            DocumentUploadHistory documentUploadHistory = new DocumentUploadHistory();
+            DocumentUploadMaster mst = documentUploadMasterRepository.findByDocumentUploadMstId(id);
+            if (null != mst) {
+
+                BeanUtils.copyProperties(mst, documentUploadHistory);
+                documentUploadHistory.setActionUserId(user.getUserName());
+                documentUploadHistory.setActionDateTime(new Date());
+                documentUploadHistory.setTableType(MST);
+                documentUploadHistory.setDocumentUploadId(mst.getDocumentUploadMstId());
+
+                List<DocumentUploadTempSystemRole> lst = documentUploadTempSystemRoleRepository.findByDocumentUploadTempDocumentUploadTempId(id);
+                if (lst != null && lst.size() > 0) {
+                    documentUploadTempSystemRoleRepository.deleteAllByDocumentUploadTempDocumentUploadTempId(id);
+                }
+                documentUploadRepository.deleteByDocumentUploadTempId(id);
+
+                List<DocumentUploadMasterSystemRole> lstMst = documentUploadMasterSystemRoleRepository.findAllByDocumentUploadMasterDocumentUploadMstId(id);
+                if (lstMst != null && lstMst.size() > 0) {
+                    documentUploadMasterSystemRoleRepository.deleteAllByDocumentUploadMasterDocumentUploadMstId(id);
+                }
+                documentUploadMasterRepository.deleteByDocumentUploadMstId(id);
+                documentUploadHistoryRepository.save(documentUploadHistory);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public int deleteAuthorizationDocument(int document_id) throws Exception {
+        try {
+            DocumentUploadTemp temp = documentUploadRepository.findByDocumentUploadTempId(document_id);
+            if (temp == null) {
+                DocumentUploadMaster master = documentUploadMasterRepository.findByDocumentUploadMstId(document_id);
+                if (master != null) {
+                    DocumentUploadTemp newTemp = new DocumentUploadTemp();
+                    BeanUtils.copyProperties(master, newTemp);
+                    master.setDocumentUploadMasterSystemRoles(documentUploadMasterSystemRoleRepository.findAllByDocumentUploadMasterDocumentUploadMstId(document_id));
+                    newTemp.setDocumentUploadTempId(master.getDocumentUploadMstId());
+                    newTemp.setRecordStatus(new RecordStatus(AppConstant.DELETE));
+                    List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = new ArrayList<>();
+                    for (DocumentUploadMasterSystemRole systemRole : master.getDocumentUploadMasterSystemRoles()) {
+                        DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
+                        documentUploadTempSystemRole.setDocumentUploadTemp(new DocumentUploadTemp(systemRole.getDocumentUploadMaster().getDocumentUploadMstId()));
+                        documentUploadTempSystemRole.setSystemRole(new SystemRole(systemRole.getSystemRole().getSystemRoleId()));
+                        documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
+                    }
+                    newTemp.setDocumentUploadTempSystemRoles(documentUploadTempSystemRoles);
+                    documentUploadRepository.save(newTemp);
+                    return SUCSESS;
+                } else {
+                    return ERROR;
+                }
+            } else {
+                return RECODE_EXSIST_TEMP;
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean deleteTempDocument(int id, User user) throws Exception {
+        try {
+            DocumentUploadHistory documentUploadHistory = new DocumentUploadHistory();
+            DocumentUploadTemp temp = documentUploadRepository.findByDocumentUploadTempId(id);
+            if (null != temp) {
+                BeanUtils.copyProperties(temp, documentUploadHistory);
+                documentUploadHistory.setActionUserId(user.getUserName());
+                documentUploadHistory.setActionDateTime(new Date());
+                documentUploadHistory.setTableType(TEMP);
+                documentUploadHistory.setDocumentUploadId(temp.getDocumentUploadTempId());
+                documentUploadTempSystemRoleRepository.deleteAllByDocumentUploadTempDocumentUploadTempId(id);
+                documentUploadRepository.deleteByDocumentUploadTempId(id);
+                documentUploadHistoryRepository.save(documentUploadHistory);
+                return true;
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public List<RejectedDocumentDto> getAllRejectedDoc(User user) throws Exception {
+
+        List<RejectedDocumentDto> dockAuthDtos = new ArrayList<>();
+        Iterable<DocumentUploadTemp> all;
+        all = documentUploadRepository.findByRecordStatusStatusId(8);
+        for (DocumentUploadTemp documentUploadHistory : all) {
+            RejectedDocumentDto dto = new RejectedDocumentDto();
+            dto.setDocId(documentUploadHistory.getDocumentUploadTempId());
+            dto.setCatName(documentUploadHistory.getDocCategoryMaster().getDocCategoryName());
+            dto.setDocName(documentUploadHistory.getDocumentName());
+            dto.setRejectedReson(documentUploadHistory.getReason());
+            dto.setResubmit(RESUBMIT_BTN.replace(ID, documentUploadHistory.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+
+
+            dto.setRejecteduser(documentUploadHistory.getActionUserId());
+            dto.setRejectedtime(new SimpleDateFormat(AppConstant.DATE_FORMAT).format(documentUploadHistory.getActionDateTime()));
+            dockAuthDtos.add(dto);
+        }
+        return dockAuthDtos;
+
+    }
+    @Override
+    public DocumentUploadMaster searchMstDocumentById(int id) throws Exception {
+
+        DocumentUploadMaster byDocumentUploadMstId = documentUploadMasterRepository.findByDocumentUploadMstId(id);
+        byDocumentUploadMstId.setDocumentUploadMasterSystemRoles(findMasterSystemRolesByDocId(id));
+        return byDocumentUploadMstId;
+
+    }
+    private List<DocumentUploadMasterSystemRole> findMasterSystemRolesByDocId(int docId) {
+        return documentUploadMasterSystemRoleRepository.findAllByDocumentUploadMasterDocumentUploadMstId(docId);
+
+    }
 }

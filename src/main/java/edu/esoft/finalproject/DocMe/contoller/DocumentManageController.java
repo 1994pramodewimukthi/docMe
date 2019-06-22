@@ -4,9 +4,8 @@ package edu.esoft.finalproject.DocMe.contoller;
 import edu.esoft.finalproject.DocMe.config.*;
 import edu.esoft.finalproject.DocMe.dto.AuthRejectCategoryWebix;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
-import edu.esoft.finalproject.DocMe.entity.DocCategoryMaster;
-import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
-import edu.esoft.finalproject.DocMe.entity.User;
+import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.entity.*;
 import edu.esoft.finalproject.DocMe.service.DocCategoryService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MessageService;
@@ -16,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -242,4 +242,49 @@ public class DocumentManageController {
         }
         return categoryMasters;
     }
+
+    @RequestMapping("/authRejectDocModalViwer")
+    public ModelAndView athRejectDocModalContent(@RequestParam(value = "docId") int docId, @ModelAttribute("user") User user) {
+        ModelAndView modelAndView = new ModelAndView("/ui/documentauthrizeviwer");
+        List<SystemRole> systemRoles = new ArrayList<>();
+        try {
+            List<AccessUserType> accessUserTypes = new ArrayList<>();
+            /*try {
+                accessUserTypes = accessUserTypeService.searchAllByChannelCode(user);
+                for (AccessUserType accessUserType : accessUserTypes) {
+                    List<SystemRole> roles = systemRoleService.searchAllUserRolesByAccessUserType(accessUserType);
+                    for (SystemRole role : roles) {
+                        systemRoles.add(role);
+                    }
+                }
+
+            } catch (MisynJDBCException e) {
+                LOGGER.error(e.getMessage());
+            }*/
+            modelAndView.addObject("systemList", systemRoles);
+            DocumentUploadTemp documentUploadTemp = documentUploadService.searchTempDocumentById(docId);
+            DocumentUploadDto documentUploadDto = new DocumentUploadDto();
+            documentUploadDto.setDocumentUploadTempId(documentUploadTemp.getDocumentUploadTempId());
+            documentUploadDto.setDocCategoryMasterId(documentUploadTemp.getDocCategoryMaster().getDocCategoryMstId());
+            documentUploadDto.setDocumentName(documentUploadTemp.getDocumentName());
+            documentUploadDto.setHeadLine(documentUploadTemp.getHeadline());
+            documentUploadDto.setDocumentDescription(documentUploadTemp.getDocumentDescription());
+            List<String> acessTypes = documentUploadDto.getAcessTypes();
+            for (DocumentUploadTempSystemRole documentUploadTempSystemRole : documentUploadTemp.getDocumentUploadTempSystemRoles()) {
+                acessTypes.add(Integer.toString(documentUploadTempSystemRole.getSystemRole().getSystemRoleId()));
+            }
+            documentUploadDto.setAcessTypes(acessTypes);
+            documentUploadDto.setRecordStatus(documentUploadTemp.getRecordStatus());
+            documentUploadDto.setInpDateTime(Utility.getDateString(documentUploadTemp.getInpDateTime(), AppConstant.DATE_FORMAT));
+            documentUploadDto.setPublishDate(documentUploadTemp.getPublishDate());
+            documentUploadDto.setExpireDate(documentUploadTemp.getExpireDate());
+            documentUploadDto.setPath(documentUploadTemp.getPath());
+            modelAndView.addObject("documentUploadDto", documentUploadDto);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
+
+    }
+
 }

@@ -106,7 +106,7 @@ $(function () {
                     if (obj.tableConfig === 1) {
                         if (obj.optionModify === true) {
                             isModify = true;
-                            return "<input class='btn btn-success btn-table modbtn' type='button' value='Modify Document'>";
+                            return "<input class='btn btn-success btn-table modbtn' type='button' value='Modify Document' onclick='modifyDocument(obj.docCategoryMstId)'>";
                         } else {
                             isModify = false;
                             return "<input class='btn btn-success btn-table modbtn' type='button' value='Modify Document' disabled>";

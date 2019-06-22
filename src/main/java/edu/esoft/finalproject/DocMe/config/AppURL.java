@@ -69,4 +69,5 @@ public class AppURL {
 
     final public static String DOCUMENT_UPLOAD_CONTROLLER = "/documentUploadController";
     final public static String DOCUMENT_UPLOAD_SAVE = "/save";
+    final public static String DOCUMENT_UPLOAD_LIST = "/getPendingDocList";
 }

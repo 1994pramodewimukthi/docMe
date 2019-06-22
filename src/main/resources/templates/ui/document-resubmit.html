@@ -1,0 +1,179 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-collapsed sidebar-light sidebar-left-sm" lang="en">
+<head>
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+
+    <meta name="context-path" th:content="@{/}"/>
+
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+</head>
+<body>
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+        <!-- end: sidebar -->
+        <section role="main" class="content-body pb-0">
+            <header class="page-header ">
+                <h2 class="">Resubmit Documents</h2>
+                <div class="right-wrapper text-right">
+                    <ol class="breadcrumbs ">
+
+                    </ol>
+                </div>
+            </header>
+            <!-- start: page -->
+            <div class="row ">
+                <div class="col-lg-12">
+                    <div id="webixtablecontainer"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="modifyDiv">
+
+    </div>
+
+    <!-- end: page -->
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script  type="text/javascript" th:src="@{/js/docrejecteddatatable.js}"></script>
+
+<!--<script src="../../static/js/categorycreationdatatable.js" th:src="@{/js/categorycreationdatatable.js}"></script>-->
+
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+
+<script>
+    $("#acessTypes").chosen({
+        no_results_text: "No results found!",
+        width: "100%"
+    }).on('change', function (evt, params) {
+
+    });
+    $(document).ready(function () {
+        $("#publishDate").flatpickr({enable: [{from: "today", to: "2500-01-01"}]});
+
+        $("#expireDate").flatpickr({disable: [{from: "1900-01-01", to: "today"}]});
+    });
+
+    function resubmitDoc(id) {
+        $.ajax({
+            url: CONTEXT_PATH + "/documentUploadController/modifyResubmitDocument?id=" + id,
+            type: 'GET',
+            cache: false,
+            dataType: 'html',
+            success: function (result) {
+                $('#modifyDiv').html(result);
+                $('#resubmitViwerModal').modal('show');
+                return false;
+            },
+            error: function (result) {
+                alert(result);
+            }
+
+        });
+    }
+
+    function MasterDocumentDelete() {
+        var masterId = $("#tempDocId").val();
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete this Document!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then(function () {
+            jQuery.ajax({
+                url: CONTEXT_PATH + "/documentUploadController/delete_document?docID=" + masterId,
+                type: 'GET',
+                success: function (data) {
+                    if (data.isSucsess == 1) {
+                        swal(data.message, "", "success").then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentResubmit')
+                        });
+                    } else {
+                        swal(data.message, "", "error").then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentResubmit')
+                        });
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    }
+
+    function downloadAttachment(id) {
+        var url = CONTEXT_PATH + '/documentUploadController/viewDocumemt?docId=' + id;
+        window.location.href = url;
+    }
+</script>
+
+
+<script th:inline="javascript">
+
+    $('.chosen-toggle').each(function (index) {
+        console.log(index);
+        $(this).on('click', function () {
+            console.log($(this).parent().find('option').text());
+            $(this).parent().find('option').prop('selected', $(this).hasClass('select')).parent().trigger('chosen:updated');
+        });
+    });
+
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+
+        var isOptionDelete = [[${isOptionDelete}]];
+        if (!isOptionDelete) {
+            $('#delBtn').attr("disabled", "disabled");
+        }
+
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+
+        if (isSucsess) {
+            swal(message, "", "success").then(function () {
+                location.replace(CONTEXT_PATH + '/ui/documentResubmit')
+            });
+        } else if (isSucsess == false) {
+            swal(message, "", "error").then(function () {
+                location.replace(CONTEXT_PATH + '/ui/documentResubmit')
+            });
+        }
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

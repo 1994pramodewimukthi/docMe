@@ -1,15 +1,16 @@
 package edu.esoft.finalproject.DocMe.entity;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-@Entity(name = "doc_upload_mst")
-public class DocumentUploadMaster implements Serializable {
+@Entity(name = "doc_upload_hst")
+public class DocumentUploadHistory implements Serializable {
 
-    private Integer documentUploadMstId;
-    private DocCategoryMaster docCategoryMaster;
+    private Integer documentUploadHistoryId;
+    private Integer documentUploadId;
+    private Integer docCategoryMaster;
     private String documentName;
     private String documentDescription;
     private String headline;
@@ -18,32 +19,42 @@ public class DocumentUploadMaster implements Serializable {
     private Date inpDateTime;
     private String authUserId;
     private Date authDateTime;
+//    private AccessUserType accessUserType;
     private String reason;
     private Date publishDate;
     private Date expireDate;
     private String channel;
     private String path;
-    private List<DocumentUploadMasterSystemRole> documentUploadMasterSystemRoles;
+    private String tableType;
+    private String actionUserId;
+    private Date actionDateTime;
 
     @Id
-    @Column(name = "doc_upload_mst_id")
-//    @GeneratedValue(strategy = GenerationType.TABLE)
-    public Integer getDocumentUploadMstId() {
-        return documentUploadMstId;
+    @Column(name = "doc_upload_hst_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getDocumentUploadHistoryId() {
+        return documentUploadHistoryId;
     }
 
-    public void setDocumentUploadMstId(Integer documentUploadMstId) {
-        this.documentUploadMstId = documentUploadMstId;
+    public void setDocumentUploadHistoryId(Integer documentUploadHistoryId) {
+        this.documentUploadHistoryId = documentUploadHistoryId;
     }
 
+    @Column(name = "doc_upload_id")
+    public Integer getDocumentUploadId() {
+        return documentUploadId;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "doc_category_mst_id")
-    public DocCategoryMaster getDocCategoryMaster() {
+    public void setDocumentUploadId(Integer documentUploadId) {
+        this.documentUploadId = documentUploadId;
+    }
+
+    @Column(name = "doc_category_id")
+    public Integer getDocCategoryMaster() {
         return docCategoryMaster;
     }
 
-    public void setDocCategoryMaster(DocCategoryMaster docCategoryMaster) {
+    public void setDocCategoryMaster(Integer docCategoryMaster) {
         this.docCategoryMaster = docCategoryMaster;
     }
 
@@ -111,6 +122,15 @@ public class DocumentUploadMaster implements Serializable {
         this.authDateTime = authDateTime;
     }
 
+    /*@ManyToOne(optional = false)
+    @JoinColumn(name = "access_user_type_id")
+    public AccessUserType getAccessUserType() {
+        return accessUserType;
+    }
+
+    public void setAccessUserType(AccessUserType accessUserType) {
+        this.accessUserType = accessUserType;
+    }*/
 
     @Column(name = "reason")
     public String getReason() {
@@ -148,6 +168,30 @@ public class DocumentUploadMaster implements Serializable {
         this.path = path;
     }
 
+    public String getTableType() {
+        return tableType;
+    }
+
+    public void setTableType(String tableType) {
+        this.tableType = tableType;
+    }
+
+    public String getActionUserId() {
+        return actionUserId;
+    }
+
+    public void setActionUserId(String actionUserId) {
+        this.actionUserId = actionUserId;
+    }
+
+    public Date getActionDateTime() {
+        return actionDateTime;
+    }
+
+    public void setActionDateTime(Date actionDateTime) {
+        this.actionDateTime = actionDateTime;
+    }
+
     public String getHeadline() {
         return headline;
     }
@@ -162,14 +206,5 @@ public class DocumentUploadMaster implements Serializable {
 
     public void setChannel(String channel) {
         this.channel = channel;
-    }
-
-    @OneToMany(mappedBy = "systemRole", cascade = CascadeType.ALL)
-    public List<DocumentUploadMasterSystemRole> getDocumentUploadMasterSystemRoles() {
-        return documentUploadMasterSystemRoles;
-    }
-
-    public void setDocumentUploadMasterSystemRoles(List<DocumentUploadMasterSystemRole> documentUploadMasterSystemRoles) {
-        this.documentUploadMasterSystemRoles = documentUploadMasterSystemRoles;
     }
 }
