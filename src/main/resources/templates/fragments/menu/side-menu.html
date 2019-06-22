@@ -1,102 +1,122 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="side-menu">
-        <aside id="sidebar-left" class="sidebar-left">
-            <div class="sidebar-header">
-                <div class="sidebar-title">
-                    Navigation
-                </div>
-                <div class="sidebar-toggle d-none d-md-block" data-toggle-class="   " data-target="html"
-                     data-fire-event="sidebar-left-toggle">
-                    <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
-                </div>
-            </div>
-            <div class="nano">
-                <div class="nano-content">
-                    <nav id="menu" class="nav-main" role="navigation">
-
-                        <ul class="nav nav-main">
-                            <li class="nav-parent">
-                                <a href="#">
-                                    <i class="fas fa-tasks " aria-hidden="true"></i>
-                                    <span>Category Management</span>
-                                </a>
-                                <ul class="nav nav-children" style="">
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryCreation#}">
-                                            Category Creation
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryAuth}">
-                                            Category Authorization
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryResubmit}">
-                                            Category Resubmit
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                        <ul class="nav nav-main">
-                            <li class="nav-parent">
-                                <a href="#">
-                                    <i class="fas fa-tasks " aria-hidden="true"></i>
-                                    <span>Category Management</span>
-                                </a>
-                                <ul class="nav nav-children" style="">
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryCreation#}">
-                                            Category Creation
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryAuth}">
-                                            Category Authorization
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryResubmit}">
-                                            Category Resubmit
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                        <ul class="nav nav-main">
-                            <li class="nav-parent">
-                                <a href="#">
-                                    <i class="fas fa-tasks " aria-hidden="true"></i>
-                                    <span>Category Management</span>
-                                </a>
-                                <ul class="nav nav-children" style="">
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryCreation#}">
-                                            Category Creation
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryAuth}">
-                                            Category Authorization
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link fa fa-dot-circle-o" th:href="@{/ui/categoryResubmit}">
-                                            Category Resubmit
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </nav>
-                </div>
-
-            </div>
-        </aside>
+<div th:fragment="side-menu">
+  <aside id="sidebar-left" class="sidebar-left">
+    <div class="sidebar-header">
+      <div class="sidebar-title">
+        Navigation
+      </div>
+      <div class="sidebar-toggle d-none d-md-block" data-toggle-class="   " data-target="html"
+           data-fire-event="sidebar-left-toggle">
+        <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
+      </div>
     </div>
+    <div class="nano">
+      <div class="nano-content">
+        <nav id="menu" class="nav-main" role="navigation">
+
+          <ul class="nav nav-main">
+            <li class="nav-parent">
+              <a href="#" class="nav-link">
+                <i class="fas fa-tasks " aria-hidden="true"></i>
+                <span>Category Management</span>
+              </a>
+              <ul class="nav nav-children" style="">
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryCreation#}"><i class="fas fa-chevron-right"></i>
+                    Category Creation
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryAuth}"><i class="fas fa-chevron-right"></i>
+                    Category Authorization
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryResubmit}"><i class="fas fa-chevron-right"></i>
+                    Category Resubmission
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav nav-main">
+            <li class="nav-parent">
+              <a href="#" class="nav-link">
+                <i class="fas fa-book " aria-hidden="true"></i>
+                <span>Document Management</span>
+              </a>
+              <ul class="nav nav-children" style="">
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryCreation#}"><i class="fas fa-chevron-right"></i>
+                    Document Creation
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryAuth}"><i class="fas fa-chevron-right"></i>
+                    Document Authorization
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryResubmit}"><i class="fas fa-chevron-right"></i>
+                    Document Resubmit
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav nav-main">
+            <li class="nav-parent">
+              <a href="#" class="nav-link">
+                <i class="fas fa-handshake " aria-hidden="true"></i>
+                <span>Agreement Management</span>
+              </a>
+              <ul class="nav nav-children" style="">
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryCreation#}"><i class="fas fa-chevron-right"></i>
+                    Add Agreement Type
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryAuth}"><i class="fas fa-chevron-right"></i>
+                    Upload Agreement
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" th:href="@{/ui/categoryResubmit}"><i class="fas fa-chevron-right"></i>
+                    Update Current Agreement Details
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" ><i class="fas fa-chevron-right"></i>
+                    Uploaded Agreement List
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" ><i class="fas fa-chevron-right"></i>
+                    User Related Document
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" ><i class="fas fa-chevron-right"></i>
+                    Agreement Status Report
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link" ><i class="fas fa-chevron-right"></i>
+                    Update Retention Period
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+  </aside>
+</div>
 </html>
