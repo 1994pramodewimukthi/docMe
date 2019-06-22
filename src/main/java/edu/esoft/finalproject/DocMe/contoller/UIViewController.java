@@ -3,16 +3,10 @@ package edu.esoft.finalproject.DocMe.contoller;
 import edu.esoft.finalproject.DocMe.config.AppURL;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
-import edu.esoft.finalproject.DocMe.entity.User;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/ui")
@@ -27,6 +21,12 @@ public class UIViewController {
     @GetMapping(value = "/login")
     public ModelAndView getLogin() {
         ModelAndView modelAndView = new ModelAndView("/ui/login");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/register")
+    public ModelAndView getRegisterPage() {
+        ModelAndView modelAndView = new ModelAndView("/user/register");
         return modelAndView;
     }
 
