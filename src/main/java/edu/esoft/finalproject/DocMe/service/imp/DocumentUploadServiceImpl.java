@@ -9,6 +9,7 @@ import edu.esoft.finalproject.DocMe.repository.DocumentUploadMasterRepository;
 import edu.esoft.finalproject.DocMe.repository.DocumentUploadRepository;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
+import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,9 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     @Autowired
     private DocumentUploadSFTPService documentUploadSFTPService;
     @Autowired
-    DocumentUploadRepository documentUploadRepository;
+    private DocumentUploadRepository documentUploadRepository;
+    @Autowired
+    private SystemRoleDockUpService systemRoleDockUpService;
 
     @Override
     public List<DocCategoryMasterWebix> createCategoryWebixTableWithUploadDocumentAll(User user) throws Exception {
@@ -140,7 +143,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                         search.setAccessUserTypeId((long) 1);
                         DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
 
-
+                        List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = new ArrayList<>();
 
                         documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
                         documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
@@ -162,11 +165,12 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                             documentUploadTempSystemRole.setSystemRole(systemRoleById);
                             documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
                         }
-                        if (null != user.getSelectedAgent().getAgentCode()) {
+                        /*if (null != user.getSelectedAgent().getAgentCode()) {
                             documentUploadTemp.setChannel(user.getSelectedAgent().getChannel().getChannelType().toString());
                         } else {
                             documentUploadTemp.setChannel(BOTH);
-                        }
+                        }*/
+                        documentUploadTemp.setChannel(BOTH);
                         documentUploadTemp.setDocumentUploadTempSystemRoles(documentUploadTempSystemRoles);
                         documentUploadRepository.save(documentUploadTemp);
                         return SUCSESS;

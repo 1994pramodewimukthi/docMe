@@ -2,15 +2,28 @@ package edu.esoft.finalproject.DocMe.contoller;
 
 import edu.esoft.finalproject.DocMe.config.AppURL;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.dto.Email;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
+import edu.esoft.finalproject.DocMe.entity.User;
+import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jms.JMSException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/ui")
 public class UIViewController {
+
+    @Autowired
+    private ActiveMQEmail activeMQEmail;
 
     @GetMapping(value = "/view")
     public ModelAndView viewPage() {
@@ -21,12 +34,11 @@ public class UIViewController {
     @GetMapping(value = "/login")
     public ModelAndView getLogin() {
         ModelAndView modelAndView = new ModelAndView("/ui/login");
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/register")
-    public ModelAndView getRegisterPage() {
-        ModelAndView modelAndView = new ModelAndView("/user/register");
+        try {
+            activeMQEmail.sendFromEmail(new Email());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
         return modelAndView;
     }
 
@@ -59,6 +71,12 @@ public class UIViewController {
         ModelAndView modelAndView = new ModelAndView("/ui/document-creation");
         DocumentUploadDto documentUploadDto = new DocumentUploadDto();
         modelAndView.addObject("documentUploadDto", documentUploadDto);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/register")
+    public ModelAndView getRegisterPage() {
+        ModelAndView modelAndView = new ModelAndView("/user/register");
         return modelAndView;
     }
 }
