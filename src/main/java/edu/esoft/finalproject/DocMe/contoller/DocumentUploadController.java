@@ -3,9 +3,7 @@ package edu.esoft.finalproject.DocMe.contoller;
 
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.AppURL;
-import edu.esoft.finalproject.DocMe.config.CommonFunction;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
-import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
 import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import org.apache.commons.io.IOUtils;
@@ -51,14 +49,15 @@ public class DocumentUploadController {
 //    private MessageService messageService;
 //    @Autowired
 //    AccessUserTypeService accessUserTypeService;
-    @Autowired
-    private CommonFunction commonFunction;
+//
+//    @Autowired
+//    private CommonFunction commonFunction;
 
-    @Value("${document.multipart.magic-extension-types}")
-    private String DOCUMENT_VALID_FILE_MAGIC_TYPES;
-
-    @Value("${document.multipart.max-file-size}")
-    private Long DOCUMENT_MAX_FILE_SIZE;
+//    @Value("${document.multipart.magic-extension-types}")
+//    private String DOCUMENT_VALID_FILE_MAGIC_TYPES;
+//
+//    @Value("${document.multipart.max-file-size}")
+//    private Long DOCUMENT_MAX_FILE_SIZE;
 
     @RequestMapping(value = AppURL.DOCUMENT_UPLOAD_WEBIX_CAT, method = RequestMethod.GET)
     public Object loadAuthorizedUser(@ModelAttribute("user") User user) {
@@ -70,69 +69,4 @@ public class DocumentUploadController {
         }
         return categoryMasters;
     }
-
-//    @RequestMapping(value = AppURL.DOCUMENT_UPLOAD_SAVE, method = RequestMethod.POST)
-//    public ModelAndView saveDocument(@ModelAttribute("docUploadTempForm") DocumentUploadDto documentUploadDto, @ModelAttribute("user") User user, ModelAndView modelAndView, @RequestParam(value = "catId") int catagoryId, @ModelAttribute(AppConstant.SESSION_NAVIGATION_MENU_MAP) Map<Integer, NavigationMenuDto> navigationMenuMap) {
-//        try {
-//            if (!documentUploadDto.getAttachment().getOriginalFilename().equals(AppConstant.STRING_EMPTY)) {
-//                if (commonFunction.checkIsValidFileType(documentUploadDto.getAttachment(), DOCUMENT_VALID_FILE_MAGIC_TYPES.split(AppConstant.STRING_COMMA))) {
-//                    if (commonFunction.isFileSizeSufficient(documentUploadDto.getAttachment(), DOCUMENT_MAX_FILE_SIZE)) {
-//
-////                    if (APPLICATION_PDF.equals(documentUploadDto.getAttachment().getContentType())) {
-//                        int i = documentUploadService.uploadDocumentToCategory(documentUploadDto, user, catagoryId);
-//                        if (i == VIRUS_FILE_MESSAGE) {
-//                            List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//                            modelAndView.addObject("chanelList", chanelList);
-//                            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
-//                            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.VIRUS_DETECTED_ERROR_MESSAGE));
-//                        } else if (i == SUCSESS) {
-//                            List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//                            modelAndView.addObject("chanelList", chanelList);
-//                            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, true);
-//                            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.SUCCESSFULLY_SUBMITED_FOR_AUTH));
-//                        } else {
-//
-//                        }
-//                    } else {
-//                        List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//                        modelAndView.addObject("chanelList", chanelList);
-//                        modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
-//                        modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.FILE_SIZE_BIGGER_THAN_PARAM)+DOCUMENT_MAX_FILE_SIZE+MB);
-//                    }
-//                } else {
-//                    List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//                    modelAndView.addObject("chanelList", chanelList);
-//                    modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
-//                    modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.FILE_TYPE_EXTENTION));//EXEIED_DOC_SIZE
-//                }
-//            } else {
-//                documentUploadService.uploadDocumentToCategory(documentUploadDto, user, catagoryId);
-//                List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//                modelAndView.addObject("chanelList", chanelList);
-//                modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
-//                modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ERROR_PLEASE_CONTACT_SYSTEM_ADMIN));
-//            }
-//        } catch (VirusScannerException ex) {
-//            LOGGER.error(ex.getMessage());
-//            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
-//            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.VIRUS_SCAN_EXEPTION));
-//            List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//            modelAndView.addObject("chanelList", chanelList);
-//        } catch (Exception e) {
-//            LOGGER.error(e.getMessage());
-//            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
-//            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ERROR_PLEASE_CONTACT_SYSTEM_ADMIN));
-//            List<SystemMenuItemChannel> chanelList = menuItemService.findAllMenuItemChanelNotBoth();
-//            modelAndView.addObject("chanelList", chanelList);
-//        }
-//        DocumentUploadDto documentUploadDto1 = new DocumentUploadDto();
-//        modelAndView.addObject("documentUploadDto", documentUploadDto1);
-//        modelAndView.setViewName("docmanagement/docupload/docupload");
-//        DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
-//        docCategoryTemp.setSystemMenuItemChannel(new SystemMenuItemChannel());
-//        modelAndView.addObject("docCategoryTemp", docCategoryTemp);
-//        setNavigationMenuListByModelAndView(modelAndView, navigationMenuMap);
-//        return modelAndView;
-//
-//    }
 }
