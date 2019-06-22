@@ -25,8 +25,8 @@ public class DocumentUploadTemp implements Serializable {
     private String path;
     private String actionUserId;
     private Date actionDateTime;
-
-
+    private AccessUserType accessUserType;
+    private List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles;
     public DocumentUploadTemp() {
     }
 
@@ -190,4 +190,23 @@ public class DocumentUploadTemp implements Serializable {
     public void setChannel(String channel) {
         this.channel = channel;
     }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "access_user_type_id")
+    public AccessUserType getAccessUserType() {
+        return accessUserType;
+    }
+
+    public void setAccessUserType(AccessUserType accessUserType) {
+        this.accessUserType = accessUserType;
+    }
+
+    @OneToMany(mappedBy = "systemRole", cascade = CascadeType.ALL)
+    public List<DocumentUploadTempSystemRole> getDocumentUploadTempSystemRoles() {
+        return documentUploadTempSystemRoles;
+    }
+
+    public void setDocumentUploadTempSystemRoles(List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles) {
+        this.documentUploadTempSystemRoles = documentUploadTempSystemRoles;
+    }
+
 }
