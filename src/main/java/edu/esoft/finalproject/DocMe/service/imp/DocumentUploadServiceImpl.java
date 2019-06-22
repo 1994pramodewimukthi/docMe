@@ -1,7 +1,6 @@
 package edu.esoft.finalproject.DocMe.service.imp;
 
 import edu.esoft.finalproject.DocMe.config.DocCategoryMasterWebixComparator;
-import edu.esoft.finalproject.DocMe.dto.DocAuthDto;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
 import edu.esoft.finalproject.DocMe.entity.*;

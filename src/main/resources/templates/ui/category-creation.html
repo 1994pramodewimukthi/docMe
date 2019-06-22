@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-collapsed sidebar-light sidebar-left-sm" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" class="fixed       sidebar-left-sm" lang="en">
 <head>
 
     <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
@@ -13,7 +13,7 @@
     <!-- end: header -->
 
 </head>
-<body>
+<body id="loginBody">
 <section class="body">
     <!-- start: header -->
     <header class="header">
@@ -132,13 +132,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button"
-                                class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button"
+                                class="btn btn-primary "
                                 data-dismiss="modal">
-                            <span>Close</span></button>
+                            Close</button>
 
 
                         <button type="submit" name="action1" value="Insert"
-                                class="btn btn-primary btn-icon-hover fa fa-save flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                                class="btn btn-primary ">
                             <span>Save</span>
                         </button>
                     </div>
@@ -146,154 +146,8 @@
             </form>
         </div>
     </div>
-    <div class="modal fade" id="editSubCatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-         aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="">Edit Sub Category</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="">
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Category Name</label>
-                                        <input class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Sorting Order</label>
-                                        <input class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Category Description</label>
-                                        <textarea class="form-control" rows="2"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-edit"></i>
-                        Modify
-                    </button>
-                    <button type="button" class="btn btn-primary"><i class="fas fa-close"></i> Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="uploadDocModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="">Edit Sub Category</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="">
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Document Name</label>
-                                        <input class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Head Line</label>
-                                        <input class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Published Date</label>
-                                        <div class="input-group">
-                      <span class="input-group-prepend">
-                        <span class="input-group-text">
-                          <i class="fas fa-calendar-alt"></i>
-                        </span>
-                      </span>
-                                            <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="publishedDate"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Expiry Date</label>
-                                        <div class="input-group">
-                      <span class="input-group-prepend">
-                        <span class="input-group-text">
-                          <i class="fas fa-calendar-alt"></i>
-                        </span>
-                      </span>
-                                            <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="expiryDate"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Document Description</label>
-                                        <textarea class="form-control" rows="3"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Access User</label>
-                                        <select class="form-control" id="accessUser">
-                                            <option value="user 01">user 01</option>
-                                            <option value="user 02">user 02</option>
-                                            <option value="user 03">user 03</option>
-                                            <option value="user 04">user 04</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label">Document Upload(PDF files only)</label>
-                                        <form enctype="multipart/form-data" id="fileupload" name="fileupload">
-                                            <input class="dropify" data-allowed-file-extensions="xls xlsx"
-                                                   data-height="300" id="file"
-                                                   name="file"
-                                                   type="file"/>
-                                            <div class="row showerrordiv mt-2" style="display: none">
-                                                <div class="col-md-12">
-                                                    <div class="alert alert-warning alert-icon-left" role="alert">
-                                                        <div class="float-xs-left errormsg">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-edit"></i>
-                        Modify
-                    </button>
-                    <button type="button" class="btn btn-primary"><i class="fas fa-close"></i> Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
     <div id="modifyDiv">
 
     </div>
