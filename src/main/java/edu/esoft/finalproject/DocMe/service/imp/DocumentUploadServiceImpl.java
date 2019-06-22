@@ -140,6 +140,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                         search.setAccessUserTypeId((long) 1);
                         DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
 
+
+
                         documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
                         documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
                         documentUploadTemp.setDocumentDescription(documentUploadDto.getDocumentDescription());
