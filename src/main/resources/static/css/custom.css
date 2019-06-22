@@ -146,8 +146,8 @@ table thead {
     background: url('../img/wallpaper.jpg') no-repeat;
 }
 
-.card-body{
-    opacity: 0.8 ;
+#loginBody .card-body{
+    opacity: 0.9 ;
 }
 
 .btn-table {
@@ -158,5 +158,8 @@ table thead {
 .addbtn {
     background-color: #55ADF7 !important;
     border-color: #55ADF7 !important;
+}
+header {
+    border-bottom: 2px solid #d31145;
 }
 /*# sourceMappingURL=custom.css.map */
