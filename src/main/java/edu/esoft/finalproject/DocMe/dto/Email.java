@@ -9,6 +9,7 @@ public class Email  implements Serializable {
     private String ccAddress= "cc address";
     private String subject= "subject";
     private String emailMessage= "email";
+    private String documentNAme= "DocMe";
 
     public String getEmailLogId() {
         return emailLogId;
@@ -56,5 +57,13 @@ public class Email  implements Serializable {
 
     public void setEmailMessage(String emailMessage) {
         this.emailMessage = emailMessage;
+    }
+
+    public String getDocumentNAme() {
+        return documentNAme;
+    }
+
+    public void setDocumentNAme(String documentNAme) {
+        this.documentNAme = documentNAme;
     }
 }
