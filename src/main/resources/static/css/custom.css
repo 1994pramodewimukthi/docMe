@@ -63,7 +63,7 @@ table.dataTable tr th.select-checkbox.selected::after {
 }
 
 .datepicker--day-name {
-    color: #d31145;
+    color: #3498db;
 }
 
 table.dataTable thead th {
@@ -120,7 +120,7 @@ table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select
 }
 
 .nav-tabs li.active .nav-link, .nav-tabs li.active .nav-link:hover, .nav-tabs li.active .nav-link:focus {
-    border-top: 3px solid #d31145;
+    border-top: 3px solid #3498db;
     color: #2d1010;
 }
 
@@ -136,7 +136,7 @@ table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select
     z-index: 99999;
 }
 .modal-header {
-    border-bottom: 3px solid #d31145;
+    border-bottom: 3px solid #3498db;
 }
 table thead {
     background-color: #656565;
@@ -160,6 +160,51 @@ table thead {
     border-color: #55ADF7 !important;
 }
 header {
-    border-bottom: 2px solid #d31145;
+    border-bottom: 2px solid #3498db;
 }
+
+.webix_dd_drag_column, .webix_ss_header, .webix_ss_header TD, .webix_ss_vscroll_header {
+    font-size: 15px;
+    color: #fff;
+    background: #1d2127!important;
+}
+
+.btn-primary:hover, .btn-primary.hover {
+    background-color: #6353ed!important;
+    border-color:  #6162ee #3498db;
+    color: #ffffff;
+}
+
+.modal-footer{
+    background: #1d2127;
+}
+
+
+    .modal-dialog {
+        max-width: 700px!important;
+        margin: 1.75rem auto;
+    }
+
+.sidebar-left .sidebar-header .sidebar-title {
+    background: #1D2127;
+    color: #3498db;
+    padding: 15px;
+    font-size: 0.8rem;
+}
+
+.nav-link{
+    border-bottom: 1px solid rgba(195, 195, 195, 0.08) !important;
+}
+
+.body-sign .card-sign {
+    background: #3498db38!important;
+}
+
+
+.modal-title {
+    margin-bottom: 0!important;
+    line-height: 1.5!important;
+    color: #3498db!important;
+}
+
 /*# sourceMappingURL=custom.css.map */

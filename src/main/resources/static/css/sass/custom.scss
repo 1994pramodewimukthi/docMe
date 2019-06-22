@@ -61,7 +61,7 @@ table.dataTable tr th.select-checkbox.selected::after {
 }
 
 .datepicker--day-name {
-  color: #d31145;
+  color: #3498db;
 }
 
 table.dataTable thead th {
@@ -116,7 +116,7 @@ table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select
   margin-left: -12px;
 }
 .nav-tabs li.active .nav-link, .nav-tabs li.active .nav-link:hover, .nav-tabs li.active .nav-link:focus {
-  border-top: 3px solid #d31145;
+  border-top: 3px solid #3498db;
   color: #2d1010;
 }
 .nav-tabs li .nav-link, .nav-tabs li .nav-link:hover {
@@ -130,7 +130,7 @@ table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select
   z-index: 99999;
 }
 .modal-header {
-  border-bottom: 3px solid #d31145;
+  border-bottom: 3px solid #3498db;
 }
 table thead {
   background-color: #656565;
@@ -153,5 +153,5 @@ table thead {
   border-color: #55ADF7 !important;
 }
 header {
-  border-bottom: 2px solid #d31145;
+  border-bottom: 2px solid #3498db;
 }

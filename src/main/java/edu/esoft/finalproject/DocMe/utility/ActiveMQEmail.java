@@ -19,6 +19,7 @@ public class ActiveMQEmail {
     private static final String CC_ADDRESS_KEY = "CC_ADDRESS";
     private static final String SUBJECT_KEY = "SUBJECT";
     private static final String BODY_KEY = "BODY";
+    private static final String DOC_NAME = "DOC_NAME";
 
     private String jmsQueueName = "Esoft-Email-Queue";
 
@@ -35,6 +36,7 @@ public class ActiveMQEmail {
             mapMessage.setObject(CC_ADDRESS_KEY, email.getCcAddress());// save CC Address
             mapMessage.setObject(SUBJECT_KEY, email.getSubject());// save Subject
             mapMessage.setObject(BODY_KEY, email.getEmailMessage());// save Body
+            mapMessage.setObject(DOC_NAME, email.getDocumentNAme());// save Body
             return mapMessage;
         };
         jmsTemplate.send(jmsQueueName, messageCreator);
