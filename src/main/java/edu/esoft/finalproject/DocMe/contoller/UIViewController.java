@@ -73,4 +73,10 @@ public class UIViewController {
         modelAndView.addObject("documentUploadDto", documentUploadDto);
         return modelAndView;
     }
+
+    @GetMapping(value = "/register")
+    public ModelAndView getRegisterPage() {
+        ModelAndView modelAndView = new ModelAndView("/user/register");
+        return modelAndView;
+    }
 }

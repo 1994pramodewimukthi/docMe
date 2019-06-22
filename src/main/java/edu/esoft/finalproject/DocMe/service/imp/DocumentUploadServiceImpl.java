@@ -127,56 +127,56 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     @Override
     public int uploadDocumentToCategory(DocumentUploadDto documentUploadDto, User user, int catagoryId) throws Exception {
-        documentUploadDto.setDocCategoryMasterId(catagoryId);
-        try {
-            if (null != documentUploadDto.getAttachment()) {
-                if (documentUploadDto.getDocumentName() != "") {
-                    DocCategoryMaster catagory = docCategoryMasterRepository.findByDocCategoryMstId(catagoryId);
-
-                    String sftpPath = documentUploadSFTPService.uploadFile(documentUploadDto);
-                    if (sftpPath != null) {
-//                    file save
-                        AccessUserType search = new AccessUserType();
-                        search.setAccessUserTypeId((long) 1);
-                        DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
-
-                        documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
-                        documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
-                        documentUploadTemp.setDocumentDescription(documentUploadDto.getDocumentDescription());
-                        documentUploadTemp.setHeadline(documentUploadDto.getHeadLine());
-                        documentUploadTemp.setRecordStatus(documentUploadDto.getRecordStatus());
-                        documentUploadTemp.setInpDateTime(new Date());
-                        documentUploadTemp.setInputUserId(user.getUserName());
-                        documentUploadTemp.setAccessUserType(search);
-                        documentUploadTemp.setReason("");
-                        documentUploadTemp.setPublishDate(documentUploadDto.getPublishDate());
-                        documentUploadTemp.setExpireDate(documentUploadDto.getExpireDate());
-                        documentUploadTemp.setPath(sftpPath);
-                        documentUploadTemp.setRecordStatus(new RecordStatus(6));
-                        for (String id : documentUploadDto.getAcessTypes()) {
-                            SystemRole systemRoleById = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(id));
-                            DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
-                            documentUploadTempSystemRole.setDocumentUploadTemp(documentUploadTemp);
-                            documentUploadTempSystemRole.setSystemRole(systemRoleById);
-                            documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
-                        }
-                        if (null != user.getSelectedAgent().getAgentCode()) {
-                            documentUploadTemp.setChannel(user.getSelectedAgent().getChannel().getChannelType().toString());
-                        } else {
-                            documentUploadTemp.setChannel(BOTH);
-                        }
-                        documentUploadTemp.setDocumentUploadTempSystemRoles(documentUploadTempSystemRoles);
-                        documentUploadRepository.save(documentUploadTemp);
-                        return SUCSESS;
-                    } else {
-                        return VIRUS_FILE_MESSAGE;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw e;
-        }
+//        documentUploadDto.setDocCategoryMasterId(catagoryId);
+//        try {
+//            if (null != documentUploadDto.getAttachment()) {
+//                if (documentUploadDto.getDocumentName() != "") {
+//                    DocCategoryMaster catagory = docCategoryMasterRepository.findByDocCategoryMstId(catagoryId);
+//
+//                    String sftpPath = documentUploadSFTPService.uploadFile(documentUploadDto);
+//                    if (sftpPath != null) {
+////                    file save
+//                        AccessUserType search = new AccessUserType();
+//                        search.setAccessUserTypeId((long) 1);
+//                        DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
+//
+//                        documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
+//                        documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
+//                        documentUploadTemp.setDocumentDescription(documentUploadDto.getDocumentDescription());
+//                        documentUploadTemp.setHeadline(documentUploadDto.getHeadLine());
+//                        documentUploadTemp.setRecordStatus(documentUploadDto.getRecordStatus());
+//                        documentUploadTemp.setInpDateTime(new Date());
+//                        documentUploadTemp.setInputUserId(user.getUserName());
+//                        documentUploadTemp.setAccessUserType(search);
+//                        documentUploadTemp.setReason("");
+//                        documentUploadTemp.setPublishDate(documentUploadDto.getPublishDate());
+//                        documentUploadTemp.setExpireDate(documentUploadDto.getExpireDate());
+//                        documentUploadTemp.setPath(sftpPath);
+//                        documentUploadTemp.setRecordStatus(new RecordStatus(6));
+//                        for (String id : documentUploadDto.getAcessTypes()) {
+//                            SystemRole systemRoleById = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(id));
+//                            DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
+//                            documentUploadTempSystemRole.setDocumentUploadTemp(documentUploadTemp);
+//                            documentUploadTempSystemRole.setSystemRole(systemRoleById);
+//                            documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
+//                        }
+//                        if (null != user.getSelectedAgent().getAgentCode()) {
+//                            documentUploadTemp.setChannel(user.getSelectedAgent().getChannel().getChannelType().toString());
+//                        } else {
+//                            documentUploadTemp.setChannel(BOTH);
+//                        }
+//                        documentUploadTemp.setDocumentUploadTempSystemRoles(documentUploadTempSystemRoles);
+//                        documentUploadRepository.save(documentUploadTemp);
+//                        return SUCSESS;
+//                    } else {
+//                        return VIRUS_FILE_MESSAGE;
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            LOGGER.error(e.getMessage());
+//            throw e;
+//        }
 
         return ERROR;
     }
