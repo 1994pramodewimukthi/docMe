@@ -122,6 +122,7 @@ public class DocumentUploadTemp implements Serializable {
         this.authDateTime = authDateTime;
     }
 
+
     @Column(name = "reason")
     public String getReason() {
         return reason;
