@@ -1,78 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>docME Login</title>
-  <!--    <style th:inline="text">-->
-  <!--        body {-->
-  <!--            /*background-image: url('\'+@{}+\'');*/-->
-  <!--           -->
-  <!--        }-->
-  <!--    </style>-->
+    <title>docME Login</title>
+    <!--    <style th:inline="text">-->
+    <!--        body {-->
+    <!--            /*background-image: url('\'+@{}+\'');*/-->
+    <!--           -->
+    <!--        }-->
+    <!--    </style>-->
 </head>
 <!-- start: header -->
 <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
 <!-- end: header -->
 <body id="loginBody">
 <section class="body-sign">
-  <div class="center-sign">
-    <!--<a href="/" class="logo float-left">-->
-    <!--<img th:src="@{/img/logo.png}" height="54" alt="Porto Admin" />-->
-    <!--</a>-->
+    <div class="center-sign">
+        <!--<a href="/" class="logo float-left">-->
+        <!--<img th:src="@{/img/logo.png}" height="54" alt="Porto Admin" />-->
+        <!--</a>-->
 
-    <div class="panel card-sign">
-      <div class="card-title-sign mt-3 text-right">
-        <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user mr-1"></i> Sign In</h2>
-      </div>
-      <div class="card-body">
-        <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/login}" method="post"
-              style="opacity: 1 !important;">
-          <div class="form-group mb-3">
-            <label>Username</label>
-            <div class="input-group">
-              <input name="userName" th:field="*{userName}" type="text" class="form-control form-control-lg"/>
-              <span class="input-group-append">
+        <div class="panel card-sign">
+            <div class="card-title-sign mt-3 text-right">
+                <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user mr-1"></i> Sign In</h2>
+            </div>
+            <div class="card-body">
+                <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/login}"
+                      method="post"
+                      style="opacity: 1 !important;">
+                    <div class="form-group mb-3">
+                        <label>Username</label>
+                        <div class="input-group">
+                            <input name="userName" th:field="*{userName}" type="text"
+                                   class="form-control form-control-lg"/>
+                            <span class="input-group-append">
 										<span class="input-group-text">
 											<i class="fas fa-user"></i>
 										</span>
 									</span>
-            </div>
-          </div>
+                        </div>
+                    </div>
 
-          <div class="form-group mb-3">
-            <div class="input-group">
-              <input name="password" th:field="*{password}" type="password" class="form-control form-control-lg"/>
-              <span class="input-group-append">
+                    <div class="form-group mb-3">
+                        <div class="input-group">
+                            <input name="password" th:field="*{password}" type="password"
+                                   class="form-control form-control-lg"/>
+                            <span class="input-group-append">
 										<span class="input-group-text">
 											<i class="fas fa-lock"></i>
 										</span>
 									</span>
-            </div>
-          </div>
+                        </div>
+                    </div>
 
-          <div class="row">
-            <div class="col-sm-8">
-              <a role="menuitem" tabindex="-1" th:href="@{/user/register}" style="color: #000000"><i class="fas fa-user"
-              style="color: #3498db"></i> Sign Up</a>
-              <!--                            <div class="checkbox-custom checkbox-default">-->
-              <!--                                <input id="RememberMe" name="rememberme" type="checkbox"/>-->
-              <!--                                <label for="RememberMe">Remember Me</label>-->
-              <!--                            </div>-->
-            </div>
-            <div class="col-lg-12 text-right">
-              <button type="submit" class="btn btn-primary mt-2"><a role="menuitem" tabindex="-1"
-                                                                    th:href="@{/user/register}"></a>Sign Up
-              </button>
-              <button type="submit" class="btn btn-primary mt-2">Sign In</button>
-            </div>
-          </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <a role="menuitem" tabindex="-1" class="btn btn-primary mt-2" th:href="@{/user/register}">Sign
+                                Up</a>
+                            <button type="submit" class="btn btn-primary mt-2">Sign In</button>
+                        </div>
+                    </div>
 
-          <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
-        </form>
-      </div>
+                    <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
+                </form>
+            </div>
+        </div>
+
+
     </div>
-
-
-  </div>
 </section>
 </body>
 <!--start: footer-->
