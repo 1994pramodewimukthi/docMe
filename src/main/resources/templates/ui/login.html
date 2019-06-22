@@ -24,11 +24,11 @@
                 <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user mr-1"></i> Sign In</h2>
             </div>
             <div class="card-body">
-                <form action="index.html" method="post" style="opacity: 1 !important;">
+                <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/login}" method="post" style="opacity: 1 !important;">
                     <div class="form-group mb-3">
                         <label>Username</label>
                         <div class="input-group">
-                            <input name="username" type="text" class="form-control form-control-lg"/>
+                            <input name="userName" th:field="*{userName}" type="text" class="form-control form-control-lg"/>
                             <span class="input-group-append">
 										<span class="input-group-text">
 											<i class="fas fa-user"></i>
@@ -39,7 +39,7 @@
 
                     <div class="form-group mb-3">
                         <div class="input-group">
-                            <input name="pwd" type="password" class="form-control form-control-lg"/>
+                            <input name="password" th:field="*{password}" type="password" class="form-control form-control-lg"/>
                             <span class="input-group-append">
 										<span class="input-group-text">
 											<i class="fas fa-lock"></i>
@@ -50,10 +50,12 @@
 
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="checkbox-custom checkbox-default">
-                                <input id="RememberMe" name="rememberme" type="checkbox"/>
-                                <label for="RememberMe">Remember Me</label>
-                            </div>
+                            <a role="menuitem" tabindex="-1" th:href="@{/user/register}" style="color: #000000"><i class="fas fa-user"
+                                                                                          style="color: #3498db"></i> Sign Up</a>
+<!--                            <div class="checkbox-custom checkbox-default">-->
+<!--                                <input id="RememberMe" name="rememberme" type="checkbox"/>-->
+<!--                                <label for="RememberMe">Remember Me</label>-->
+<!--                            </div>-->
                         </div>
                         <div class="col-sm-4 text-right">
                             <button type="submit" class="btn btn-primary mt-2">Sign In</button>

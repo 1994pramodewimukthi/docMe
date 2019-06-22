@@ -1,106 +1,167 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <title>docME Register</title>
 
-  <title>docME Register</title>
-  <!--    <style th:inline="text">-->
-  <!--        body {-->
-  <!--            /*background-image: url('\'+@{}+\'');*/-->
-  <!--           -->
-  <!--        }-->
-  <!--    </style>-->
+    <meta name="context-path" th:content="@{/}"/>
 </head>
 <!-- start: header -->
 <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
 <!-- end: header -->
 <body id="loginBody">
 <section class="body-sign">
-  <div class="center-sign">
-    <!--<a href="/" class="logo float-left">-->
-    <!--<img th:src="@{/img/logo.png}" height="54" alt="Porto Admin" />-->
-    <!--</a>-->
+    <div class="center-sign">
+        <!--<a href="/" class="logo float-left">-->
+        <!--<img th:src="@{/img/logo.png}" height="54" alt="Porto Admin" />-->
+        <!--</a>-->
 
-    <div class="panel card-sign">
-      <div class="card-title-sign mt-3 text-right">
-        <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user-plus mr-1"></i> Register</h2>
-      </div>
-      <div class="card-body" style="width: 800px">
-        <form action="index.html" method="post" style="opacity: 1 !important;">
-          <div class="form-group row mb-3">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>First Name</label><span class="required">*</span>
-                <input name="firstname" type="text" class="form-control form-control-lg">
-              </div>
+        <div class="panel card-sign">
+            <div class="card-title-sign mt-3 text-right">
+                <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user-plus mr-1"></i> Register
+                </h2>
             </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Last Name</label>
-                <input name="lastname" type="text" class="form-control form-control-lg">
-              </div>
+            <div class="card-body" style="width: 800px">
+                <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/save}"
+                      method="post" style="opacity: 1 !important;">
+                    <input id="userEdit" th:field="*{userEdit}" type="hidden">
+                    <input id="id" th:field="*{id}" type="hidden">
+                    <div class="form-group row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input name="userName" th:field="*{userName}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Password</label><span class="required">*</span>
+                                <input name="password" th:field="*{password}" th:value="*{password}" type="password"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>First Name</label><span class="required">*</span>
+                                <input name="firstname" th:field="*{firstName}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input name="lastName" th:field="*{lastName}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Address 1</label><span class="required">*</span>
+                                <input name="addressLine1" th:field="*{addressLine1}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Address 2</label><span class="required">*</span>
+                                <input name="addressLine2" th:field="*{addressLine2}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Date of Birth</label><span class="required">*</span>
+                                <input name="dateOfBirth" th:field="*{dateOfBirth}" id="dob" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Email</label><span class="required">*</span>
+                                <input name="email" th:field="*{email}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>NIC</label>
+                                <input name="nic" th:field="*{nic}" type="text" class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Mobile Number</label><span class="required">*</span>
+                                <input name="mobile" th:field="*{mobile}" type="text"
+                                       class="form-control form-control-lg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="submit" class="btn btn-primary mt-2">Save</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Address 1</label><span class="required">*</span>
-                <input name="address1" type="text" class="form-control form-control-lg">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Address 2</label><span class="required">*</span>
-                <input name="address2" type="text" class="form-control form-control-lg">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Date of Birth</label><span class="required">*</span>
-                <input name="dob" id="dob" type="text" class="form-control form-control-lg">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Email</label><span class="required">*</span>
-                <input name="email" type="text" class="form-control form-control-lg">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>NIC</label>
-                <input name="nic" type="text" class="form-control form-control-lg">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Mobile Number</label><span class="required">*</span>
-                <input name="mobileNumber" type="text" class="form-control form-control-lg">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 text-right">
-              <button type="submit" class="btn btn-primary mt-2">Save</button>
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
     </div>
-
-    <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
-  </div>
 </section>
 </body>
 <!--start: footer-->
 <!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
 <!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
 <script th:inline="javascript">
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+
     $('#dob').datepicker({
         language: 'en',
         autoClose: true,
         dateFormat: 'dd-mm-yyyy'
     });
-</script>
 
+    /*<![CDATA[*/
+    $(document).ready(function () {
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+        var edit = $("#userEdit").val();
+        if (isSucsess) {
+            swal({
+                title: 'Success',
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                debugger;
+                console.log(edit);
+                if (edit == "true") {
+                    location.replace(CONTEXT_PATH + '/user/update');
+                } else {
+                    location.replace(CONTEXT_PATH + '/user/register');
+                }
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: 'Error',
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            });
+        }
+
+
+    });
+    /*]]>*/
+</script>
 </html>

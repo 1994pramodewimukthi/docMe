@@ -1,22 +1,20 @@
 package edu.esoft.finalproject.DocMe.contoller;
 
+import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.AppURL;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
 import edu.esoft.finalproject.DocMe.dto.Email;
+import edu.esoft.finalproject.DocMe.dto.UserDto;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
-import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.jms.JMSException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(value = "/ui")
@@ -32,8 +30,15 @@ public class UIViewController {
     }
 
     @GetMapping(value = "/login")
-    public ModelAndView getLogin() {
-        ModelAndView modelAndView = new ModelAndView("/ui/login");
+    public ModelAndView getLogin(HttpSession session) {
+        ModelAndView modelAndView;
+        if (null != session.getAttribute(AppConstant.USER)) {
+            modelAndView = new ModelAndView("redirect:/ui/categoryCreation");
+        } else {
+            UserDto userDto = new UserDto();
+            modelAndView = new ModelAndView("/ui/login");
+            modelAndView.addObject("userDetailsDto", userDto);
+        }
         try {
             activeMQEmail.sendFromEmail(new Email());
         } catch (JMSException e) {
@@ -78,5 +83,11 @@ public class UIViewController {
     public ModelAndView getRegisterPage() {
         ModelAndView modelAndView = new ModelAndView("/user/register");
         return modelAndView;
+    }
+
+    @RequestMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        session.invalidate();
+        return new ModelAndView("redirect:/ui/login");
     }
 }

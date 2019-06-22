@@ -40,4 +40,7 @@ public class MessageConstant {
     public final static long FILE_SIZE_BIGGER_THAN_PARAM = 161;
     public final static long SORTING_ORDER_ALREADY_EXIST = 162;
     public final static long ERROR_ADMINISTRATOR_FOR_MORE_DETAIL = 135;
+    public final static long DUPLICATE_USER = 175;
+    public final static long INVALID_LOGINS = 176;
+    public final static long INVALID_INPUTS = 177;
 }
