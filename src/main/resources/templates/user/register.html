@@ -35,148 +35,92 @@
                       method="post" style="opacity: 1 !important;">
                     <input id="userEdit" th:field="*{userEdit}" type="hidden">
                     <input id="id" th:field="*{id}" type="hidden">
-                    <div class="form-group row mb-3">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input name="userName" th:field="*{userName}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Password</label><span class="required">*</span>
-                                <input name="password" th:field="*{password}" th:value="*{password}" type="password"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>First Name</label><span class="required">*</span>
-                                <input name="firstname" th:field="*{firstName}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input name="lastName" th:field="*{lastName}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Address 1</label><span class="required">*</span>
-                                <input name="addressLine1" th:field="*{addressLine1}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Address 2</label><span class="required">*</span>
-                                <input name="addressLine2" th:field="*{addressLine2}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Date of Birth</label><span class="required">*</span>
-                                <input name="dateOfBirth" th:field="*{dateOfBirth}" id="dob" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Email</label><span class="required">*</span>
-                                <input name="email" th:field="*{email}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>NIC</label>
-                                <input name="nic" th:field="*{nic}" type="text" class="form-control form-control-lg">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Mobile Number</label><span class="required">*</span>
-                                <input name="mobile" th:field="*{mobile}" type="text"
-                                       class="form-control form-control-lg">
-                            </div>
-                        </div>
-            <div class="card-body" style="width: 1000px">
-                <form action="index.html" method="post" style="opacity: 1 !important;">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p class="text-center" >
-                            <img th:src="@{/img/user.png}" class="img-circle img-responsive" style="    margin-top: 24%;">
-                            </p>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="form-group row mb-3">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>First Name</label><span class="required">*</span>
-                                        <input name="firstname" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input name="lastname" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Address 1</label><span class="required">*</span>
-                                        <input name="address1" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Address 2</label><span class="required">*</span>
-                                        <input name="address2" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Date of Birth</label><span class="required">*</span>
-                                        <input name="dob" id="dob" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Email</label><span class="required">*</span>
-                                        <input name="email" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>NIC</label>
-                                        <input name="nic" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Mobile Number</label><span class="required">*</span>
-                                        <input name="mobileNumber" type="text" class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="col-md-3">
+                        <p class="text-center">
+                            <img th:src="@{/img/user.png}" class="img-circle img-responsive"
+                                 style="    margin-top: 24%;">
+                        </p>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-right">
-                            <button type="submit" class="btn btn-primary mt-2">Save</button>
+                    <div class="col-md-9">
+                        <div class="form-group row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input name="userName" th:field="*{userName}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Password</label><span class="required">*</span>
+                                    <input name="password" th:field="*{password}" th:value="*{password}" type="password"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>First Name</label><span class="required">*</span>
+                                    <input name="firstname" th:field="*{firstName}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input name="lastName" th:field="*{lastName}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Address 1</label><span class="required">*</span>
+                                    <input name="addressLine1" th:field="*{addressLine1}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Address 2</label><span class="required">*</span>
+                                    <input name="addressLine2" th:field="*{addressLine2}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Date of Birth</label><span class="required">*</span>
+                                    <input name="dateOfBirth" th:field="*{dateOfBirth}" id="dob" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label><span class="required">*</span>
+                                    <input name="email" th:field="*{email}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>NIC</label>
+                                    <input name="nic" th:field="*{nic}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Mobile Number</label><span class="required">*</span>
+                                    <input name="mobile" th:field="*{mobile}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="card-body" style="width: 1000px">
+                            </div>
                         </div>
                     </div>
+                    <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
                 </form>
             </div>
         </div>
-
-        <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
     </div>
 </section>
 </body>
