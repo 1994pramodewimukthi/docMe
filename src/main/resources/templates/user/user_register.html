@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Title </title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+            crossorigin="anonymous"></script>
+    <meta name="context-path" th:content="@{/}"/>
+</head>
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+<body>
+<div>
+    <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/save}" class="form-horizontal" method="post">
+
+        <div class="row marginTop">
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">First Name : *</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{firstName}"/>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Last Name : </label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{lastName}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row marginTop">
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Address 1 : *</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{addressLine1}"/>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Address 2 : *</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{addressLine2}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row marginTop">
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Address 3 :</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{addressLine3}"/>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Date of birth :</label>
+                <div class="form-material">
+                    <div class='input-group date ' data-plugin="flatpickr"
+                         data-wrap="true">
+                        <input type='date' class="form-control dateofbirth"
+                               th:field="*{dateOfBirth}"/>
+                        <!--                        th:value="${#dates.format(userDetailsDto.dateOfBirth,'yyyy-MM-dd')}"-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row marginTop">
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Email : *</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{email}"/>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">NIC :</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{nic}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row marginTop">
+            <div class="col-md-6 form-group">
+                <label class="material-label-fixed">Mobile Phone : *</label>
+                <div class="form-material">
+                    <input type="text" class="form-control"
+                           th:field="*{mobile}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row marginTop">
+            <div class="col-md-12 form-group">
+                <button class="btn btn-primary btn-icon-hover fa fa-save flat-buttons floatRight CusFormBtn"
+                        type="submit" th:value="Insert">
+                    <span>Save</span></button>
+            </div>
+        </div>
+    </form>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function () {
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+        var action = [[${action}]];
+
+
+        if (isSucsess) {
+            // swal({
+            //     title: 'Success',
+            //     text: message,
+            //     type: 'success',
+            //     showConfirmButton: true,
+            //     allowOutsideClick: false,
+            //     closeOnClickOutside: false
+            // }).then(function () {
+            //     location.replace(CONTEXT_PATH + '/user/register');
+            // });
+            confirm(message)
+            location.replace(CONTEXT_PATH + '/user/register');
+        } else if (isSucsess == false) {
+            // swal({
+            //     title: 'Error',
+            //     text: message,
+            //     type: 'error',
+            //     showConfirmButton: true,
+            //     allowOutsideClick: false,
+            //     closeOnClickOutside: false
+            // }).then(function () {
+            //     if (action == "ADD") {
+            //         $("#addModal").modal('show');
+            //     } else {
+            //         location.replace(CONTEXT_PATH + '/user/register');
+            //     }
+            //
+            // });
+            confirm(message);
+        }
+
+
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

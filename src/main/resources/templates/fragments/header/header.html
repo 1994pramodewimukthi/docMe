@@ -1,0 +1,85 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-collapsed sidebar-light sidebar-left-sm" lang="en">
+
+<head>
+  <link rel="stylesheet" th:href="@{/vendor/select2/css/select2.min.css}">
+  <link rel="stylesheet" th:href="@{/vendor/select2-bootstrap-theme/select2-bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/vendor/datatables/custom-datatables/css/select.dataTables.min.css}">
+  <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}">
+  <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}">
+
+  <!-- start: header -->
+  <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+  <!-- end: header -->
+</head>
+<body>
+<section class="body">
+  <!-- start: header -->
+  <header class="header">
+    <!--start: top-nav-->
+    <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+    <!--end: top-nav-->
+  </header>
+  <!-- end: header -->
+  <div class="inner-wrapper">
+    <!-- start: sidebar -->
+    <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+    <!-- end: sidebar -->
+    <section role="main" class="content-body pb-0">
+      <header class="page-header">
+        <h2>Batch Delivery Status Update</h2>
+        <div class="right-wrapper text-right">
+          <ol class="breadcrumbs">
+            <!--<li>-->
+            <!--<a href="index.html">-->
+            <!--<i class="fas fa-home"></i>-->
+            <!--</a>-->
+            <!--</li>-->
+          </ol>
+        </div>
+      </header>
+      <!-- start: page -->
+      <div class="row">
+        <div class="col-md-12">
+          <section class="card">
+            <div class="card-body">
+              <form enctype="multipart/form-data" id="fileupload" name="fileupload">
+                <input type="file" id="file" name="file" class="dropify" data-height="300"
+                       data-allowed-file-extensions="xls xlsx"/>
+
+                <div class="row showerrordiv mt-2" style="display: none">
+                  <div class="col-md-12">
+                    <div class="alert alert-warning alert-icon-left" role="alert">
+                      <div class="float-xs-left errormsg">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <footer class="card-footer text-right">
+              <!--<button class="btn btn-primary" onclick="setDispatchDate()"><i class="fas fa-edit"></i> Update-->
+              <!--Dispatch Date-->
+              <!--</button>-->
+              <button class="btn btn-primary" onclick="deliveryStatusUpdate()"><i class="fas fa-edit"></i>
+                Update Batch
+                Delivery Status
+              </button>
+
+            </footer>
+          </section>
+        </div>
+      </div>
+
+      <!-- end: page -->
+    </section>
+  </div>
+
+</section>
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+
+
+</body>
+</html>

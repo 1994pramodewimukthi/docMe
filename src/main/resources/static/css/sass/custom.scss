@@ -1,0 +1,154 @@
+/* Add here all your CSS customizations */
+/*Akila Nilakshi*/
+.form-bordered .form-group {
+  border-bottom: 0px solid #eff2f7;
+}
+
+.verify-state {
+  display: none;
+}
+
+.btn-center {
+  text-align: center;
+}
+
+.btn-not-function {
+  cursor: unset !important;
+}
+
+.select2-container {
+  width: 100% !important;
+  padding: 0;
+}
+
+.assigned {
+  color: #008000;
+  padding-right: 5px;
+}
+
+.not-assigned {
+  color: #ff0000;
+  padding-right: 5px;
+}
+
+.fixed-size {
+  min-width: 90px;
+  padding: 3px;
+  cursor: auto!important;
+}
+.fixed-size .btn:not(:disabled):not(.disabled) {
+  cursor: auto!important;
+}
+
+img {
+  width: 180px;
+}
+
+.card-header {
+  padding: 10px;
+}
+
+.card-actions {
+  top: 10px;
+}
+
+table.dataTable tr th.select-checkbox.selected::after {
+  content: "✔";
+  margin-top: -11px;
+  margin-left: -4px;
+  text-align: center;
+  text-shadow: rgb(176, 190, 217) 1px 1px, rgb(176, 190, 217) -1px -1px, rgb(176, 190, 217) 1px -1px, rgb(176, 190, 217) -1px 1px;
+}
+
+.datepicker--day-name {
+  color: #d31145;
+}
+
+table.dataTable thead th {
+  vertical-align: middle !important;
+  text-align: center!important;
+}
+
+.select2-container .select2-selection--single {
+  height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #999 !important;
+  line-height: 35px !important;
+}
+
+.select2-container--default .select2-selection--single {
+  border: 1px solid #ced4da !important;
+}
+
+.dropzone .dz-preview .dz-progress {
+  top: 70% !important;
+}
+
+.dz-progress {
+  display: none !important;
+}
+
+.modal-lg {
+  max-width: 1200px;
+}
+
+#lpStatusTable tbody tr td:nth-child(6) {
+  text-align: center !important;
+}
+table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select-checkbox:before {
+  margin-top: -1px !important;
+  margin-left: -10px !important;
+}
+
+table.dataTable tr.selected td.select-checkbox:after, table.dataTable tr.selected th.select-checkbox:after {
+  margin-top: -7px !important;
+  margin-left: -9px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  margin-left: -7px;
+  margin-top: 4px;
+}
+
+table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select-checkbox:before {
+  margin-left: -12px;
+}
+.nav-tabs li.active .nav-link, .nav-tabs li.active .nav-link:hover, .nav-tabs li.active .nav-link:focus {
+  border-top: 3px solid #d31145;
+  color: #2d1010;
+}
+.nav-tabs li .nav-link, .nav-tabs li .nav-link:hover {
+  border-top: 3px solid #ada2a2;
+  color: #929090;
+}
+.datepicker{
+  z-index: 99999;
+}
+.select2-container {
+  z-index: 99999;
+}
+.modal-header {
+  border-bottom: 3px solid #d31145;
+}
+table thead {
+  background-color: #656565;
+  color: #fff;
+}
+#loginBody{
+  background: url('../img/wallpaper.jpg') no-repeat;
+}
+.card-body{
+  opacity: 0.8 ;
+}
+
+.btn-table {
+  padding: 2px 7px;
+  font-size: 11px;
+}
+
+.addbtn {
+  background-color: #55ADF7 !important;
+  border-color: #55ADF7 !important;
+}

@@ -1,0 +1,287 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      class="fixed sidebar-left-collapsed sidebar-light sidebar-left-sm" lang="en">
+<head>
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+
+    <meta name="context-path" th:content="@{/}"/>
+
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+</head>
+<body>
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+        <!-- end: sidebar -->
+        <section role="main" class="content-body pb-0">
+            <header class="page-header ">
+                <h2 class="">Category Creation</h2>
+                <div class="right-wrapper text-right">
+                    <ol class="breadcrumbs ">
+                        <!--<li>-->
+                        <!--<a href="index.html">-->
+                        <!--<i class="fas fa-home"></i>-->
+                        <!--</a>-->
+                        <!--</li>-->
+                    </ol>
+                </div>
+            </header>
+            <!-- start: page -->
+            <div class="row ">
+                <div class="col-lg-12">
+                    <section class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-right mb-md-3">
+                                    <button type="button" class="btn btn-primary btn-sm "
+                                            data-target="#addSubCatModal"
+                                            data-toggle="modal">
+                                        Add Sub Category
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="webixtablecontainerDocUpload"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <input type="hidden" id="catId" name="catId"></input>
+    <form th:action="@{/documentUploadController/save}"
+          th:id="docUploadTempForm"
+          th:object="${documentUploadDto}"
+          th:name="docUploadTempForm" method="POST" enctype="multipart/form-data">
+
+        <div class="modal fade" id="uploadDocModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="">Upload Document</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Document Name</label>
+                                        <input class="form-control"/></input>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Head Line</label>
+                                        <input class="form-control"/></input>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Published Date</label>
+                                        <div class="input-group"><span class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-calendar-alt"></i></span>
+                                                                                </span>
+                                            <input type="text" data-plugin-datepicker="" class="form-control"
+                                                   id="publishedDate"/></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Expiry Date</label>
+                                        <div class="input-group">
+                                              <span class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </span>
+                                              </span>
+                                            <input type="text" data-plugin-datepicker="" class="form-control"
+                                                   id="expiryDate"/></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Document Description</label>
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Access User</label>
+                                        <select class="form-control" id="accessUser">
+                                            <option value="user 01">user 01</option>
+                                            <option value="user 02">user 02</option>
+                                            <option value="user 03">user 03</option>
+                                            <option value="user 04">user 04</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Document Upload(PDF files only)</label>
+                                        <input type="file" class="dropify" data-show-loader="true"
+                                               data-plugin="dropify" id="fileUpload" data-height="200"
+                                               data-allowed-file-extensions="pdf" accept=".pdf"/></input>
+                                        <div class="row showerrordiv mt-2" style="display: none">
+                                            <div class="col-md-12">
+                                                <div class="alert alert-warning alert-icon-left" role="alert">
+                                                    <div class="float-xs-left errormsg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-close"></i> Delete</button>
+                        <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>
+                            Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</section>
+
+<div id="modifyDiv">
+
+</div>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script th:src="@{/js/catergoryDocUpload.js}"></script>
+
+<!--<script src="../../static/js/categorycreationdatatable.js" th:src="@{/js/categorycreationdatatable.js}"></script>-->
+
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+
+<script th:inline="javascript">
+    $('#publishedDate,#expiryDate').datepicker({
+        language: 'en',
+        autoClose: true,
+        dateFormat: 'dd-mm-yyyy'
+
+    });
+    $('#accessUser').select2({
+        multiple: true
+
+    });
+
+    function saveCategory() {
+        swal({
+            text: 'Sub category created successfully',
+            type: 'success'
+        });
+    }
+
+
+    //    --------------------------------------------------------------------------------------
+
+
+    function uploadDocument(id) {
+        catId = id;
+        var chl = $('#channel').val();
+        $('#catId').val(id);
+        $('#channel2').val(chl);
+
+        $('#documentName').val('');
+        $('#headLine').val('');
+        $('#publishDate').val('');
+        $('#expireDate').val('');
+        $('#docDescription').val('');
+//        $('#attachment').val('');
+//        $('#attachment').addClass("dropify-clear");
+        $('#acessTypes').val('').trigger('chosen:updated');
+        var drEvent = $('#attachment').dropify();
+        // drEvent = drEvent.data('dropify');
+        // drEvent.resetPreview();
+        // drEvent.clearElement();
+        $('#uploadDocModal').modal('show');
+
+    }
+
+
+</script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+
+        if (isSucsess) {
+            swal({
+                title: "Success",
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: "Error",
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+            });
+        }
+
+
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" href="../static/assets/global/plugins/form-validation/form-validation.css"
+      th:href="@{/assets/global/plugins/form-validation/form-validation.css}"/>
+<script src="../../static/assets/global/plugins/form-validation/form-validation.js"
+        th:src="@{/assets/global/plugins/form-validation/form-validation.js}"></script>
+
+
+<form id="authViwerForm" th:object="${temp}"
+      th:name="master" method="POST">
+    <div class="modal fade" id="authViwerModal" role="dialog">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Category Authorization</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="material-label-fixed">Category Name * :</label>
+                            <div class="form-material ">
+
+                                <input class="form-control" type="hidden" id="tempId"
+                                       th:field="${temp.docCategoryTempId}"
+                                       th:value="${temp.docCategoryTempId}"></input>
+
+                                <input class="form-control" type="text" name="catName"
+                                       th:field="${temp.docCategoryName}" th:value="${temp.docCategoryName}"
+                                       id="catName" readonly="readonly"></input>
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="material-label-fixed">Sorting Order * :</label>
+                            <div class="form-material ">
+                                <input class="form-control" type="text" name="sortingOrder"
+                                       th:field="${temp.sortingOrder}" th:value="${temp.sortingOrder}"
+                                       id="sortingOrder" readonly="readonly"></input>
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="material-label-fixed">Category Description:</label>
+                            <div class="form-material ">
+                                <textarea class="form-control" rows="3"
+                                          th:field="${temp.docCategoryDescription}" readonly="readonly"></textarea>
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer"
+                     th:if="${temp.recordStatus.statusId == 6 || temp.recordStatus.statusId == 8}">
+                    <button type="button" onclick=""
+                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button"
+                            data-dismiss="modal">
+                        <span>Close</span></button>
+
+                    <button type="button" onclick="modalReject()"
+                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                        <span>Reject</span></button>
+
+                    <button type="button" name="action1" value="Insert" onclick="modalAuthorization()"
+                            class="btn btn-primary btn-icon-hover fa fa-save flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                        <span>Authorize</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer" th:if="${temp.recordStatus.statusId == 5}">
+                    <button type="button" onclick=""
+                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button"
+                            data-dismiss="modal">
+                        <span>Close</span></button>
+
+                    <button type="button" onclick="modalDeleteReject()"
+                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                        <span>Reject</span></button>
+
+                    <button type="button" onclick="modalDelete()"
+                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                        <span>Authorize</span></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+</html>

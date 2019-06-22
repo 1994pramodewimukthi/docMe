@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="AIA Cambodia Application Portal System">
+    <meta name="viewport" content="width=device-width">
+    <title th:text="${@environment.getProperty('system.title')}"></title>
+
+    <!-- START HEADER -->
+    <!--/*/ <th:block th:include="fragments/resources :: resources"></th:block> /*/-->
+    <!-- END HEADER -->
+
+    <!--<script src="../../../static/assets/custom/documentmanagement/catAuthReject/categoryresubmitdatatable.js"-->
+    <!--th:src="@{/assets/custom/documentmanagement/catAuthReject/categoryresubmitdatatable.js}"></script>-->
+
+
+    <meta name="context-path" th:content="@{/}"/>
+    <!-- END LAYOUT CSS -->
+
+
+</head>
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+
+
+</script>
+
+<body>
+<div class="loader-overlay">
+    <div class="loader-preview-area">
+        <div class="spinners">
+            <div class="loader">
+                <div class="rotating-plane"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <!-- START HEADER -->
+    <!--/*/ <th:block th:include="fragments/pageheader :: header"></th:block> /*/-->
+
+    <!-- END HEADER -->
+    <!-- START CONTENT -->
+    <section id="main" class="container-fluid">
+        <div class="row">
+
+            <!-- START RIGHT CONTENT -->
+            <section id="content-wrapper" class="form-elements">
+
+
+                <!-- START PAGE TITLE -->
+                <div class="site-content-title">
+                    <div class="col-xl-6  col-lg-12">
+                        <h3 class="popheading">Category Resubmit</h3>
+                    </div>
+                    <div class="col-xl-6  col-lg-12">
+                        <!-- START BREADCRUMB -->
+                        <!--/*/ <th:block th:include="fragments/navigation :: navigationmenu"></th:block> /*/-->
+                        <!-- END BREADCRUMB -->
+                    </div>
+                    <div class="col-md-12">
+                        <span class="sexy_line"></span>
+                    </div>
+                </div>
+                <!-- END PAGE TITLE -->
+
+                <!--  START DASHBOARD -->
+                <div class="contain-inner dashboard-v2">
+                    <div class="col-md-12">
+                        <div class="row">
+
+
+                        </div>
+                        <div class="divider25"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row ">
+                                    <div class="offset-xl-1 col-xl-10 col-lg-12 col-md-12 col-sm-12 dashboard_v4_box_block"
+                                         style="margin-bottom: 30px;">
+                                        <div class="content ">
+                                            <form th:action="@{/documentManagement/updateresubmitcategory}" id="temp"
+                                                  th:object="${temp}"
+                                                  th:name="temp" method="POST">
+                                                <div class="row">
+                                                    <div class="ribbon-box left-ribbon-box">
+                                                        <div class="border-ribbon right-round-border left-side">
+                                                            <div class="ribbon-position left-border-ribbon left-ribbon-position"></div>
+                                                            <strong>Category Resubmit</strong>
+                                                        </div>
+                                                        <input type="hidden" id="tempId"
+                                                               th:value="${temp.docCategoryTempId}"
+                                                               th:field="${temp.docCategoryTempId}">
+                                                        <div class="divider25"></div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label class="material-label-fixed">Category
+                                                                    Name * :</label>
+                                                                <div class="form-material ">
+                                                                    <input class="form-control" type="text"
+                                                                           th:value="${temp.docCategoryName}"
+                                                                           name="menuName"
+                                                                           id="menuName"
+                                                                           th:field="${temp.docCategoryName}">
+                                                                    <span class="material-line"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label>Channel:</label>
+                                                                <div class="form-material">
+                                                                    <input class="form-control" type="text"
+                                                                           id="chanel" name="chanel"
+                                                                           th:field="${temp.SystemMenuItemChannel.channelCode}"
+                                                                           th:value="${temp.SystemMenuItemChannel.channelCode}"
+                                                                           readonly>
+                                                                    <span class="material-line"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label class="material-label-fixed">Category
+                                                                    Description:</label>
+                                                                <div class="form-material ">
+                                                                    <textarea class="form-control" rows="3"
+                                                                              th:field="${temp.docCategoryDescription}"></textarea>
+                                                                    <span class="material-line"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="material-label-fixed">Sorting
+                                                                    Order</label>
+                                                                <div class="form-material ">
+                                                                    <input class="form-control" type="text"
+                                                                           th:value="${temp.sortingOrder}"
+                                                                           th:field="${temp.sortingOrder}">
+                                                                    <span class="material-line"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label class="material-label-fixed">Reject
+                                                                    Reason</label>
+                                                                <div class="form-material ">
+                                                                    <textarea class="form-control" rows="3" readonly
+                                                                              th:value="${temp.reason}"
+                                                                              th:field="${temp.reason}"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <button type="button" name="action1" value="Insert"
+                                                                        onclick="deleteCategory()"
+                                                                        class="btn btn-primary btn-icon-hover fa fa-trash flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                                                                    <span>Delete</span>
+                                                                </button>
+
+                                                                <button type="submit" name="action1" value="Insert"
+                                                                        class="btn btn-primary btn-icon-hover fa fa-pencil flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                                                                    <span>Update</span>
+                                                                </button>
+
+
+                                                            </div>
+                                                        </div>
+
+                                                        <hr>
+
+                                                        <!--<div class="row">-->
+                                                        <!--<div class="col-md-12">-->
+                                                        <!--<div id="webixtablecontainer"></div>-->
+                                                        <!--</div>-->
+                                                        <!--</div>-->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  END DASHBOARD -->
+            </section>
+            <!-- END RIGHT CONTENT -->
+        </div>
+    </section>
+
+
+    <!-- END CONTENT -->
+    <!-- START FOOTER -->
+    <!--/*/ <th:block th:include="fragments/pagefooter :: footer"></th:block> /*/-->
+
+</div>
+<script>
+    function deleteCategory() {
+        var category_id = $('#tempId').val();
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete this category!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then(function () {
+//            $.ajax({
+//                url: CONTEXT_PATH + "/documentManagement/delete_resubmit_category?category_id=" + category_id,
+//                type: 'GET',
+//                success: function (result) {
+//                    if (result.isSucsess == 1) {
+////                        swal("Deleted!", result.message, "success").then(function () {
+////                            window.location.href = CONTEXT_PATH + '/documentManagement/resubmitTable';
+////                        });
+//                        swal({
+//                            title: result.message,
+//                            type: 'success',
+//                            showConfirmButton: true,
+//                            allowOutsideClick: false,
+//                            closeOnClickOutside: false
+//                        }).then(function () {
+//                            location.replace(CONTEXT_PATH + '/my_library/category_resubmit');
+//                        });
+//                    } else {
+//                        swal("Failed!", result.message, "error");
+//                        location.reload();
+//                    }
+//                },
+//                error: function (result) {
+//                    console.log(result);
+//                }
+////
+//            });
+
+            jQuery.ajax({
+                url: CONTEXT_PATH + "/documentManagement/delete_resubmit_category?category_id=" + category_id,
+                type: 'GET',
+                success: function (data) {
+                    if (data.isSucsess == 1) {
+                        swal(data.message, "", "success").then(function () {
+                            location.reload();
+                        });
+                    } else {
+                        swal(data.message, "", "error").then(function () {
+                            location.reload();
+                        });
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    }
+</script>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+        if (isSucsess) {
+            swal({
+                title: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/my_library/category_resubmit');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/my_library/category_resubmit');
+            });
+        }
+    });
+    /*]]>*/
+</script>
+
+</body>
+</html>

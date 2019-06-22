@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" href="../static/assets/global/plugins/form-validation/form-validation.css"
+      th:href="@{/assets/global/plugins/form-validation/form-validation.css}"/>
+<script src="../../static/assets/global/plugins/form-validation/form-validation.js"
+        th:src="@{/assets/global/plugins/form-validation/form-validation.js}"></script>
+
+
+<form th:action="@{/documentManagement/updateresubmitcategory}" id="reSubmitForm" th:object="${temp}"
+      th:name="temp" method="POST">
+    <div class="modal fade" id="modifyModal" role="dialog">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Category Resubmit</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="tempId"
+                               th:value="${temp.docCategoryTempId}"
+                               th:field="${temp.docCategoryTempId}"></input>
+
+                        <input type="hidden" id="masterCategoryId"
+                               th:field="${temp.parentDocCategoryTemp}" th:value="${temp.parentDocCategoryTemp}"></input>
+
+                        <div class="col-md-6 form-group">
+                            <label class="material-label-fixed">Category Name * :</label>
+                            <div class="form-material ">
+                                <input class="form-control" type="text" name="catName"
+                                       th:field="${temp.docCategoryName}" th:value="${temp.docCategoryName}"
+                                       id="catName"></input>
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="material-label-fixed">Sorting Order * :</label>
+                            <div class="form-material ">
+                                <input class="form-control" type="text" name="sortingOrder"
+                                       th:field="${temp.sortingOrder}" th:value="${temp.sortingOrder}"
+                                       id="sortingOrder"></input>
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="material-label-fixed">Category Description:</label>
+                            <div class="form-material ">
+                                <textarea class="form-control" rows="3"
+                                          th:field="${temp.docCategoryDescription}"></textarea>
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="delBtn" onclick="deleteCategory()"
+                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button"
+                            data-dismiss="modal">
+                        <span>Close</span></button>
+
+                    <button type="submit" id="modifyBtn"
+                            class="btn btn-primary btn-icon-hover fa fa-save flat-buttons floatRight CusFormBtn waves-effect waves-button">
+                        <span>Submit</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+        var chanelId = $("#chanel").val();
+        var isOptionModify = [[${isOptionModify}]];
+        var isOptionDelete = [[${isOptionDelete}]];
+        if (!isOptionModify) {
+            $('#modBtn').attr("disabled", "disabled");
+        }
+        if (!isOptionDelete) {
+            $('#delBtn').attr("disabled", "disabled");
+        }
+        /*]]>*/
+
+    });
+</script>
+<!--<script>-->
+
+<!--    $(document).ready(function () {-->
+
+<!--        $('#reSubmitForm').formValidation({-->
+<!--            framework: 'bootstrap',-->
+<!--            excluded: ':disabled',-->
+<!--            icon: {-->
+<!--                valid: 'glyphicon glyphicon-ok',-->
+<!--                invalid: 'glyphicon glyphicon-remove',-->
+<!--                validating: 'glyphicon glyphicon-refresh'-->
+<!--            },-->
+<!--            fields: {-->
+<!--                docCategoryName: {-->
+<!--                    validators: {-->
+<!--                        notEmpty: {-->
+<!--                            message: 'This field is required and cannot be empty.'-->
+<!--                        },-->
+<!--                        stringLength: {-->
+<!--                            max: 255,-->
+<!--                            message: 'The category name must be less than 255 characters'-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                docCategoryDescription: {-->
+<!--                    validators: {-->
+<!--                        stringLength: {-->
+<!--                            max: 255,-->
+<!--                            message: 'The category description must be less than 255 characters'-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                sortingOrder: {-->
+<!--                    validators: {-->
+<!--                        integer: {-->
+<!--                            message: 'The value is not an integer'-->
+<!--                        }, notEmpty: {-->
+<!--                            message: 'This field is required and cannot be empty.'-->
+<!--                        }-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+
+<!--    });-->
+
+<!--</script>-->
+
+
+</html>

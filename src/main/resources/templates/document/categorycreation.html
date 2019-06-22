@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta name="description" content="AIA Cambodia Application Portal System"></meta>
+    <meta name="viewport" content="width=device-width"></meta>
+
+
+    <!--    <meta name="context-path" th:content="@{/}"/>-->
+    <!-- END LAYOUT CSS -->
+    <!--    <link rel="stylesheet" href="../static/assets/global/plugins/form-validation/form-validation.css"-->
+    <!--          th:href="@{/assets/global/plugins/form-validation/form-validation.css}"/>-->
+    <!--    <script src="../../static/assets/global/plugins/form-validation/form-validation.js"-->
+    <!--            th:src="@{/assets/global/plugins/form-validation/form-validation.js}"></script>-->
+
+    <link href="../../static/vendor/webix/webix.css" rel="stylesheet" type="text/css"
+          th:href="@{/vendor/webix/webix.css}"/>
+
+    <script src="../../static/vendor/webix/webix.js"
+            th:src="@{/vendor/webix/webix.js}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+            crossorigin="anonymous"></script>
+
+    <script src="../../static/js/categorycreationdatatable.js"
+            th:src="@{/js/categorycreationdatatable.js}"></script>
+</head>
+<script>
+    function loadNewCategoryModal() {
+        $('#catTitle').text("Add Main Category")
+        $('#myModal').modal('show');
+    }
+</script>
+<script>
+    // var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    // CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+
+<body>
+<div class="loader-overlay">
+    <div class="loader-preview-area">
+        <div class="spinners">
+            <div class="loader">
+                <div class="rotating-plane"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <!-- START CONTENT -->
+    <section id="main" class="container-fluid">
+        <div class="row">
+
+            <!-- START RIGHT CONTENT -->
+            <section id="content-wrapper" class="form-elements">
+
+
+                <!-- START PAGE TITLE -->
+                <div class="site-content-title">
+                    <div class="col-xl-6  col-lg-12">
+                        <h3 class="popheading">Category Creation</h3>
+                    </div>
+                    <div class="col-xl-6  col-lg-12">
+                    </div>
+                    <div class="col-md-12">
+                        <span class="sexy_line"></span>
+                    </div>
+                </div>
+                <!-- END PAGE TITLE -->
+
+                <!--  START DASHBOARD -->
+                <div class="contain-inner dashboard-v2">
+                    <div class="col-md-12">
+                        <div class="row">
+
+
+                        </div>
+                        <div class="divider25"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row ">
+                                    <div class="offset-xl-1 col-xl-10 col-lg-12 col-md-12 col-sm-12 dashboard_v4_box_block"
+                                         style="margin-bottom: 30px;">
+                                        <div class="content categcreation">
+
+                                            <div class="row">
+                                                <div class="col-md-12 mb-1">
+                                                    <button type="button" id="addMainCategoryBtn"
+                                                            class="btn btn-primary flat-buttons btn-icon-hover fa fa-plus-circle waves-effect floatRight waves-button"
+                                                            data-toggle="modal"
+                                                            onclick="loadNewCategoryModal()">
+                                                        <span>Add Main Category</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="webixtablecontainer"></div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!--  END DASHBOARD -->
+
+            </section>
+            <!-- END RIGHT CONTENT -->
+        </div>
+    </section>
+
+    <!--    <form th:action="@{/documentManagement/save}" id="docCategoryTempForm" th:object="${docCategoryTemp}"-->
+    <!--          th:name="docCategoryTemp" method="POST">-->
+    <!--        <div class="modal fade" id="myModal" role="dialog">-->
+    <!--            <div class="modal-dialog ">-->
+    <!--                <div class="modal-content">-->
+    <!--                    <div class="modal-header">-->
+    <!--                        <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+    <!--                        <h5 class="page-content-title" id="catTitle"></h5>-->
+    <!--                    </div>-->
+    <!--                    <div class="modal-body">-->
+    <!--                        <div class="row">-->
+    <!--                            <input type="hidden" id="parentId"-->
+    <!--                                   th:value="${docCategoryTemp.parentDocCategoryTemp}"-->
+    <!--                                   th:field="${docCategoryTemp.parentDocCategoryTemp}">-->
+    <!--                            <input type="hidden" id="chanelId"-->
+    <!--                                   th:value="${docCategoryTemp.systemMenuItemChannel}"-->
+    <!--                                   th:field="${docCategoryTemp.systemMenuItemChannel}">-->
+
+    <!--                            <div class="col-md-6 form-group">-->
+    <!--                                <label class="material-label-fixed">Category Name * :</label>-->
+    <!--                                <div class="form-material ">-->
+    <!--                                    <input class="form-control" type="text" th:name="catName"-->
+    <!--                                           th:field="${docCategoryTemp.docCategoryName}" th:id="catName">-->
+    <!--                                    <span class="material-line"></span>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                            <div class="col-md-6 form-group">-->
+    <!--                                <label class="material-label-fixed">Sorting Order * :</label>-->
+    <!--                                <div class="form-material ">-->
+    <!--                                    <input class="form-control" type="text" name="sortingOrder"-->
+    <!--                                           th:field="${docCategoryTemp.sortingOrder}" id="sortingOrder">-->
+    <!--                                    <span class="material-line"></span>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        <div class="row">-->
+    <!--                            <div class="col-md-6 form-group">-->
+    <!--                                <label class="material-label-fixed">Category Description:</label>-->
+    <!--                                <div class="form-material ">-->
+    <!--                                    <textarea class="form-control" rows="3" id="desc" name="desc"-->
+    <!--                                              th:field="${docCategoryTemp.docCategoryDescription}"></textarea>-->
+    <!--                                    <span class="material-line"></span>-->
+    <!--                                </div>-->
+    <!--                            </div>-->
+
+    <!--                            <div class="col-md-12  pull-right">-->
+    <!--                                <button type="button"-->
+    <!--                                        class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button"-->
+    <!--                                        data-dismiss="modal">-->
+    <!--                                    <span>Close</span></button>-->
+
+
+    <!--                                <button type="submit" name="action1" value="Insert"-->
+    <!--                                        class="btn btn-primary btn-icon-hover fa fa-save flat-buttons floatRight CusFormBtn waves-effect waves-button">-->
+    <!--                                    <span>Save</span>-->
+    <!--                                </button>-->
+
+    <!--                                &lt;!&ndash;<button type="submit" name="action1" value="Insert"&ndash;&gt;-->
+    <!--                                &lt;!&ndash;class="btn btn-primary btn-icon-hover fa fa-pencil flat-buttons floatRight CusFormBtn waves-effect waves-button">&ndash;&gt;-->
+    <!--                                &lt;!&ndash;<span>Change</span>&ndash;&gt;-->
+    <!--                                &lt;!&ndash;</button>&ndash;&gt;-->
+
+
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </form>-->
+
+    <div id="modifyDiv">
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

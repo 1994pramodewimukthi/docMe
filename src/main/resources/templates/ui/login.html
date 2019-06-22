@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <!--    <style th:inline="text">-->
+    <!--        body {-->
+    <!--            /*background-image: url('\'+@{}+\'');*/-->
+    <!--           -->
+    <!--        }-->
+    <!--    </style>-->
+</head>
+<!-- start: header -->
+<!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+<!-- end: header -->
+<body id="loginBody">
+<section class="body-sign">
+    <div class="center-sign">
+        <!--<a href="/" class="logo float-left">-->
+        <!--<img th:src="@{/img/logo.png}" height="54" alt="Porto Admin" />-->
+        <!--</a>-->
+
+        <div class="panel card-sign">
+            <div class="card-title-sign mt-3 text-right">
+                <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user mr-1"></i> Sign In</h2>
+            </div>
+            <div class="card-body">
+                <form action="index.html" method="post" style="opacity: 1 !important;">
+                    <div class="form-group mb-3">
+                        <label>Username</label>
+                        <div class="input-group">
+                            <input name="username" type="text" class="form-control form-control-lg"/>
+                            <span class="input-group-append">
+										<span class="input-group-text">
+											<i class="fas fa-user"></i>
+										</span>
+									</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="input-group">
+                            <input name="pwd" type="password" class="form-control form-control-lg"/>
+                            <span class="input-group-append">
+										<span class="input-group-text">
+											<i class="fas fa-lock"></i>
+										</span>
+									</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="checkbox-custom checkbox-default">
+                                <input id="RememberMe" name="rememberme" type="checkbox"/>
+                                <label for="RememberMe">Remember Me</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <button type="submit" class="btn btn-primary mt-2">Sign In</button>
+                        </div>
+                    </div>
+
+                    <span class="mt-3 mb-3 line-thru text-center text-uppercase">
+							</span>
+                </form>
+            </div>
+        </div>
+
+        <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
+    </div>
+</section>
+</body>
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+
+</html>

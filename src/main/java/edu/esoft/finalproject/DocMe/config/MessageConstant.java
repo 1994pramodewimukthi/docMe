@@ -1,0 +1,43 @@
+package edu.esoft.finalproject.DocMe.config;
+
+public class MessageConstant {
+    public final static long INFO_MESSAGE_SUCCESSFULLY_SAVED = 33;
+    public final static long INFO_MESSAGE_SUCCESSFULLY_UPDATED = 34;
+    public final static long DUPLICATE_NAME = 35;
+    public final static long DOCUMENT_UPLOAD_FAILD = 134;
+    public final static long SYSTEM_ERROR_PLEASE_CONTACT_SYSTEM_ADMIN = 135;
+    public final static long DOCUMENT_SUCCESSFULLY_UPDATED = 137;
+    public final static long DOCUMENT_UPDATE_FAILED = 138;
+    public final static long CATEGORY_AUTHORIZE_SUCSESSFULLY = 141;
+    public final static long CATEGORY_REJECT_SUCSESSFULLY = 142;
+    public final static long DOCUMENT_UPLOAD_SUCCESS = 163;
+    public final static long INVALIDE_DOC_NAME = 164;
+    public final static long INVALIDE_DOC_VERSION = 165;
+    public final static long INVALIDE_USER_RANK = 166;
+    public final static long INVALIDE_DOC_FOOTER_HEIGHT = 167;
+    public final static long INVALIDE_DOC = 168;
+    public final static long INVALIDE_DOC_START_PAGE = 169;
+    public final static long INVALIDE_DOC_ACKNOWLAGEMENT = 170;
+    public final static long INVALIDE_DOC_SKIP_DATE_COUNT = 171;
+    public final static long INVALIDE_DOC_PAGE_COUNT = 172;
+    public final static long DOCUMENT_SIGN_FAILED = 173;
+    public final static long DOCUMENT_GENERATE_FAILED = 174;
+    public static final long ASIGNMENT_SUCCESSFULLY_COMMITED = 132;
+    public static final long SUCCESSFULLY_SUBMITED_FOR_AUTH = 133;
+    public final static long DOCUMENT_SUCCESSFULLY_RESUBMITED = 139;
+    public final static long DOCUMENT_SUCCESSFULLY_DELETED = 148;
+    public final static long DOCUMENT_UPLOAD_PLEASE_UPLOAD_PDF = 149;
+    public final static long RECORD_SUCCESSFULLY_SUBMITTED_FOR_AUTHORIZATION = 150;
+    public final static long FAILED_SUBMITTED_FOR_AUTHORIZATION = 151;
+    public final static long RECODE_REJECTED_SUCSESSFULLY = 152;
+    public final static long CAN_NOT_EDIT_PREVIOUS_RECORD = 153;
+    public final static long CAN_NOT_EDIT_AGENT_TERMINATED = 154;
+    public final static long LDAP_USER_RESTRICTED = 155;
+    public final static long CATEGORY_NAME_SHOULDNT_DUPLICATE = 156;
+    public final static long VIRUS_SCAN_EXEPTION = 157;
+    public final static long VIRUS_DETECTED_ERROR_MESSAGE = 158;
+    public final static long FILE_TYPE_EXTENTION = 160;
+    public final static long FILE_SIZE_BIGGER_THAN_PARAM = 161;
+    public final static long SORTING_ORDER_ALREADY_EXIST = 162;
+    public final static long ERROR_ADMINISTRATOR_FOR_MORE_DETAIL = 135;
+}
