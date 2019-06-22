@@ -67,13 +67,12 @@
         </section>
     </div>
 
-
-    <input type="hidden" id="catId" name="catId"></input>
     <form th:action="@{/documentUploadController/save}"
           th:id="docUploadTempForm"
           th:object="${documentUploadDto}"
           th:name="docUploadTempForm" method="POST" enctype="multipart/form-data">
 
+        <input type="hidden" id="catId" name="catId">
         <div class="modal fade" id="uploadDocModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalCenterTitle"
              aria-hidden="true">
@@ -134,7 +133,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Description</label>
-                                        <textarea class="form-control" rows="3" th:field="${documentUploadDto.documentDescription}"></textarea>
+                                        <textarea id="documentDescription" class="form-control" rows="3" th:field="${documentUploadDto.documentDescription}"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -240,7 +239,8 @@
         $('#headLine').val('');
         $('#publishDate').val('');
         $('#expireDate').val('');
-        $('#docDescription').val('');
+//        $('#docDescription').val('');
+        $('#documentDescription').val('');
 //        $('#attachment').val('');
 //        $('#attachment').addClass("dropify-clear");
         $('#acessTypes').val('').trigger('chosen:updated');
@@ -271,7 +271,7 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+                location.replace(CONTEXT_PATH + '/ui/documentUpload');
             });
         } else if (isSucsess == false) {
             swal({
@@ -282,7 +282,7 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+                location.replace(CONTEXT_PATH + '/ui/documentUpload');
             });
         }
 

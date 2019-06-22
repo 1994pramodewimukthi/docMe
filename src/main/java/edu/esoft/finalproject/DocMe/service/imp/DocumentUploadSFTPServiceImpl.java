@@ -81,8 +81,6 @@ public class DocumentUploadSFTPServiceImpl implements DocumentUploadSFTPService 
             InputStream inputStream1 = file1.getInputStream();
 
             DocCategoryMaster catagory = docCategoryMasterRepository.findByDocCategoryMstId(documentUploadDto.getDocCategoryMasterId());
-            sftpChannel.put(inputStream1, documentUploadDto.getDocumentName() + timestampTime + PDF);
-            sftpChannel.rm(virusCheackTempPath + documentUploadDto.getDocumentName() + timestampTime + PDF);
             return documentUploadDto.getDocumentName() + timestampTime + PDF;
         } catch (JSchException | SftpException | IOException e) {
             throw e;

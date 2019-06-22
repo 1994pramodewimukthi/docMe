@@ -1,6 +1,7 @@
 package edu.esoft.finalproject.DocMe.service.imp;
 
 import edu.esoft.finalproject.DocMe.config.DocCategoryMasterWebixComparator;
+import edu.esoft.finalproject.DocMe.dto.DocAuthDto;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
 import edu.esoft.finalproject.DocMe.entity.*;
@@ -139,8 +140,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                     String sftpPath = documentUploadSFTPService.uploadFile(documentUploadDto);
                     if (sftpPath != null) {
 //                    file save
-                        AccessUserType search = new AccessUserType();
-                        search.setAccessUserTypeId((long) 1);
+//                        AccessUserType search = new AccessUserType();
+//                        search.setAccessUserTypeId((long) 1);
                         DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
 
                         List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = new ArrayList<>();
@@ -152,7 +153,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                         documentUploadTemp.setRecordStatus(documentUploadDto.getRecordStatus());
                         documentUploadTemp.setInpDateTime(new Date());
                         documentUploadTemp.setInputUserId(user.getUserName());
-                        documentUploadTemp.setAccessUserType(search);
+//                        documentUploadTemp.setAccessUserType(search);
                         documentUploadTemp.setReason("");
                         documentUploadTemp.setPublishDate(documentUploadDto.getPublishDate());
                         documentUploadTemp.setExpireDate(documentUploadDto.getExpireDate());
@@ -217,4 +218,44 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         }
 
     }
+
+/*
+    @Override
+    public List<DocAuthDto> getAllTempDock(User user) throws MisynJDBCException {
+        List<DocAuthDto> dockAuthDtos = new ArrayList<>();
+        Iterable<DocumentUploadTemp> all;
+        if (null != user.getSelectedAgent().getAgentCode()) {
+            all = documentUploadRepository.findAllByRecordStatusPendingDeletByChanel(user.getSelectedAgent().getChannel().getChannelType().name());
+        } else {
+            all = documentUploadRepository.findAllByRecordStatusPendingDelet();
+        }
+        for (DocumentUploadTemp documentUploadTemp : all) {
+            DocAuthDto dto = new DocAuthDto();
+            dto.setDocId(documentUploadTemp.getDocumentUploadTempId());
+            dto.setDocName(documentUploadTemp.getDocumentName());
+            dto.setInputuser(documentUploadTemp.getInputUserId());
+            if (documentUploadTemp.getRecordStatus().getStatusId() == AppConstant.DELETE) {
+                if (systemRoleSystemMenuItem.isOptionDelete()) {
+                    dto.setAuthorizeButton(DELETE_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                } else {
+                    dto.setAuthorizeButton(DELETE_BUTTON_DISSABLE.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                }
+
+            } else {
+                if (systemRoleSystemMenuItem.isOptionAuthorize()) {
+                    dto.setAuthorizeButton(AUTH_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                } else {
+                    dto.setAuthorizeButton(AUTH_BUTTON_DISABLE.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                }
+            }
+
+            Date inpDateTime = documentUploadTemp.getInpDateTime();
+            dto.setInputtime(new SimpleDateFormat(com.misyn.datamiddle.commondto.utility.AppConstant.CAPS_DATE_FORMAT).format(inpDateTime));
+            dockAuthDtos.add(dto);
+        }
+
+        return dockAuthDtos;
+    }
+*/
+
 }
