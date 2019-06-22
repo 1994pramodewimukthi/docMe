@@ -64,8 +64,7 @@ public class AppURL {
     final public static String GET_REJECTED_LIST = "/get_rejected_lst";
     public final static String UPDATE_CRESUBMIT_CATEGORY = "/updateresubmitcategory";
     final public static String DOCUMENT_UPLOAD = "/documentUpload";
-
     final public static String DOCUMENT_UPLOAD_WEBIX_CAT = "/document_upload_webix_Category";
+
     final public static String DOCUMENT_UPLOAD_CONTROLLER = "/documentUploadController";
-    final public static String DOCUMENT_UPLOAD_SAVE = "/save";
 }

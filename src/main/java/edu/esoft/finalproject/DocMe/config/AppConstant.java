@@ -3,10 +3,6 @@ package edu.esoft.finalproject.DocMe.config;
 import java.io.Serializable;
 
 public class AppConstant implements Serializable {
-
-    public static final String MST = "mst";
-    public static final String TEMP = "temp";
-
     public static final Integer PENDDING = 6;
     public static final Integer AUTHORIZED = 7;
     public static final Integer DELETE = 5;

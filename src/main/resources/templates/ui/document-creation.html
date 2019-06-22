@@ -91,16 +91,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Name</label>
-                                        <input class="form-control" type="text" name="documentName"
-                                               th:field="${documentUploadDto.documentName}"
-                                        /></input>
+                                        <input class="form-control"/></input>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Head Line</label>
-                                        <input class="form-control" name="headLine" id="headLine"
-                                               th:field="${documentUploadDto.headLine}"/></input>
+                                        <input class="form-control"/></input>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -111,8 +108,7 @@
                                                         class="fas fa-calendar-alt"></i></span>
                                                                                 </span>
                                             <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="publishedDate" th:name="publishDate"
-                                                   th:id="publishDate"/></input>
+                                                   id="publishedDate"/></input>
                                         </div>
                                     </div>
                                 </div>
@@ -126,31 +122,31 @@
                                                     </span>
                                               </span>
                                             <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="expiryDate" th:name="expireDate"
-                                                   th:id="expireDate"/></input>
+                                                   id="expiryDate"/></input>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Description</label>
-                                        <textarea class="form-control" rows="3" th:field="${documentUploadDto.documentDescription}"></textarea>
+                                        <textarea class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Access User</label>
-                                        <select class="form-control" id="accessUser" th:field="${documentUploadDto.documentDescription}">
-                                            <option th:each="system : ${systemList}"
-                                                    th:value="${{system}}"
-                                                    th:text="${system.systemRoleName}"></option>
+                                        <select class="form-control" id="accessUser">
+                                            <option value="user 01">user 01</option>
+                                            <option value="user 02">user 02</option>
+                                            <option value="user 03">user 03</option>
+                                            <option value="user 04">user 04</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Upload(PDF files only)</label>
-                                        <input type="file" class="dropify" data-show-loader="true" name="attachment"
+                                        <input type="file" class="dropify" data-show-loader="true"
                                                data-plugin="dropify" id="fileUpload" data-height="200"
                                                data-allowed-file-extensions="pdf" accept=".pdf"/></input>
                                         <div class="row showerrordiv mt-2" style="display: none">
@@ -168,11 +164,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                                class="fas fa-close"></i>
-                            Delete
-                        </button>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-close"></i> Delete</button>
+                        <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>
                             Upload
                         </button>
                     </div>
