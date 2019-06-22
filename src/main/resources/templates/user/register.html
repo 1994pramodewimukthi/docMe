@@ -6,6 +6,14 @@
     <title>docME Register</title>
 
     <meta name="context-path" th:content="@{/}"/>
+
+    <title>docME Register</title>
+    <!--    <style th:inline="text">-->
+    <!--        body {-->
+    <!--            /*background-image: url('\'+@{}+\'');*/-->
+    <!--           -->
+    <!--        }-->
+    <!--    </style>-->
 </head>
 <!-- start: header -->
 <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
@@ -97,6 +105,67 @@
                                        class="form-control form-control-lg">
                             </div>
                         </div>
+            <div class="card-body" style="width: 1000px">
+                <form action="index.html" method="post" style="opacity: 1 !important;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="text-center" >
+                            <img th:src="@{/img/user.png}" class="img-circle img-responsive" style="    margin-top: 24%;">
+                            </p>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group row mb-3">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>First Name</label><span class="required">*</span>
+                                        <input name="firstname" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input name="lastname" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Address 1</label><span class="required">*</span>
+                                        <input name="address1" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Address 2</label><span class="required">*</span>
+                                        <input name="address2" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Date of Birth</label><span class="required">*</span>
+                                        <input name="dob" id="dob" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Email</label><span class="required">*</span>
+                                        <input name="email" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>NIC</label>
+                                        <input name="nic" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Mobile Number</label><span class="required">*</span>
+                                        <input name="mobileNumber" type="text" class="form-control form-control-lg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-sm-12 text-right">

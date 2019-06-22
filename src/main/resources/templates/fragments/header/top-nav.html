@@ -9,6 +9,12 @@
              data-fire-event="sidebar-left-opened">
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
         </div>
+      <a href="" class="logo">
+        <img th:src="@{/img/1.png}" width="50" height="35" alt="Porto Admin"/>
+      </a>
+      <button class="btn header-btn-collapse-nav d-lg-none" data-toggle="collapse" data-target=".header-nav">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
 
     <!-- start: search & user box -->
@@ -128,6 +134,19 @@
                     </ul>
                 </div>
             </div>
+        <div class="dropdown-menu">
+          <ul class="list-unstyled">
+            <li class="divider"></li>
+            <li>
+              <a role="menuitem" tabindex="-1" th:href="@{/ui/register}"><i class="fas fa-user" style="color: #3498db"></i> My Profile</a>
+            </li>
+            <!--<li>-->
+              <!--<a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fas fa-lock"></i> Lock Screen</a>-->
+            <!--</li>-->
+            <li>
+              <a role="menuitem" tabindex="-1" th:href="@{/ui/login}"><i class="fas fa-power-off" style="color: #3498db"></i> Logout</a>
+            </li>
+          </ul>
         </div>
         <!-- end: search & user box -->
     </header>

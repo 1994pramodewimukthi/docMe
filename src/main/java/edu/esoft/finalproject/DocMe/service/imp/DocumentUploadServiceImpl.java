@@ -7,6 +7,7 @@ import edu.esoft.finalproject.DocMe.entity.*;
 import edu.esoft.finalproject.DocMe.repository.DocCategoryMasterRepository;
 import edu.esoft.finalproject.DocMe.repository.DocumentUploadMasterRepository;
 import edu.esoft.finalproject.DocMe.repository.DocumentUploadRepository;
+import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import org.slf4j.LoggerFactory;
@@ -46,8 +47,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     private DocCategoryMasterRepository docCategoryMasterRepository;
     @Autowired
     DocumentUploadMasterRepository documentUploadMasterRepository;
-//    @Autowired
-//    private DocumentUploadSFTPService documentUploadSFTPService;
+    @Autowired
+    private DocumentUploadSFTPService documentUploadSFTPService;
     @Autowired
     private DocumentUploadRepository documentUploadRepository;
     @Autowired
@@ -127,64 +128,64 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         }
     }
 
-//    @Override
-//    public int uploadDocumentToCategory(DocumentUploadDto documentUploadDto, User user, int catagoryId) throws Exception {
-//        documentUploadDto.setDocCategoryMasterId(catagoryId);
-//        try {
-//            if (null != documentUploadDto.getAttachment()) {
-//                if (documentUploadDto.getDocumentName() != "") {
-//                    DocCategoryMaster catagory = docCategoryMasterRepository.findByDocCategoryMstId(catagoryId);
-//
-//                    String sftpPath = documentUploadSFTPService.uploadFile(documentUploadDto);
-//                    if (sftpPath != null) {
-////                    file save
+    @Override
+    public int uploadDocumentToCategory(DocumentUploadDto documentUploadDto, User user, int catagoryId) throws Exception {
+        documentUploadDto.setDocCategoryMasterId(catagoryId);
+        try {
+            if (null != documentUploadDto.getAttachment()) {
+                if (documentUploadDto.getDocumentName() != "") {
+                    DocCategoryMaster catagory = docCategoryMasterRepository.findByDocCategoryMstId(catagoryId);
+
+                    String sftpPath = documentUploadSFTPService.uploadFile(documentUploadDto);
+                    if (sftpPath != null) {
+//                    file save
 //                        AccessUserType search = new AccessUserType();
 //                        search.setAccessUserTypeId((long) 1);
-//                        DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
-//
-//                        List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = new ArrayList<>();
-//
-//                        documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
-//                        documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
-//                        documentUploadTemp.setDocumentDescription(documentUploadDto.getDocumentDescription());
-//                        documentUploadTemp.setHeadline(documentUploadDto.getHeadLine());
-//                        documentUploadTemp.setRecordStatus(documentUploadDto.getRecordStatus());
-//                        documentUploadTemp.setInpDateTime(new Date());
-//                        documentUploadTemp.setInputUserId(user.getUserName());
+                        DocumentUploadTemp documentUploadTemp = new DocumentUploadTemp(catagory);
+
+                        List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles = new ArrayList<>();
+
+                        documentUploadTemp.setDocumentUploadTempId(getCategoryNextId());
+                        documentUploadTemp.setDocumentName(documentUploadDto.getDocumentName());
+                        documentUploadTemp.setDocumentDescription(documentUploadDto.getDocumentDescription());
+                        documentUploadTemp.setHeadline(documentUploadDto.getHeadLine());
+                        documentUploadTemp.setRecordStatus(documentUploadDto.getRecordStatus());
+                        documentUploadTemp.setInpDateTime(new Date());
+                        documentUploadTemp.setInputUserId(user.getUserName());
 //                        documentUploadTemp.setAccessUserType(search);
-//                        documentUploadTemp.setReason("");
-//                        documentUploadTemp.setPublishDate(documentUploadDto.getPublishDate());
-//                        documentUploadTemp.setExpireDate(documentUploadDto.getExpireDate());
-//                        documentUploadTemp.setPath(sftpPath);
-//                        documentUploadTemp.setRecordStatus(new RecordStatus(6));
-//                        for (String id : documentUploadDto.getAcessTypes()) {
-//                            SystemRole systemRoleById = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(id));
-//                            DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
-//                            documentUploadTempSystemRole.setDocumentUploadTemp(documentUploadTemp);
-//                            documentUploadTempSystemRole.setSystemRole(systemRoleById);
-//                            documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
-//                        }
-//                        /*if (null != user.getSelectedAgent().getAgentCode()) {
-//                            documentUploadTemp.setChannel(user.getSelectedAgent().getChannel().getChannelType().toString());
-//                        } else {
-//                            documentUploadTemp.setChannel(BOTH);
-//                        }*/
-//                        documentUploadTemp.setChannel(BOTH);
-//                        documentUploadTemp.setDocumentUploadTempSystemRoles(documentUploadTempSystemRoles);
-//                        documentUploadRepository.save(documentUploadTemp);
-//                        return SUCSESS;
-//                    } else {
-//                        return VIRUS_FILE_MESSAGE;
-//                    }
-//                }
-//            }
-//        } catch (Exception e) {
-//            LOGGER.error(e.getMessage());
-//            throw e;
-//        }
-//
-//        return ERROR;
-//    }
+                        documentUploadTemp.setReason("");
+                        documentUploadTemp.setPublishDate(documentUploadDto.getPublishDate());
+                        documentUploadTemp.setExpireDate(documentUploadDto.getExpireDate());
+                        documentUploadTemp.setPath(sftpPath);
+                        documentUploadTemp.setRecordStatus(new RecordStatus(6));
+                        for (String id : documentUploadDto.getAcessTypes()) {
+                            SystemRole systemRoleById = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(id));
+                            DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
+                            documentUploadTempSystemRole.setDocumentUploadTemp(documentUploadTemp);
+                            documentUploadTempSystemRole.setSystemRole(systemRoleById);
+                            documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
+                        }
+                        /*if (null != user.getSelectedAgent().getAgentCode()) {
+                            documentUploadTemp.setChannel(user.getSelectedAgent().getChannel().getChannelType().toString());
+                        } else {
+                            documentUploadTemp.setChannel(BOTH);
+                        }*/
+                        documentUploadTemp.setChannel(BOTH);
+                        documentUploadTemp.setDocumentUploadTempSystemRoles(documentUploadTempSystemRoles);
+                        documentUploadRepository.save(documentUploadTemp);
+                        return SUCSESS;
+                    } else {
+                        return VIRUS_FILE_MESSAGE;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw e;
+        }
+
+        return ERROR;
+    }
 
     public int getCategoryNextId() throws Exception {
         int maxTemp = 0;
@@ -216,4 +217,44 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         }
 
     }
+
+/*
+    @Override
+    public List<DocAuthDto> getAllTempDock(User user) throws MisynJDBCException {
+        List<DocAuthDto> dockAuthDtos = new ArrayList<>();
+        Iterable<DocumentUploadTemp> all;
+        if (null != user.getSelectedAgent().getAgentCode()) {
+            all = documentUploadRepository.findAllByRecordStatusPendingDeletByChanel(user.getSelectedAgent().getChannel().getChannelType().name());
+        } else {
+            all = documentUploadRepository.findAllByRecordStatusPendingDelet();
+        }
+        for (DocumentUploadTemp documentUploadTemp : all) {
+            DocAuthDto dto = new DocAuthDto();
+            dto.setDocId(documentUploadTemp.getDocumentUploadTempId());
+            dto.setDocName(documentUploadTemp.getDocumentName());
+            dto.setInputuser(documentUploadTemp.getInputUserId());
+            if (documentUploadTemp.getRecordStatus().getStatusId() == AppConstant.DELETE) {
+                if (systemRoleSystemMenuItem.isOptionDelete()) {
+                    dto.setAuthorizeButton(DELETE_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                } else {
+                    dto.setAuthorizeButton(DELETE_BUTTON_DISSABLE.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                }
+
+            } else {
+                if (systemRoleSystemMenuItem.isOptionAuthorize()) {
+                    dto.setAuthorizeButton(AUTH_BUTTON.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                } else {
+                    dto.setAuthorizeButton(AUTH_BUTTON_DISABLE.replace(ID, documentUploadTemp.getDocumentUploadTempId() + AppConstant.STRING_EMPTY));
+                }
+            }
+
+            Date inpDateTime = documentUploadTemp.getInpDateTime();
+            dto.setInputtime(new SimpleDateFormat(com.misyn.datamiddle.commondto.utility.AppConstant.CAPS_DATE_FORMAT).format(inpDateTime));
+            dockAuthDtos.add(dto);
+        }
+
+        return dockAuthDtos;
+    }
+*/
+
 }

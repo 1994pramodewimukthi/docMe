@@ -56,17 +56,18 @@
                 <div class="modal-footer"
                      th:if="${temp.recordStatus.statusId == 6 || temp.recordStatus.statusId == 8}">
                     <button type="button" onclick=""
-                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button"
+                            class="btn btn-primary"
                             data-dismiss="modal">
-                        <span>Close</span></button>
+                        <i class="fas fa-times-circle"></i> Close</button>
 
                     <button type="button" onclick="modalReject()"
-                            class="btn btn-primary btn-icon-hover fa fa-close flat-buttons floatRight CusFormBtn waves-effect waves-button">
-                        <span>Reject</span></button>
+                            class="btn btn-primary">
+                        <i class="fas fa-ban"></i> Reject</button>
 
                     <button type="button" name="action1" value="Insert" onclick="modalAuthorization()"
-                            class="btn btn-primary btn-icon-hover fa fa-save flat-buttons floatRight CusFormBtn waves-effect waves-button">
-                        <span>Authorize</span>
+                            class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>
+                        Authorize
                     </button>
                 </div>
 
