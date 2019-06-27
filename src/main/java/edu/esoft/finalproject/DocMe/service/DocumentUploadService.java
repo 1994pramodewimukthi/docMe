@@ -4,6 +4,7 @@ package edu.esoft.finalproject.DocMe.service;
 import edu.esoft.finalproject.DocMe.dto.DocAuthDto;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.dto.Email;
 import edu.esoft.finalproject.DocMe.entity.DocumentUploadMaster;
 import edu.esoft.finalproject.DocMe.entity.DocumentUploadTemp;
 import edu.esoft.finalproject.DocMe.entity.User;
@@ -35,4 +36,6 @@ public interface DocumentUploadService {
     Object getAllRejectedDoc(User user) throws Exception;
 
     DocumentUploadMaster searchMstDocumentById(int id) throws Exception;
+
+    int sendEmail(Email email)throws Exception;
 }

@@ -2,21 +2,20 @@ package edu.esoft.finalproject.DocMe.service.imp;
 
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.DocCategoryMasterWebixComparator;
-import edu.esoft.finalproject.DocMe.dto.DocAuthDto;
-import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
-import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
-import edu.esoft.finalproject.DocMe.dto.RejectedDocumentDto;
+import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.*;
 import edu.esoft.finalproject.DocMe.repository.*;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
+import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jms.JMSException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -44,11 +43,10 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     private static String MST = "MST";
     private static String BOTH = "BOTH";
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
-
-    @Autowired
-    private DocCategoryMasterRepository docCategoryMasterRepository;
     @Autowired
     DocumentUploadMasterRepository documentUploadMasterRepository;
+    @Autowired
+    private DocCategoryMasterRepository docCategoryMasterRepository;
     @Autowired
     private DocumentUploadSFTPService documentUploadSFTPService;
     @Autowired
@@ -61,6 +59,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     private DocumentUploadMasterSystemRoleRepository documentUploadMasterSystemRoleRepository;
     @Autowired
     private DocumentUploadHistoryRepository documentUploadHistoryRepository;
+    @Autowired
+    private ActiveMQEmail activeMQEmail;
 
     @Override
     public List<DocCategoryMasterWebix> createCategoryWebixTableWithUploadDocumentAll(User user) throws Exception {
@@ -473,6 +473,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         return dockAuthDtos;
 
     }
+
     @Override
     public DocumentUploadMaster searchMstDocumentById(int id) throws Exception {
 
@@ -481,6 +482,20 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         return byDocumentUploadMstId;
 
     }
+
+    @Override
+    public int sendEmail(Email email) throws Exception {
+        try {
+            DocumentUploadMaster dto = documentUploadMasterRepository.findByDocumentUploadMstId(Integer.parseInt(email.getDocId()));
+            email.setDocumentNAme(dto.getDocumentName());
+            activeMQEmail.sendFromEmail(email);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private List<DocumentUploadMasterSystemRole> findMasterSystemRolesByDocId(int docId) {
         return documentUploadMasterSystemRoleRepository.findAllByDocumentUploadMasterDocumentUploadMstId(docId);
 
