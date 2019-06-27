@@ -2,21 +2,17 @@ package edu.esoft.finalproject.DocMe.contoller;
 
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.AppURL;
-import edu.esoft.finalproject.DocMe.config.EmailMessageConstant;
-import edu.esoft.finalproject.DocMe.config.MessageConstant;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
 import edu.esoft.finalproject.DocMe.dto.Email;
 import edu.esoft.finalproject.DocMe.dto.UserDto;
-import edu.esoft.finalproject.DocMe.entity.DocCategoryMaster;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
-import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jms.JMSException;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -29,6 +25,18 @@ public class UIViewController {
     @GetMapping(value = "/view")
     public ModelAndView viewPage() {
         ModelAndView modelAndView = new ModelAndView("/document/categorycreation");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/uploadAgreement")
+    public ModelAndView getUploadAgreement() {
+        ModelAndView modelAndView = new ModelAndView("/ui/upload-agreement");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/addAgreementType")
+    public ModelAndView getAgreementType() {
+        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
         return modelAndView;
     }
 
