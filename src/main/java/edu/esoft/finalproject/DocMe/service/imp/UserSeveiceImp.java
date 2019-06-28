@@ -6,6 +6,7 @@ import edu.esoft.finalproject.DocMe.dto.UserDto;
 import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.repository.UserRepository;
 import edu.esoft.finalproject.DocMe.service.UserService;
+import edu.esoft.finalproject.DocMe.utility.Cryptography;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class UserSeveiceImp implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private Cryptography cryptography;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Long SUCCESS = 1L;
@@ -35,7 +39,7 @@ public class UserSeveiceImp implements UserService {
             Long valid = validate(userDto);
 
             if (valid.equals(SUCCESS)) {
-                user.setId(Integer.parseInt(userDto.getId()));
+//                user.setId(Integer.parseInt(userDto.getId()));
                 user.setFirstName(userDto.getFirstName());
                 user.setLastName(userDto.getLastName());
                 user.setAddressLine1(userDto.getAddressLine1());
@@ -46,8 +50,9 @@ public class UserSeveiceImp implements UserService {
                 user.setMobile(userDto.getMobile());
                 user.setNic(userDto.getNic());
                 user.setUserName(userDto.getUserName());
-                user.setPassword(userDto.getPassword());
-
+                if (null != userDto.getPassword()) {
+                    user.setPassword(cryptography.encrypt(userDto.getPassword().trim()));
+                }
                 User save = userRepository.save(user);
 
                 if (null != save) {
@@ -81,7 +86,8 @@ public class UserSeveiceImp implements UserService {
 
     @Override
     public Long userLogin(UserDto userDto, HttpSession session) throws Exception {
-        User user = userRepository.findByUserNameAndPassword(userDto.getUserName(), userDto.getPassword());
+        String encrypt = cryptography.encrypt(userDto.getPassword().trim());
+        User user = userRepository.findByUserNameAndPassword(userDto.getUserName(), encrypt);
         if (null != user) {
             session.setAttribute(AppConstant.USER, user);
             return SUCCESS;

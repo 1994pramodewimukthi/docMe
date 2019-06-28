@@ -5,19 +5,22 @@ import edu.esoft.finalproject.DocMe.config.*;
 import edu.esoft.finalproject.DocMe.dto.AuthRejectCategoryWebix;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.dto.Email;
 import edu.esoft.finalproject.DocMe.entity.*;
 import edu.esoft.finalproject.DocMe.service.DocCategoryService;
+import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MessageService;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(AppURL.DOCUMENT_MANAGEMENT)
@@ -35,6 +38,8 @@ public class DocumentManageController {
     private MessageService messageService;
     @Autowired
     private DocumentUploadService documentUploadService;
+    @Autowired
+    private DocumentUploadSFTPService documentUploadSFTPService;
 
     @RequestMapping(value = AppURL.SAVE, method = RequestMethod.POST)
     public ModelAndView saveCategory(@ModelAttribute("docCategoryTemp") DocCategoryTemp docCategoryTemp1, BindingResult bindingResult, ModelAndView modelAndView, @ModelAttribute("user") User user) {
@@ -285,6 +290,22 @@ public class DocumentManageController {
         }
         return modelAndView;
 
+    }
+
+
+    @RequestMapping(value = "/email-send", method = RequestMethod.POST)
+    public ModelAndView sendEmail(@ModelAttribute("email") Email email, ModelAndView modelAndView) {
+        try {
+            System.out.println(email);
+            InputStream inputStream = documentUploadSFTPService.viewUploadedFile(Integer.parseInt(email.getDocId()), AppConstant.MST);
+            email.setDocInputStream(IOUtils.toByteArray(inputStream));
+            int result = documentUploadService.sendEmail(email);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
+            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.ERROR_ADMINISTRATOR_FOR_MORE_DETAIL));
+        }
+        return modelAndView;
     }
 
 }

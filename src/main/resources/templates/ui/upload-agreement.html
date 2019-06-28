@@ -1,0 +1,162 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-sm" lang="en">
+<head>
+
+  <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+  <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+  <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+  <link rel="stylesheet" th:href="@{/vendor/dropzone/basic.css}"/>
+  <link rel="stylesheet" th:href="@{/vendor/dropzone/dropzone.css}"/>
+
+  <!-- start: header -->
+  <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+  <!-- end: header -->
+
+</head>
+<body id="loginBody">
+<section class="body">
+  <!-- start: header -->
+  <header class="header">
+    <!--start: top-nav-->
+    <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+    <!--end: top-nav-->
+  </header>
+  <!-- end: header -->
+  <div class="inner-wrapper">
+    <!-- start: sidebar -->
+    <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+    <!-- end: sidebar -->
+    <section role="main" class="content-body pb-0">
+      <header class="page-header ">
+        <h2 class="">Upload Agreement</h2>
+        <div class="right-wrapper text-right">
+          <ol class="breadcrumbs ">
+            <!--<li>-->
+            <!--<a href="index.html">-->
+            <!--<i class="fas fa-home"></i>-->
+            <!--</a>-->
+            <!--</li>-->
+          </ol>
+        </div>
+      </header>
+      <!-- start: page -->
+      <div class="row ">
+        <div class="col-lg-12">
+          <section class="card">
+            <form>
+              <div class="card-body">
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Agreement Type</label>
+                    <select class="form-control">
+                      <option value="Type 1">Type 1</option>
+                      <option value="Type 2">Type 2</option>
+                      <option value="Type 3">Type 3</option>
+                      <option value="Type 4">Type 4</option>
+                      <option value="Type 5">Type 5</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Version</label>
+                    <input class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Rank</label>
+                    <select class="form-control">
+                      <option value="Rank 1">Rank 1</option>
+                      <option value="Rank 2">Rank 2</option>
+                      <option value="Rank 3">Rank 3</option>
+                      <option value="Rank 4">Rank 4</option>
+                      <option value="Rank 5">Rank 5</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Footer Height</label>
+                    <input class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Maximum Skip Days Count</label>
+                    <input class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <label class="col-form-label">Agreement PDF</label>
+                    <input type="file" class="dropify" data-show-loader="true" "
+                    data-plugin="dropify" id="fileUpload" data-height="200"
+                    data-allowed-file-extensions="pdf" accept=".pdf"/></input>
+                    <div class="row showerrordiv mt-2" style="display: none">
+                      <div class="col-md-12">
+                        <div class="alert alert-warning alert-icon-left" role="alert">
+                          <div class="float-xs-left errormsg">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Include Signature From Page Number</label>
+                    <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label class="col-form-label">Page Number</label>
+                    <input class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <label class="col-form-label">Acknowledgement</label>
+                    <textarea class="form-control" rows="3"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row text-right">
+                  <div class="col-lg-12">
+                    <button class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                  </div>
+                </div>
+                <div class="form-group row text-right">
+                  <div class="col-lg-12">
+                    <button class="btn btn-primary"><i class="fas fa-search"></i> Preview</button>
+                    <button class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- end: page -->
+  </div>
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+
+
+
+</body>
+</html>

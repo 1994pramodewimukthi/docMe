@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 public interface UserService {
 
     Long userSave(UserDto userDto) throws Exception;
+
     Long userLogin(UserDto userDto, HttpSession session) throws Exception;
+
     UserDto getUser(String  userId) throws Exception;
 }

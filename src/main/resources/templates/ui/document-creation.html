@@ -13,7 +13,7 @@
     <!-- end: header -->
 
 </head>
-<body>
+<body id="loginBody">
 <section class="body">
     <!-- start: header -->
     <header class="header">
@@ -44,7 +44,15 @@
                 <div class="col-lg-12">
                     <section class="card">
                         <div class="card-body">
-                            
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-12 text-right mb-md-3">-->
+                                    <!--<button type="button" class="btn btn-primary btn-sm "-->
+                                            <!--data-target="#addSubCatModal"-->
+                                            <!--data-toggle="modal">-->
+                                        <!--Add Sub Category-->
+                                    <!--</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div id="webixtablecontainerDocUpload"></div>
@@ -100,9 +108,12 @@
                                                 <span class="input-group-text"><i
                                                         class="fas fa-calendar-alt"></i></span>
                                                                                 </span>
-                                            <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="publishedDate" th:name="publishDate"
-                                                   th:id="publishDate"/></input>
+                                            <!--<input type="text" data-plugin-datepicker="" class="form-control"-->
+                                                   <!--id="publishedDate" th:name="publishDate"-->
+                                                   <!--th:id="publishDate"/></input>-->
+
+                                            <input  th:name="publishDate" id="publishedDate" type="text"
+                                                   class="form-control form-control-lg">
                                         </div>
                                     </div>
                                 </div>
@@ -115,9 +126,13 @@
                                                         <i class="fas fa-calendar-alt"></i>
                                                     </span>
                                               </span>
-                                            <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="expiryDate" th:name="expireDate"
-                                                   th:id="expireDate"/></input>
+                                            <!--<input type="text" data-plugin-datepicker="" class="form-control"-->
+                                                   <!--id="expiryDate" th:name="expireDate"-->
+                                                   <!--th:id="expireDate"/></input>-->
+
+
+                                            <input  th:name="expireDate" id="expireDate" type="text"
+                                                    class="form-control form-control-lg">
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +210,7 @@
 </script>
 
 <script th:inline="javascript">
-    $('#publishedDate,#expiryDate').datepicker({
+    $('#publishedDate,#expireDate').datepicker({
         language: 'en',
         autoClose: true,
         dateFormat: 'dd-mm-yyyy'

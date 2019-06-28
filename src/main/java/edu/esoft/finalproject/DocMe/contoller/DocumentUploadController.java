@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -71,10 +72,10 @@ public class DocumentUploadController {
     }
 
     @RequestMapping(value = AppURL.DOCUMENT_UPLOAD_SAVE, method = RequestMethod.POST)
-    public ModelAndView saveDocument(@ModelAttribute("docUploadTempForm") DocumentUploadDto documentUploadDto,
-                                     @ModelAttribute("user") User user, ModelAndView modelAndView,
-                                     @RequestParam(value = "catId") int catagoryId) {
+    public ModelAndView saveDocument(@ModelAttribute("docUploadTempForm") DocumentUploadDto documentUploadDto, ModelAndView modelAndView,
+                                     @RequestParam(value = "catId") int catagoryId,HttpSession session) {
         try {
+            User user = (User) session.getAttribute(AppConstant.USER);
             if (!documentUploadDto.getAttachment().getOriginalFilename().equals(AppConstant.STRING_EMPTY)) {
                 if (commonFunction.checkIsValidFileType(documentUploadDto.getAttachment(), DOCUMENT_VALID_FILE_MAGIC_TYPES.split(AppConstant.STRING_COMMA))) {
                     if (commonFunction.isFileSizeSufficient(documentUploadDto.getAttachment(), DOCUMENT_MAX_FILE_SIZE)) {
@@ -264,7 +265,7 @@ public class DocumentUploadController {
         }
     }
 
-    @RequestMapping(value = "modifyResubmitDocument")
+    @RequestMapping(value = "/modifyResubmitDocument")
     public ModelAndView modifResubmityDoc(@RequestParam(value = "id") int id, @ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
         try {
@@ -315,8 +316,9 @@ public class DocumentUploadController {
     }
 
     @RequestMapping(value = "/modifyDocument")
-    public ModelAndView modifyDoc(@RequestParam(value = "id") int id, @ModelAttribute("user") User user) {
+    public ModelAndView modifyDoc(@RequestParam(value = "id") int id,HttpSession session) {
         try {
+            User user = (User) session.getAttribute(AppConstant.USER);
             ModelAndView modelAndView = new ModelAndView();
             List<SystemRole> systemRoles = new ArrayList<>();
             List<AccessUserType> accessUserTypes = new ArrayList<>();
@@ -381,4 +383,15 @@ public class DocumentUploadController {
         }
     }
 
+
+    @RequestMapping(value ="/document_upload_webix_email", method = RequestMethod.GET)
+    public Object loadDocForSend(@ModelAttribute("user") User user) {
+        DocCategoryMasterWebix categoryMasters = new DocCategoryMasterWebix();
+        try {
+            categoryMasters.setData(documentUploadService.createCategoryWebixTableWithUploadDocumentAll(user));
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return categoryMasters;
+    }
 }

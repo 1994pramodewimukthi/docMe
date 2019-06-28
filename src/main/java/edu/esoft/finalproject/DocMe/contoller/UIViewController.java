@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jms.JMSException;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -29,6 +28,18 @@ public class UIViewController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/uploadAgreement")
+    public ModelAndView getUploadAgreement() {
+        ModelAndView modelAndView = new ModelAndView("/ui/upload-agreement");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/addAgreementType")
+    public ModelAndView getAgreementType() {
+        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/login")
     public ModelAndView getLogin(HttpSession session) {
         ModelAndView modelAndView;
@@ -38,11 +49,6 @@ public class UIViewController {
             UserDto userDto = new UserDto();
             modelAndView = new ModelAndView("/ui/login");
             modelAndView.addObject("userDetailsDto", userDto);
-        }
-        try {
-            activeMQEmail.sendFromEmail(new Email());
-        } catch (JMSException e) {
-            e.printStackTrace();
         }
         return modelAndView;
     }
@@ -70,11 +76,12 @@ public class UIViewController {
         ModelAndView modelAndView = new ModelAndView("/ui/category-resubmit");
         return modelAndView;
     }
-
+//documentUpload
     @RequestMapping(AppURL.DOCUMENT_UPLOAD)
     public ModelAndView viewDocumentUploadList() {
         ModelAndView modelAndView = new ModelAndView("/ui/document-creation");
         DocumentUploadDto documentUploadDto = new DocumentUploadDto();
+
         modelAndView.addObject("documentUploadDto", documentUploadDto);
         return modelAndView;
     }
@@ -100,4 +107,14 @@ public class UIViewController {
         session.invalidate();
         return new ModelAndView("redirect:/ui/login");
     }
+
+
+    @RequestMapping("/send_document")
+    public ModelAndView viewDocumentListForSendEmail() {
+        ModelAndView modelAndView = new ModelAndView("/ui/document-send-by-email");
+        Email email=new Email();
+        modelAndView.addObject("email",email);
+        return modelAndView;
+    }
+
 }

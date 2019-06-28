@@ -152,13 +152,13 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                debugger;
-                console.log(edit);
-                if (edit == "true") {
-                    location.replace(CONTEXT_PATH + '/user/update');
-                } else {
-                    location.replace(CONTEXT_PATH + '/user/register');
-                }
+                location.replace(CONTEXT_PATH + '/ui/login');
+                // console.log(edit);
+                // if (edit == "true") {
+                //     location.replace(CONTEXT_PATH + '/user/update');
+                // } else {
+                //     location.replace(CONTEXT_PATH + '/user/register');
+                // }
             });
         } else if (isSucsess == false) {
             swal({
