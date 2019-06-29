@@ -107,11 +107,11 @@ public class DocumentUploadController {
         DocumentUploadDto documentUploadDto1 = new DocumentUploadDto();
         modelAndView.addObject("documentUploadDto", documentUploadDto1);
         if (documentUploadDto.getDocumentUploadTempId() == null && documentUploadDto.getDocCategoryMasterId() == null) {
-            modelAndView.setViewName("/ui/document-creation");
+            modelAndView.setViewName("/ui/document/document-creation");
         } else if (documentUploadDto.getDocumentUploadTempId() != null && documentUploadDto.getDocCategoryMasterId() == null) {
-            modelAndView.setViewName("/ui/document-resubmit");
+            modelAndView.setViewName("/ui/document/document-resubmit");
         } else if (documentUploadDto.getDocCategoryMasterId() != null) {
-            modelAndView.setViewName("/ui/document-creation");
+            modelAndView.setViewName("/ui/document/document-creation");
         }
 //        DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
 //        docCategoryTemp.setSystemMenuItemChannel(new SystemMenuItemChannel());
@@ -303,7 +303,7 @@ public class DocumentUploadController {
             documentUploadDto.setPath(documentUploadTemp.getPath());
             modelAndView.addObject("documentUploadDto", documentUploadDto);
             modelAndView.addObject("accessList", documentUploadDto.getAcessTypes());
-            modelAndView.setViewName("ui/documentresubmitviwer");
+            modelAndView.setViewName("ui/document/documentresubmitviwer");
 //            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, true);
 //            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.DOCUMENT_SUCCESSFULLY_UPDATED));
             return modelAndView;
@@ -353,7 +353,7 @@ public class DocumentUploadController {
             documentUploadDto.setPath(documentUploadTemp.getPath());
             modelAndView.addObject("documentUploadDto", documentUploadDto);
             modelAndView.addObject("accessList", documentUploadDto.getAcessTypes());
-            modelAndView.setViewName("ui/documentresubmitviwer");
+            modelAndView.setViewName("ui/document/documentresubmitviwer");
             return modelAndView;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

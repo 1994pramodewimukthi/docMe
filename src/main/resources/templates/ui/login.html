@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
     <title>docME Login</title>
     <!--    <style th:inline="text">-->
     <!--        body {-->
@@ -73,4 +74,23 @@
 <!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
 <!--end: footer-->
 
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var message = [[${msg}]];
+    var isSucsess = [[${isSucsess}]];
+    var action = [[${action}]];
+
+    if (isSucsess == false) {
+        swal({
+            title: 'Error',
+            text: message,
+            type: 'error',
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            closeOnClickOutside: false
+        });
+    }
+    /*]]>*/
+</script>
 </html>

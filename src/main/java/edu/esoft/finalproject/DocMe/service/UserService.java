@@ -11,4 +11,5 @@ public interface UserService {
     Long userLogin(UserDto userDto, HttpSession session) throws Exception;
 
     UserDto getUser(String  userId) throws Exception;
+
 }

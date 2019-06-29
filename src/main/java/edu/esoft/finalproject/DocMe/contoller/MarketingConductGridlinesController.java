@@ -1,10 +1,7 @@
 package edu.esoft.finalproject.DocMe.contoller;
 
 
-import edu.esoft.finalproject.DocMe.config.AppURL;
-import edu.esoft.finalproject.DocMe.config.EmailMessageConstant;
-import edu.esoft.finalproject.DocMe.config.MessageConstant;
-import edu.esoft.finalproject.DocMe.config.ModuleConstant;
+import edu.esoft.finalproject.DocMe.config.*;
 import edu.esoft.finalproject.DocMe.dto.DocumentCategoryDto;
 import edu.esoft.finalproject.DocMe.dto.McgDocumentUpdateDto;
 import edu.esoft.finalproject.DocMe.dto.McgDocumentUploadDto;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -42,23 +40,10 @@ public class MarketingConductGridlinesController {
     @Autowired
     private MCGDocumentUploadService mcgDocumentUploadService;
 
-    @GetMapping(value = AppURL.MCG_ADD_CATEGORY)
-    public ModelAndView addCategory() {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_CATEGORY_MODEL);
-
-
-        try {
-            modelAndView.addObject("mcgDocumentCategorys", marketingConductGridlinesService.getAllCategorys());
-            modelAndView.addObject("documentCategoryDto", new DocumentCategoryDto());
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
-        return modelAndView;
-    }
 
     @GetMapping(value = AppURL.MCG_VIEW_UPDATE_CATEGORY)
     public ModelAndView viewUpdateCategory(@PathVariable("catId") String catId) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_VIEW_UPDATE_CATEGORY_MODEL);
+        ModelAndView modelAndView = new ModelAndView("/ui/category_update_modal");
 
         try {
             modelAndView.addObject("documentCategoryDto", marketingConductGridlinesService.getCategoryById(catId));
@@ -69,13 +54,14 @@ public class MarketingConductGridlinesController {
     }
 
     @PostMapping(value = AppURL.MCG_SAVE_CATEGORY)
-    public ModelAndView saveCategory(@ModelAttribute("documentCategoryDto") DocumentCategoryDto documentCategoryDto, @ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_CATEGORY_MODEL);
+    public ModelAndView saveCategory(@ModelAttribute("documentCategoryDto") DocumentCategoryDto documentCategoryDto, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             Long result = marketingConductGridlinesService.saveCategory(documentCategoryDto, user);
             modelAndView.addObject("action", "ADD");
-            if (result == SUCSESS) {
+            if (result.equals(SUCSESS)) {
                 modelAndView.addObject(IS_SUCSESS, true);
                 modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.INFO_MESSAGE_SUCCESSFULLY_SAVED));
             } else if (result > ERROR) {
@@ -98,9 +84,10 @@ public class MarketingConductGridlinesController {
     }
 
     @PostMapping(value = AppURL.MCG_UPDATE_CATEGORY)
-    public ModelAndView updateCategory(@ModelAttribute("documentCategoryDto") DocumentCategoryDto documentCategoryDto, @ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_CATEGORY_MODEL);
+    public ModelAndView updateCategory(@ModelAttribute("documentCategoryDto") DocumentCategoryDto documentCategoryDto, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             modelAndView.addObject("action", "UPDATE");
             Long result = marketingConductGridlinesService.updateCategory(documentCategoryDto, user);
@@ -122,26 +109,12 @@ public class MarketingConductGridlinesController {
         return modelAndView;
     }
 
-    @GetMapping(AppURL.MCG_ADD_NEW_DOCUMENT)
-    public ModelAndView addDocument() {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_MODEL);
-
-        try {
-            McgDocumentUploadDto mcgDocumentUploadDto = new McgDocumentUploadDto();
-            mcgDocumentUploadDto.setDocumentAcknowledgement(ModuleConstant.ACKNOWLEDGMENT);
-            ArrayList<DocumentCategoryDto> categoryList = (ArrayList<DocumentCategoryDto>) marketingConductGridlinesService.getAllCategorys();
-            modelAndView.addObject("categoryList", categoryList);
-            modelAndView.addObject("mcgDocumentUploadDto", mcgDocumentUploadDto);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
-        return modelAndView;
-    }
 
     @PostMapping(AppURL.MCG_UPLOAD_NEW_DOCUMENT)
-    public ModelAndView uploadDocument(@ModelAttribute("mcgDocumentUploadDto") McgDocumentUploadDto mcgDocumentUploadDto, @ModelAttribute("user") User user) {
+    public ModelAndView uploadDocument(@ModelAttribute("mcgDocumentUploadDto") McgDocumentUploadDto mcgDocumentUploadDto, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_MODEL);
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             Long result = mcgDocumentUploadService.mcgDocumentUpload(mcgDocumentUploadDto, user);
             ArrayList<DocumentCategoryDto> categoryList = (ArrayList<DocumentCategoryDto>) marketingConductGridlinesService.getAllCategorys();
@@ -199,10 +172,11 @@ public class MarketingConductGridlinesController {
     }
 
     @PostMapping(AppURL.MCG_UPLOAD_NEW_SIGNATURE)
-    public ModelAndView uploadSignature(@ModelAttribute("mcgPdfDto") McgPdfDto mcgPdfDto, @ModelAttribute("user") User user) {
+    public ModelAndView uploadSignature(@ModelAttribute("mcgPdfDto") McgPdfDto mcgPdfDto, HttpSession session) {
 
         final ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_VIEW_MODEL);
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             final McgPdfDto mcgPdfDtoAfterSign = mcgDocumentUploadService.singInDocument(mcgPdfDto, user);
 
@@ -223,8 +197,10 @@ public class MarketingConductGridlinesController {
     }
 
     @PostMapping(AppURL.MCG_UPLOAD_SIGN_PDF)
-    public ModelAndView uploadSignPdf(@ModelAttribute("mcgPdfDto") McgPdfDto mcgPdfDto, @ModelAttribute("user") User user) {
+    public ModelAndView uploadSignPdf(@ModelAttribute("mcgPdfDto") McgPdfDto mcgPdfDto, HttpSession session) {
         final ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_VIEW_MODEL);
+
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             Long result = mcgDocumentUploadService.uploadSignPdf(mcgPdfDto, user);
 
@@ -258,9 +234,10 @@ public class MarketingConductGridlinesController {
 
 
     @GetMapping(value = AppURL.MCG_DOC_UPDATE)
-    public ModelAndView updateDocument(@ModelAttribute("user") User user) {
+    public ModelAndView updateDocument(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView(AppURL.MCG_UPDATE_DOCUMENT);
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             modelAndView.addObject("mcgDocumentUpdateDto", mcgDocumentUploadService.getValidDocument(user));
         } catch (Exception e) {
@@ -271,9 +248,10 @@ public class MarketingConductGridlinesController {
     }
 
     @PostMapping(value = AppURL.MCG_SAVE_DOC_UPDATE)
-    public ModelAndView saveDocumentUpdate(@ModelAttribute("mcgDocumentUpdateDto") McgDocumentUpdateDto mcgDocumentUpdateDto, @ModelAttribute("user") User user) {
+    public ModelAndView saveDocumentUpdate(@ModelAttribute("mcgDocumentUpdateDto") McgDocumentUpdateDto mcgDocumentUpdateDto, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView(AppURL.MCG_UPDATE_DOCUMENT);
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             Long result = mcgDocumentUploadService.saveDocumentUpdate(mcgDocumentUpdateDto, user);
             modelAndView.addObject("mcgDocumentUpdateDto", mcgDocumentUploadService.getValidDocument(user));
@@ -312,9 +290,10 @@ public class MarketingConductGridlinesController {
 
     //view doc list related to user role
     @GetMapping(value = AppURL.MCG_VIEW_RELATED_DOC)
-    public ModelAndView viewSignedDocument(@ModelAttribute("user") User user) {
+    public ModelAndView viewSignedDocument(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView(AppURL.MCG_RELATED_DOCUMENT);
 
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             modelAndView.addObject("mcgDocumentUploadDtos", mcgDocumentUploadService.getAllDocumentForUser(user));
         } catch (Exception e) {
@@ -337,8 +316,10 @@ public class MarketingConductGridlinesController {
 
     //open PDF file using doc id
     @GetMapping(value = AppURL.MCG_VIEW_UPLOADED_DOCUMENT)
-    public ModelAndView viewDocument(@ModelAttribute("user") User user, @PathVariable("docId") String docId) {
+    public ModelAndView viewDocument(HttpSession session, @PathVariable("docId") String docId) {
         ModelAndView modelAndView = new ModelAndView(AppURL.MCG_VIEW_SELECT_DOCUMENT);
+
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             McgPdfDto mcgPdfDto = mcgDocumentUploadService.getPdf(user, docId);
             if (null != mcgPdfDto) {
@@ -370,8 +351,10 @@ public class MarketingConductGridlinesController {
     }
 
     @PostMapping(value = AppURL.MCG_PREVIEW_DOCUMENT)
-    public String preview(@ModelAttribute("mcgDocumentUploadDto") McgDocumentUploadDto mcgDocumentUploadDto, @ModelAttribute("user") User user) {
+    public String preview(@ModelAttribute("mcgDocumentUploadDto") McgDocumentUploadDto mcgDocumentUploadDto, HttpSession session) {
         String result = "";
+
+        User user = (User) session.getAttribute(AppConstant.USER);
         try {
             result = mcgDocumentUploadService.previewPdf(mcgDocumentUploadDto, user);
             long parseLong = Long.parseLong(result);

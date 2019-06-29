@@ -1,0 +1,97 @@
+<meta http-equiv="X-UA-Compatible" content="IE=11">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<form th:action="@{/mcg/updateCategory}" id="updateCategoryForm"
+      th:object="${documentCategoryDto}"
+      th:name="documentCategoryDto" method="POST">
+    <input type="hidden" th:value="${documentCategoryDto.categoryId}"
+           th:field="${documentCategoryDto.categoryId}"
+           class="form-control" readonly/>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Agreement Type</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Input User</label>
+                                <input th:value="${documentCategoryDto.categoryInputUser}"
+                                       th:field="${documentCategoryDto.categoryInputUser}" class="form-control"
+                                       type="text"/>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Input Date</label>
+                                <input th:value="${documentCategoryDto.categoryInputDateTime}"
+                                       th:field="${documentCategoryDto.categoryInputDateTime}" class="form-control"
+                                       type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="col-form-label">Agreement Type</label>
+                                <input th:value="${documentCategoryDto.categoryName}"
+                                       th:field="${documentCategoryDto.categoryName}" class="form-control" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn btn-primary " data-dismiss="modal"><i
+                            class="fas fa-times-circle"></i>
+                        Close
+                    </button>
+                    <button type="submit" name="action1" value="Insert" class="btn btn-primary "><i
+                            class="fa fa-edit"></i>
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
+
+    $('#updateCategoryForm').formValidation({
+        framework: 'bootstrap',
+        excluded: ':disabled',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            categoryName: {
+                validators: {
+                    notEmpty: {
+                        message: 'This field is required and cannot be empty.'
+                    },
+                    regexp: {
+                        regexp: nospecial,
+                        message: 'Special characters are not allowed.'
+                    },
+                    stringLength: {
+                        message: 'Post content must be less than 255 characters',
+                        max: 255
+                    },
+                }
+            }
+        }
+    }).on('success.form.fv', function (e) {
+        $('.loader-overlay').show();
+
+    });
+</script>

@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class MainController {
+
     @RequestMapping(value = "/")
     public ModelAndView rootLocation() {
         return new ModelAndView("redirect:/ui/login");
