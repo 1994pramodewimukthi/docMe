@@ -12,6 +12,7 @@ import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class MarketingConductGridlinesServiceImpl implements MarketingConductGridlinesService {
 
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesServiceImpl.class);

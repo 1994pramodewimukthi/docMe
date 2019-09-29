@@ -28,7 +28,7 @@
         <!-- end: sidebar -->
         <section role="main" class="content-body pb-0">
             <header class="page-header ">
-                <h2 class="">Document Creation</h2>
+                <h2 class="">Document Send via Email</h2>
                 <div class="right-wrapper text-right">
                     <ol class="breadcrumbs ">
                     </ol>
@@ -144,4 +144,44 @@
     }
 </script>
 </body>
+
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+
+        if (isSucsess) {
+            swal({
+                title: "Success",
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: "Error",
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+            });
+        }
+
+
+    });
+    /*]]>*/
+</script>
+
+
 </html>

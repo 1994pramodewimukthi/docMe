@@ -296,7 +296,6 @@ public class DocumentManageController {
     @RequestMapping(value = "/email-send", method = RequestMethod.POST)
     public ModelAndView sendEmail(@ModelAttribute("email") Email email, ModelAndView modelAndView) {
         try {
-            System.out.println(email);
             InputStream inputStream = documentUploadSFTPService.viewUploadedFile(Integer.parseInt(email.getDocId()), AppConstant.MST);
             email.setDocInputStream(IOUtils.toByteArray(inputStream));
             int result = documentUploadService.sendEmail(email);
