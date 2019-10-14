@@ -3,6 +3,7 @@ package edu.esoft.finalproject.DocMe.contoller;
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
 import edu.esoft.finalproject.DocMe.dto.UserDto;
+import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
 import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.service.MessageService;
 import edu.esoft.finalproject.DocMe.service.UserService;
@@ -12,16 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private static final Long SUCCESS = 1L;
     private static final String IS_SUCSESS = "isSucsess";
     private static final String MSG = "msg";
-
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     @Autowired
     UserService userService;
     @Autowired
@@ -94,7 +93,7 @@ public class UserController {
         try {
             Long login = userService.userLogin(userDto, session);
             if (login.equals(SUCCESS)) {
-                modelAndView = new ModelAndView("redirect:/ui/categoryCreation");
+                modelAndView = new ModelAndView("redirect:/user/home");
             } else {
                 userDto.setPassword("");
                 modelAndView.addObject("userDetailsDto", userDto);
@@ -110,4 +109,13 @@ public class UserController {
         return modelAndView;
     }
 
+
+    @GetMapping(value = "/home")
+    public ModelAndView home() {
+
+        ModelAndView modelAndView = new ModelAndView("/ui/home");
+        DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
+        modelAndView.addObject("docCategoryTemp", docCategoryTemp);
+        return modelAndView;
+    }
 }

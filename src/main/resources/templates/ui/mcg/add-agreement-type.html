@@ -224,7 +224,7 @@
 
 
     function closeModal() {
-        location.replace(CONTEXT_PATH + '/mcg/addCategory');
+        location.replace(CONTEXT_PATH + '/ui/agreementCategory');
     }
 
     $(document).ready(function () {
@@ -244,7 +244,7 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/mcg/addCategory');
+                location.replace(CONTEXT_PATH + '/ui/agreementCategory');
             });
         } else if (isSucsess == false) {
             swal({
@@ -258,7 +258,7 @@
                 if (action == "ADD") {
                     $("#addModal").modal('show');
                 } else {
-                    location.replace(CONTEXT_PATH + '/mcg/addCategory');
+                    location.replace(CONTEXT_PATH + '/ui/agreementCategory');
                 }
 
             });

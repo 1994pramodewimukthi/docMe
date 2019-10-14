@@ -1,0 +1,301 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-sm" lang="en">
+<head>
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/basic.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/dropzone.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/form-validation/css/formValidation.min.css}">
+    <meta name="context-path" th:content="@{/}"/>
+
+</head>
+<body id="loginBody">
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <div class="row">
+
+            <!-- START RIGHT CONTENT -->
+            <section id="content-wrapper" class="form-elements">
+                <!-- START PAGE TITLE -->
+                <div class="site-content-title">
+                    <div class="col-xl-6  col-lg-12">
+                        <h3 class="popheading"
+                            th:text="${mcgPdfDto.docName != null}?${mcgPdfDto.docName}:'Document Name'">
+                            Document
+                            Creation</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <span class="sexy_line"></span>
+                    </div>
+                </div>
+                <div class="divider25"></div>
+                <!-- END PAGE TITLE -->
+                <!--  START DASHBOARD -->
+                <div class="contain-inner dashboard-v2">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="offset-xl-1 col-xl-10 col-lg-12 col-md-12 col-sm-12 dashboard_v4_box_block">
+                                <div class="content">
+                                    <div class="row marginTop pdfviewdiv">
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 pdfviewdiv">
+                                            <div class="pdfContainer">
+                                                <input id="pdfData" name="pdfData" type="hidden"
+                                                       th:value="${mcgPdfDto.pdfFile}">
+                                                <div id='pdf-viewer' class="text-center"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row marginTop">
+                                        <div class="col-md-6" style="text-align: left;">
+                                            <button type="button" class="btn btn-primary" id="skipButton"
+                                                    onclick="skipSign()"
+                                                    th:text="|Skip (${mcgPdfDto.remainingDates} days remaining)|"></button>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: right;">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#signModal">Accept & Sign
+                                            </button>
+                                            <button id="upload" type="button" class="btn btn-primary" disabled
+                                                    onclick="uploadPdf()">Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Signature Modal-->
+                        <div class="modal fade" id="signModal" tabindex="-1" role="dialog"
+                             aria-labelledby="updateModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form th:action="@{/mcg/uploadSignature}"
+                                          th:id="uploadSignatureForm"
+                                          th:name="uploadSignatureForm"
+                                          th:object="${mcgPdfDto}" method="POST">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Signature pad</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="wrapper">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-md-12 col-lg-12 borderColor">
+                                                        <p class="font-weight-bold pPadding ">
+                                                            Acknowledgement
+                                                        </p>
+                                                        <p th:text="*{acknowledgement}"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 ml-3">
+                                                        <canvas style="border: #0b0c0d 1px solid" id="signature-pad"
+                                                                class="signature-pad" width=450
+                                                                height=200></canvas>
+                                                    </div>
+                                                    <input type="hidden" id="docId" th:name="*{docId}"
+                                                           th:field="*{docId}" th:value="*{docId}">
+                                                    <input type="hidden" id="signatureFile" th:name="*{signatureFile}"
+                                                           th:field="*{signatureFile}">
+                                                    <input type="hidden" id="pdfFile" th:name="*{pdfFile}"
+                                                           th:field="*{pdfFile}" th:value="*{pdfFile}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <button id="clear" type="button" class="btn btn-secondary">Clear</button>
+                                            <button id="save" type="button" class="btn btn-primary">
+                                                Sign
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Signature Modal-->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <form th:action="@{/mcg/uploadSignPdf}" th:id="uploadSignaturePdf" th:name="uploadSignaturePdf"
+          th:object="${mcgPdfDto}" method="POST">
+
+        <input type="hidden" th:value="*{docId}" th:field="*{docId}" th:name="*{docId}">
+        <input type="hidden" th:value="*{docName}" th:field="*{docName}" th:name="*{docName}">
+        <input type="hidden" th:value="*{pdfFile}" th:field="*{pdfFile}" th:name="*{pdfFile}">
+        <input type="hidden" th:value="*{signatureFile}" th:field="*{signatureFile}" th:name="*{signatureFile}">
+        <input type="hidden" th:value="*{acknowledgement}" th:field="*{acknowledgement}" th:name="*{acknowledgement}">
+        <input type="hidden" th:value="*{remainingDates}" th:field="*{remainingDates}" th:name="*{remainingDates}">
+        <input type="hidden" th:value="*{signStatus}" th:field="*{signStatus}" th:name="*{signStatus}">
+    </form>
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/signature_pad.umd.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/form-validation/js/formValidation.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/pdf.js}"></script>
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+
+<script type="text/javascript">
+
+    var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+        backgroundColor: "white",
+        minWidth: 3,
+        penColor: "black"
+    });
+
+    var saveButton = document.getElementById('save');
+    var cancelButton = document.getElementById('clear');
+
+    saveButton.addEventListener('click', function (event) {
+        if (signaturePad.isEmpty()) {
+            swal({
+                title: 'Error',
+                text: "Please provide a signature first.",
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            });
+        } else {
+            var dataURL = signaturePad.toDataURL();
+            $("#signatureFile").val(dataURL);
+            $("#uploadSignatureForm").submit();
+        }
+    });
+
+    cancelButton.addEventListener('click', function (event) {
+        signaturePad.clear();
+    });
+
+
+    $("#enableAcknowledgement").click(function () {
+        $("#acknowledgement").attr("readonly", false);
+        $(this).attr("disabled", true);
+    });
+
+    var pdfData = atob($("#pdfData").val());
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = CONTEXT_PATH + '/js/pdf.worker.js';
+    var thePdf = null;
+    var scale = 1.3;
+    $(document).ready(function () {
+        pdfjsLib.getDocument({data: pdfData}, false, null, function (progress) {
+            var percent_loaded = (progress.loaded / progress.total) * 100;
+            console.log(percent_loaded);
+        }).promise.then(function (pdf) {
+            thePdf = pdf;
+
+            viewer = document.getElementById('pdf-viewer');
+            for (page = 1; page <= pdf.numPages; page++) {
+                canvas = document.createElement("canvas");
+                canvas.className = 'pdf-page-canvas';
+                viewer.appendChild(canvas);
+                renderPage(page, canvas);
+            }
+        });
+    });
+
+    function renderPage(pageNumber, canvas) {
+        thePdf.getPage(pageNumber).then(function (page) {
+            viewport = page.getViewport(scale);
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            page.render({canvasContext: canvas.getContext('2d'), viewport: viewport});
+        });
+    }
+
+    function uploadPdf() {
+        $("#uploadSignaturePdf").submit();
+    }
+
+    function loader() {
+        $("#signModal").hide();
+        $(".loader-overlay").css("display", "block");
+    }
+
+    function skipSign() {
+        location.replace(CONTEXT_PATH + "/mcg/skipSign");
+    }
+
+</script>
+
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+        var skip = [[${mcgPdfDto.remainingDates}]];
+        var signStatus = [[${mcgPdfDto.signStatus}]];
+
+        if (skip === "0") {
+            $("#skipButton").attr("disabled", true);
+        }
+        if (signStatus === "1") {
+            $("#upload").attr("disabled", false);
+        }
+
+        if (isSucsess) {
+            swal({
+                title: 'Success',
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/user/home');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: 'Error',
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/mcg/viewAgreement');
+            });
+        }
+        /*]]>*/
+    });
+
+</script>
+
+</body>
+</html>

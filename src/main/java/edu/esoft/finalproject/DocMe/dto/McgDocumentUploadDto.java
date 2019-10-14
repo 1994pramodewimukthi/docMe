@@ -2,10 +2,11 @@ package edu.esoft.finalproject.DocMe.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class McgDocumentUploadDto {
+import java.io.Serializable;
+
+public class McgDocumentUploadDto implements Serializable {
     private String catId;
     private String documentVersion;
-    private String documentValidRank;
     private String documentFooterHeight;
     private MultipartFile documentFile;
     private String documentAcknowledgement;
@@ -21,21 +22,12 @@ public class McgDocumentUploadDto {
         this.catId = catId;
     }
 
-
     public String getDocumentVersion() {
         return documentVersion;
     }
 
     public void setDocumentVersion(String documentVersion) {
         this.documentVersion = documentVersion;
-    }
-
-    public String getDocumentValidRank() {
-        return documentValidRank;
-    }
-
-    public void setDocumentValidRank(String documentValidRank) {
-        this.documentValidRank = documentValidRank;
     }
 
     public String getDocumentFooterHeight() {

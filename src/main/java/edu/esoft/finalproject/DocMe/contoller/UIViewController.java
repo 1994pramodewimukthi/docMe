@@ -37,13 +37,13 @@ public class UIViewController {
 
     @GetMapping(value = "/uploadAgreement")
     public ModelAndView getUploadAgreement() {
-        ModelAndView modelAndView = new ModelAndView("/ui/upload-agreement");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/upload-agreement");
         return modelAndView;
     }
 
     @GetMapping(value = "/addAgreementType")
     public ModelAndView getAgreementType() {
-        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/add-agreement-type");
         return modelAndView;
     }
 
@@ -51,7 +51,7 @@ public class UIViewController {
     public ModelAndView getLogin(HttpSession session) {
         ModelAndView modelAndView;
         if (null != session.getAttribute(AppConstant.USER)) {
-            modelAndView = new ModelAndView("redirect:/ui/categoryCreation");
+            modelAndView = new ModelAndView("redirect:/user/home");
         } else {
             UserDto userDto = new UserDto();
             modelAndView = new ModelAndView("/ui/login");
@@ -129,7 +129,7 @@ public class UIViewController {
 
     @RequestMapping("/agreementCategory")
     public ModelAndView agreementCategory() {
-        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/add-agreement-type");
         try {
             modelAndView.addObject("mcgDocumentCategorys", marketingConductGridlinesService.getAllCategorys());
             modelAndView.addObject("documentCategoryDto", new DocumentCategoryDto());
@@ -141,7 +141,7 @@ public class UIViewController {
 
     @GetMapping(AppURL.MCG_ADD_NEW_DOCUMENT)
     public ModelAndView addDocument() {
-        ModelAndView modelAndView = new ModelAndView("/ui/upload-agreement");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/upload-agreement");
 
         try {
             McgDocumentUploadDto mcgDocumentUploadDto = new McgDocumentUploadDto();

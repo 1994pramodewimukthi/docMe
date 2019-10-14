@@ -17,5 +17,6 @@ public class AppConstant implements Serializable {
     public final static String CATEGORY_ID = "category_id";
     public final static String REJECT_REASON = "reason";
     public static final String USER = "user";
+    public static final String MCG_SKIP = "mcgSkip";
     public final static String STRING_COMMA = ",";
 }

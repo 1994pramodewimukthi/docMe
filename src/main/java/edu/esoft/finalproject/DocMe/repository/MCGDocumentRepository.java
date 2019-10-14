@@ -26,7 +26,7 @@ public interface MCGDocumentRepository extends CrudRepository<MCGDocument, Integ
     @Query(value = "SELECT * FROM mcg_document WHERE status=?1", nativeQuery = true)
     MCGDocument findDocumentByStatus(String status) throws Exception;
 
-    @Query(value = "SELECT TOP 1 doc_version FROM mcg_document WHERE cat_id =?1 ORDER BY doc_id DESC", nativeQuery = true)
+    @Query(value = "SELECT doc_version FROM mcg_document WHERE cat_id =?1 ORDER BY doc_id DESC LIMIT 1", nativeQuery = true)
     String findVersionByCatId(String catId) throws Exception;
 
     @Query(value = "SELECT * FROM mcg_document ORDER BY doc_id DESC", nativeQuery = true)

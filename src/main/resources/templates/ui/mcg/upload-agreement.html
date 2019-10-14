@@ -1,7 +1,9 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-sm" lang="en">
 <head>
-
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
     <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
     <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
     <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
@@ -10,10 +12,12 @@
     <link rel="stylesheet" th:href="@{/vendor/form-validation/css/formValidation.min.css}">
 
     <meta name="context-path" th:content="@{/}"/>
-    <!-- start: header -->
-    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
-    <!-- end: header -->
+
     <style>
+        .modal-dialog {
+            max-width: 75% !important;
+        }
+
         .enable {
             box-shadow: 0 0px 3px 0 rgb(211, 17, 69) !important;
             transition: 0.3s;
@@ -85,6 +89,7 @@
             overflow-y: scroll;
             background-color: gray;
             padding: 10px;
+            border: solid 10px gray;
         }
 
         @media (min-width: 768px) {
@@ -125,10 +130,13 @@
             <div class="row ">
                 <div class="col-lg-12">
                     <section class="card">
-                        <form method="POST" th:action="@{/mcg/uploadDocument}"
+                        <form class="form-horizontal"
+                              th:action="@{/mcg/uploadDocument}"
                               th:id="documentUploadForm"
                               th:name="documentUploadForm"
-                              th:object="${mcgDocumentUploadDto}">
+                              th:object="${mcgDocumentUploadDto}"
+                              method="POST" enctype="multipart/form-data">
+
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="col-lg-6">
@@ -164,16 +172,22 @@
                                                onkeypress="return isNumber(event)" class="form-control">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-lg-12">
-                                        <label class="col-form-label">Agreement PDF</label>
+                                <div class="row">
+                                    <div class="col-md-12 mt-2">
+                                        <label class="material-label-fixed">Agreement PDF
+                                            <span class="text-danger">*</span> : </label>
+                                        <label class="float-lg-right float-md-right float-sm-right float-xl-right">Page
+                                            Count : <span id="pageCountPreview">0</span> </label>
                                         <input type="hidden" th:name="*{pageCount}" th:id="*{pageCount}"
                                                th:field="*{pageCount}">
-                                        <input type="file" class="dropify" data-show-loader="true"
-                                               data-plugin="dropify" data-height="200"
-                                               data-allowed-file-extensions="pdf" accept=".pdf"
-                                               name="documentFile" id="documentFile"
-                                               th:field="*{documentFile}"/></input>
+                                        <div class="form-material">
+                                            <input type="file" class="dropify" data-show-loader="true"
+                                                   data-plugin="dropify" data-height="200"
+                                                   data-allowed-file-extensions="pdf" accept=".pdf"
+                                                   th:name="*{documentFile}" id="documentFile"
+                                                   th:field="*{documentFile}">
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -204,8 +218,15 @@
                                 </div>
                                 <div class="form-group row text-right">
                                     <div class="col-lg-12">
-                                        <button class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
-                                        <button class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                                        <button id="enableAcknowledgement" class="btn btn-primary"
+                                                type="button">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+                                        <button id="saveAcknowledgement" name="saveAcknowledgement"
+                                                class="btn btn-primary" disabled
+                                                type="button">
+                                            <i class="fa fa-save"></i> Save
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="form-group row text-right">
@@ -249,6 +270,7 @@
 <!--start: footer-->
 <!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
 <!--end: footer-->
+
 <script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
@@ -259,7 +281,184 @@
 <script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/form-validation/js/formValidation.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/pdf.js}"></script>
+<script th:inline="javascript">
 
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+
+    $(document).ready(function () {
+
+        $(".switchYES").hide();
+        $(".pagecountDIV").hide()
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+        if (isSucsess) {
+            swal({
+                title: 'Sucsess',
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/addDocument');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: "Error",
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            });
+        }
+
+        var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
+
+        var button = $("saveAcknowledgement");
+
+        $('#documentUploadForm').formValidation({
+            // framework: 'bootstrap',
+            excluded: ':disabled',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                documentVersion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: nospecial,
+                            message: 'Special characters are not allowed.'
+                        },
+                        stringLength: {
+                            message: 'Version content must be less than 30 characters',
+                            max: 30
+                        }
+                    }
+                },
+                documentFooterHeight: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        integer: {
+                            message: 'Decimal value not allowed.',
+                            thousandsSeparator: '',
+                            decimalSeparator: '.',
+
+                        },
+                        between: {
+                            min: 8,
+                            max: 26,
+                            message: 'The number must be between 8 and 26'
+                        }
+                    }
+                },
+                startPage: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        integer: {
+                            message: 'Decimal value not allowed.',
+                            thousandsSeparator: '',
+                            decimalSeparator: '.'
+                        },
+                        between: {
+                            min: 0,
+                            max: 'pageCount',
+                            message: 'The number  must be between %s and %s'
+                        }
+                    }
+                },
+                skipDateCount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        integer: {
+                            message: 'Decimal value not allowed.',
+                            thousandsSeparator: '',
+                            decimalSeparator: '.'
+                        },
+                        stringLength: {
+                            message: 'Date Count content must be less than 3 digits.',
+                            max: 3
+                        }
+                    }
+                },
+                documentAcknowledgement: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        stringLength: {
+                            message: 'Acknowledgement content must be less than 1000 characters',
+                            max: 1000
+                        },
+                        regexp: {
+                            regexp: nospecial,
+                            message: 'Special characters are not allowed.'
+                        }
+                    }
+                },
+                catId: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        }
+                    }
+                },
+                documentValidRank: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        }
+                    }
+                },
+                documentFile: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select a pdf file.'
+                        },
+                        stringLength: {
+                            message: 'Post content must be less than 255 characters',
+                            max: 255
+                        },
+                        file: {
+                            extension: 'pdf',
+                            type: 'application/pdf',
+                            message: 'Please choose a PDF file'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.fv', function (e) {
+            $('.loader-overlay').show();
+
+        });
+
+        $('#documentUploadForm').data('formValidation').enableFieldValidators('startPage', false);
+
+
+    });
+    /*]]>*/
+</script>
 <script type="text/javascript">
 
     var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
@@ -368,7 +567,6 @@
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = CONTEXT_PATH + '/js/pdf.worker.js';
     $("#documentFile").change(function () {
-        debugger;
         if ($(this).val() !== "") {
             // $('#documentUploadForm').formValidation('revalidateField', 'startPage');
 
@@ -429,366 +627,14 @@
     $("#catId").change(function () {
         var catId = $(this).val();
         $.get(CONTEXT_PATH + "/mcg/getLatestVersion/" + catId, function (data) {
-            $("#documentVersion").val(data);
+
+            $("#documentVersion").val((data) ? "v1" : data);
             $('#documentUploadForm').formValidation('revalidateField', 'documentVersion');
         })
     });
 
 </script>
-<script th:inline="javascript">
-    function isNumber(evt) {
-        evt = (evt) ? evt : window.event;
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if ((charCode > 31 && charCode < 48) || charCode > 57) {
-            return false;
-        }
-        return true;
-    }
 
-    $(document).ready(function () {
-
-        $(".switchYES").hide();
-        $(".pagecountDIV").hide()
-
-        /*<![CDATA[*/
-        var message = [[${msg}]];
-        var isSucsess = [[${isSucsess}]];
-
-        var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
-
-        var button = $("saveAcknowledgement");
-
-        $('#documentUploadForm').formValidation({
-            framework: 'bootstrap',
-            excluded: ':disabled',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                documentVersion: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        regexp: {
-                            regexp: nospecial,
-                            message: 'Special characters are not allowed.'
-                        },
-                        stringLength: {
-                            message: 'Version content must be less than 30 characters',
-                            max: 30
-                        }
-                    }
-                },
-                documentFooterHeight: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        integer: {
-                            message: 'Decimal value not allowed.',
-                            thousandsSeparator: '',
-                            decimalSeparator: '.',
-
-                        },
-                        between: {
-                            min: 8,
-                            max: 26,
-                            message: 'The number must be between 8 and 26'
-                        }
-                    }
-                },
-                startPage: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        integer: {
-                            message: 'Decimal value not allowed.',
-                            thousandsSeparator: '',
-                            decimalSeparator: '.'
-                        },
-                        between: {
-                            min: 0,
-                            max: 'pageCount',
-                            message: 'The number  must be between %s and %s'
-                        }
-                    }
-                },
-                skipDateCount: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        integer: {
-                            message: 'Decimal value not allowed.',
-                            thousandsSeparator: '',
-                            decimalSeparator: '.'
-                        },
-                        stringLength: {
-                            message: 'Date Count content must be less than 3 digits.',
-                            max: 3
-                        }
-                    }
-                },
-                documentAcknowledgement: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        stringLength: {
-                            message: 'Acknowledgement content must be less than 1000 characters',
-                            max: 1000
-                        },
-                        regexp: {
-                            regexp: nospecial,
-                            message: 'Special characters are not allowed.'
-                        }
-                    }
-                },
-                catId: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        }
-                    }
-                },
-                documentValidRank: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        }
-                    }
-                },
-                documentFile: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please select a pdf file.'
-                        },
-                        stringLength: {
-                            message: 'Post content must be less than 255 characters',
-                            max: 255
-                        },
-                        file: {
-                            extension: 'pdf',
-                            type: 'application/pdf',
-                            message: 'Please choose a PDF file'
-                        }
-                    }
-                }
-            }
-        }).on('success.form.fv', function (e) {
-            $('.loader-overlay').show();
-
-        });
-
-        $('#documentUploadForm').data('formValidation').enableFieldValidators('startPage', false);
-
-        if (isSucsess) {
-            swal({
-                title: 'Sucsess',
-                text: message,
-                type: 'success',
-                showConfirmButton: true,
-                allowOutsideClick: false,
-                closeOnClickOutside: false
-            }).then(function () {
-                location.replace(CONTEXT_PATH + '/mcg/addDocument');
-            });
-        } else if (isSucsess == false) {
-            swal({
-                title: "Error",
-                text: message,
-                type: 'error',
-                showConfirmButton: true,
-                allowOutsideClick: false,
-                closeOnClickOutside: false
-            });
-        }
-
-
-    });
-    /*]]>*/
-</script>
-<script th:inline="javascript">
-    function isNumber(evt) {
-        evt = (evt) ? evt : window.event;
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if ((charCode > 31 && charCode < 48) || charCode > 57) {
-            return false;
-        }
-        return true;
-    }
-
-    $(document).ready(function () {
-
-        $(".switchYES").hide();
-        $(".pagecountDIV").hide()
-
-        /*<![CDATA[*/
-        var message = [[${msg}]];
-        var isSucsess = [[${isSucsess}]];
-
-        var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
-
-        var button = $("saveAcknowledgement");
-
-        $('#documentUploadForm').formValidation({
-            framework: 'bootstrap',
-            excluded: ':disabled',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                documentVersion: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        regexp: {
-                            regexp: nospecial,
-                            message: 'Special characters are not allowed.'
-                        },
-                        stringLength: {
-                            message: 'Version content must be less than 30 characters',
-                            max: 30
-                        }
-                    }
-                },
-                documentFooterHeight: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        integer: {
-                            message: 'Decimal value not allowed.',
-                            thousandsSeparator: '',
-                            decimalSeparator: '.',
-
-                        },
-                        between: {
-                            min: 8,
-                            max: 26,
-                            message: 'The number must be between 8 and 26'
-                        }
-                    }
-                },
-                startPage: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        integer: {
-                            message: 'Decimal value not allowed.',
-                            thousandsSeparator: '',
-                            decimalSeparator: '.'
-                        },
-                        between: {
-                            min: 0,
-                            max: 'pageCount',
-                            message: 'The number  must be between %s and %s'
-                        }
-                    }
-                },
-                skipDateCount: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        integer: {
-                            message: 'Decimal value not allowed.',
-                            thousandsSeparator: '',
-                            decimalSeparator: '.'
-                        },
-                        stringLength: {
-                            message: 'Date Count content must be less than 3 digits.',
-                            max: 3
-                        }
-                    }
-                },
-                documentAcknowledgement: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        },
-                        stringLength: {
-                            message: 'Acknowledgement content must be less than 1000 characters',
-                            max: 1000
-                        },
-                        regexp: {
-                            regexp: nospecial,
-                            message: 'Special characters are not allowed.'
-                        }
-                    }
-                },
-                catId: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        }
-                    }
-                },
-                documentValidRank: {
-                    validators: {
-                        notEmpty: {
-                            message: 'This field is required and cannot be empty.'
-                        }
-                    }
-                },
-                documentFile: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please select a pdf file.'
-                        },
-                        stringLength: {
-                            message: 'Post content must be less than 255 characters',
-                            max: 255
-                        },
-                        file: {
-                            extension: 'pdf',
-                            type: 'application/pdf',
-                            message: 'Please choose a PDF file'
-                        }
-                    }
-                }
-            }
-        }).on('success.form.fv', function (e) {
-            $('.loader-overlay').show();
-
-        });
-
-        $('#documentUploadForm').data('formValidation').enableFieldValidators('startPage', false);
-
-        if (isSucsess) {
-            swal({
-                title: 'Sucsess',
-                text: message,
-                type: 'success',
-                showConfirmButton: true,
-                allowOutsideClick: false,
-                closeOnClickOutside: false
-            }).then(function () {
-                location.replace(CONTEXT_PATH + '/mcg/addDocument');
-            });
-        } else if (isSucsess == false) {
-            swal({
-                title: "Error",
-                text: message,
-                type: 'error',
-                showConfirmButton: true,
-                allowOutsideClick: false,
-                closeOnClickOutside: false
-            });
-        }
-
-
-    });
-    /*]]>*/
-</script>
 <script>
 
     // checkbox validation

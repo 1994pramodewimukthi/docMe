@@ -14,6 +14,7 @@ public class UserDto {
     private String userName;
     private String password;
     private String userEdit;
+    private String userRoleId;
 
 
     public String getId() {
@@ -120,5 +121,13 @@ public class UserDto {
 
     public void setUserEdit(String userEdit) {
         this.userEdit = userEdit;
+    }
+
+    public String getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(String userRoleId) {
+        this.userRoleId = userRoleId;
     }
 }

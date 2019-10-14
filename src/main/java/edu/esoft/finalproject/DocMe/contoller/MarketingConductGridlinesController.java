@@ -1,7 +1,10 @@
 package edu.esoft.finalproject.DocMe.contoller;
 
 
-import edu.esoft.finalproject.DocMe.config.*;
+import edu.esoft.finalproject.DocMe.config.AppConstant;
+import edu.esoft.finalproject.DocMe.config.AppURL;
+import edu.esoft.finalproject.DocMe.config.EmailMessageConstant;
+import edu.esoft.finalproject.DocMe.config.MessageConstant;
 import edu.esoft.finalproject.DocMe.dto.DocumentCategoryDto;
 import edu.esoft.finalproject.DocMe.dto.McgDocumentUpdateDto;
 import edu.esoft.finalproject.DocMe.dto.McgDocumentUploadDto;
@@ -18,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -27,12 +29,11 @@ import java.util.Base64;
 @RequestMapping(value = AppURL.MCG)
 public class MarketingConductGridlinesController {
 
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesController.class);
     private static final Long SUCSESS = 1L;
     private static final Long ERROR = 0L;
     private static final String IS_SUCSESS = "isSucsess";
     private static final String MSG = "msg";
-
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesController.class);
     @Autowired
     private MarketingConductGridlinesService marketingConductGridlinesService;
     @Autowired
@@ -43,7 +44,7 @@ public class MarketingConductGridlinesController {
 
     @GetMapping(value = AppURL.MCG_VIEW_UPDATE_CATEGORY)
     public ModelAndView viewUpdateCategory(@PathVariable("catId") String catId) {
-        ModelAndView modelAndView = new ModelAndView("/ui/category_update_modal");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/category_update_modal");
 
         try {
             modelAndView.addObject("documentCategoryDto", marketingConductGridlinesService.getCategoryById(catId));
@@ -55,7 +56,7 @@ public class MarketingConductGridlinesController {
 
     @PostMapping(value = AppURL.MCG_SAVE_CATEGORY)
     public ModelAndView saveCategory(@ModelAttribute("documentCategoryDto") DocumentCategoryDto documentCategoryDto, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/add-agreement-type");
 
         User user = (User) session.getAttribute(AppConstant.USER);
         try {
@@ -85,7 +86,7 @@ public class MarketingConductGridlinesController {
 
     @PostMapping(value = AppURL.MCG_UPDATE_CATEGORY)
     public ModelAndView updateCategory(@ModelAttribute("documentCategoryDto") DocumentCategoryDto documentCategoryDto, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("/ui/add-agreement-type");
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/add-agreement-type");
 
         User user = (User) session.getAttribute(AppConstant.USER);
         try {
@@ -112,9 +113,10 @@ public class MarketingConductGridlinesController {
 
     @PostMapping(AppURL.MCG_UPLOAD_NEW_DOCUMENT)
     public ModelAndView uploadDocument(@ModelAttribute("mcgDocumentUploadDto") McgDocumentUploadDto mcgDocumentUploadDto, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_MODEL);
 
+        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_MODEL);
         User user = (User) session.getAttribute(AppConstant.USER);
+
         try {
             Long result = mcgDocumentUploadService.mcgDocumentUpload(mcgDocumentUploadDto, user);
             ArrayList<DocumentCategoryDto> categoryList = (ArrayList<DocumentCategoryDto>) marketingConductGridlinesService.getAllCategorys();
@@ -142,7 +144,7 @@ public class MarketingConductGridlinesController {
     @RequestMapping(value = AppURL.MCG_VIEW_PDF, method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView viewPdf(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView(AppURL.MCG_ADD_DOCUMENT_VIEW_MODEL);
-        User user = (User) request.getSession().getAttribute("USER");
+        User user = (User) request.getSession().getAttribute(AppConstant.USER);
         try {
             if (null != user) {
                 McgPdfDto mcgPdfDto = mcgDocumentUploadService.viewMCGDocument(user);
@@ -362,5 +364,23 @@ public class MarketingConductGridlinesController {
         } catch (Exception e) {
             return result;
         }
+    }
+
+    @GetMapping(AppURL.MCG_SKIP_SIGN_PDF)
+    public ModelAndView skipSign(HttpSession session, HttpServletRequest request) {
+        ModelAndView modelAndView = null;
+        try {
+            User user = (User) request.getSession().getAttribute(AppConstant.USER);
+            if (mcgDocumentUploadService.skipSign(user)) {
+                session.setAttribute("mcgSkip", true);
+                modelAndView = new ModelAndView("redirect:/user/home");
+            } else {
+                session.setAttribute("mcgSkip", false);
+                modelAndView = new ModelAndView(AppURL.MCG_REDIRECT_VIEW_AGREEMENT);
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
     }
 }
