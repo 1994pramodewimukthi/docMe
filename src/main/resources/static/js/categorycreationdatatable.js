@@ -28,7 +28,7 @@ $(function () {
         type: {
             folder: function (obj) {
                 if (obj.sortingOrder >= 0) {
-                    return "<div class='webix_tree_folder' ></div>"; //tree level 1 icon
+                    return "<div class='webix_tree_folder' '></div>"; //tree level 1 icon
                 }
             }
         },

@@ -1,0 +1,660 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-sm" lang="en">
+<head>
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/basic.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/dropzone.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/form-validation/css/formValidation.min.css}">
+
+    <meta name="context-path" th:content="@{/}"/>
+
+    <style>
+        .modal-dialog {
+            max-width: 75% !important;
+        }
+
+        .enable {
+            box-shadow: 0 0px 3px 0 rgb(211, 17, 69) !important;
+            transition: 0.3s;
+            background-color: #fff17012 !important;
+        }
+
+        .modal-header .close {
+            margin-top: -20px !important;
+        }
+
+        .switch1 {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 20px;
+        }
+
+        .switch1 input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider1 {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider1:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 14px;
+            left: 1px;
+            bottom: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider1 {
+            background-color: #d31145;
+        }
+
+        input:focus + .slider1 {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider1:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        .dropify-infos {
+            display: block !important;
+        }
+
+        .pdfContainer {
+            height: 60vh;
+            /*height: 369px;*/
+            overflow-y: scroll;
+            background-color: gray;
+            padding: 10px;
+            border: solid 10px gray;
+        }
+
+        @media (min-width: 768px) {
+            .modal-xl {
+                width: 90%;
+                max-width: 1200px;
+            }
+        }
+    </style>
+</head>
+<body id="loginBody">
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+        <!-- end: sidebar -->
+        <section role="main" class="content-body pb-0">
+            <header class="page-header ">
+                <h2 class="">Upload Agreement</h2>
+                <div class="right-wrapper text-right">
+                    <ol class="breadcrumbs ">
+                        <!--<li>-->
+                        <!--<a href="index.html">-->
+                        <!--<i class="fas fa-home"></i>-->
+                        <!--</a>-->
+                        <!--</li>-->
+                    </ol>
+                </div>
+            </header>
+            <!-- start: page -->
+            <div class="row ">
+                <div class="col-lg-12">
+                    <section class="card">
+                        <form class="form-horizontal"
+                              th:action="@{/mcg/uploadDocument}"
+                              th:id="documentUploadForm"
+                              th:name="documentUploadForm"
+                              th:object="${mcgDocumentUploadDto}"
+                              method="POST" enctype="multipart/form-data">
+
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Agreement Type</label>
+                                        <select class="form-control catId" name="catId"
+                                                id="catId" th:field="*{catId}">
+                                            <option value="">Please select document name</option>
+                                            <option th:each="doc : ${categoryList}"
+                                                    th:value="${{doc.categoryId}}"
+                                                    th:text="${doc.categoryName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Version</label>
+                                        <input th:name="*{documentVersion}" placeholder="Version"
+                                               th:id="*{documentVersion}" th:field="*{documentVersion}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Footer Height</label>
+                                        <input th:name="*{documentFooterHeight}"
+                                               th:id="*{documentFooterHeight}"
+                                               th:field="*{documentFooterHeight}"
+                                               onkeypress="return isNumber(event)" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Maximum Skip Days Count</label>
+                                        <input th:name="*{skipDateCount}"
+                                               th:id="*{skipDateCount}"
+                                               th:field="*{skipDateCount}"
+                                               onkeypress="return isNumber(event)" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mt-2">
+                                        <label class="material-label-fixed">Agreement PDF
+                                            <span class="text-danger">*</span> : </label>
+                                        <label class="float-lg-right float-md-right float-sm-right float-xl-right">Page
+                                            Count : <span id="pageCountPreview">0</span> </label>
+                                        <input type="hidden" th:name="*{pageCount}" th:id="*{pageCount}"
+                                               th:field="*{pageCount}">
+                                        <div class="form-material">
+                                            <input type="file" class="dropify" data-show-loader="true"
+                                                   data-plugin="dropify" data-height="200"
+                                                   data-allowed-file-extensions="pdf" accept=".pdf"
+                                                   th:name="*{documentFile}" id="documentFile"
+                                                   th:field="*{documentFile}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Include Signature From Page Number</label>
+                                        <label class="switch">
+                                            <input type="checkbox" class="checkboxval">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <span class="text-warning switchNO">Inactive</span>
+                                        <span class="text-success switchYES">Active</span>
+                                        <div class="pagecountDIV">
+                                            <label class="col-form-label">Page Number</label>
+                                            <input th:name="*{startPage}" min="0" placeholder="Page No"
+                                                   th:id="*{startPage}" th:field="*{startPage}"
+                                                   onkeypress="return isNumber(event)" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label">Acknowledgement</label>
+                                        <textarea id="acknowledgement" class="form-control" rows="5"
+                                                  th:name="*{documentAcknowledgement}"
+                                                  th:field="*{documentAcknowledgement}"
+                                                  readonly="true" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-right">
+                                    <div class="col-lg-12">
+                                        <button id="enableAcknowledgement" class="btn btn-primary"
+                                                type="button">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+                                        <button id="saveAcknowledgement" name="saveAcknowledgement"
+                                                class="btn btn-primary" disabled
+                                                type="button">
+                                            <i class="fa fa-save"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group row text-right">
+                                    <div class="col-lg-12">
+                                        <button class="btn btn-primary" type="submit" onclick="preview(event)"><i
+                                                class="fas fa-search"></i> Preview
+                                        </button>
+                                        <button class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- end: page -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agreement Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="pdfContainer">
+                        <div id='pdf-viewer' class="text-center"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/form-validation/js/formValidation.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/pdf.js}"></script>
+<script th:inline="javascript">
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+
+    $(document).ready(function () {
+
+        $(".switchYES").hide();
+        $(".pagecountDIV").hide()
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+        if (isSucsess) {
+            swal({
+                title: 'Sucsess',
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/addDocument');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: "Error",
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            });
+        }
+
+        var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
+
+        var button = $("saveAcknowledgement");
+
+        $('#documentUploadForm').formValidation({
+            // framework: 'bootstrap',
+            excluded: ':disabled',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                documentVersion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: nospecial,
+                            message: 'Special characters are not allowed.'
+                        },
+                        stringLength: {
+                            message: 'Version content must be less than 30 characters',
+                            max: 30
+                        }
+                    }
+                },
+                documentFooterHeight: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        integer: {
+                            message: 'Decimal value not allowed.',
+                            thousandsSeparator: '',
+                            decimalSeparator: '.',
+
+                        },
+                        between: {
+                            min: 8,
+                            max: 26,
+                            message: 'The number must be between 8 and 26'
+                        }
+                    }
+                },
+                startPage: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        integer: {
+                            message: 'Decimal value not allowed.',
+                            thousandsSeparator: '',
+                            decimalSeparator: '.'
+                        },
+                        between: {
+                            min: 0,
+                            max: 'pageCount',
+                            message: 'The number  must be between %s and %s'
+                        }
+                    }
+                },
+                skipDateCount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        integer: {
+                            message: 'Decimal value not allowed.',
+                            thousandsSeparator: '',
+                            decimalSeparator: '.'
+                        },
+                        stringLength: {
+                            message: 'Date Count content must be less than 3 digits.',
+                            max: 3
+                        }
+                    }
+                },
+                documentAcknowledgement: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        },
+                        stringLength: {
+                            message: 'Acknowledgement content must be less than 1000 characters',
+                            max: 1000
+                        },
+                        regexp: {
+                            regexp: nospecial,
+                            message: 'Special characters are not allowed.'
+                        }
+                    }
+                },
+                catId: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        }
+                    }
+                },
+                documentValidRank: {
+                    validators: {
+                        notEmpty: {
+                            message: 'This field is required and cannot be empty.'
+                        }
+                    }
+                },
+                documentFile: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select a pdf file.'
+                        },
+                        stringLength: {
+                            message: 'Post content must be less than 255 characters',
+                            max: 255
+                        },
+                        file: {
+                            extension: 'pdf',
+                            type: 'application/pdf',
+                            message: 'Please choose a PDF file'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.fv', function (e) {
+            $('.loader-overlay').show();
+
+        });
+
+        $('#documentUploadForm').data('formValidation').enableFieldValidators('startPage', false);
+
+
+    });
+    /*]]>*/
+</script>
+<script type="text/javascript">
+
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+
+    $("#startPage").val("");
+    $("#pageCountPreview").text("0");
+    $("#pageCount").val(0);
+
+    function preview(e) {
+        e.preventDefault();
+
+        var form = $('#documentUploadForm')[0];
+        var data = new FormData(form);
+        jQuery.ajax({
+            url: CONTEXT_PATH + '/mcg/previewDocument',
+            data: data,
+            enctype: 'multipart/form-data',
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            type: "POST",
+            success: function (pdfData) {
+
+                pdfjsLib.getDocument({data: atob(pdfData)}, false, null, function (progress) {
+                    var percent_loaded = (progress.loaded / progress.total) * 100;
+                    console.log(percent_loaded);
+                }).promise.then(function (pdf) {
+                    thePdf = pdf;
+                    viewer = $('#pdf-viewer');
+                    viewer.empty();
+                    for (page = 1; page <= pdf.numPages; page++) {
+                        canvas = document.createElement("canvas");
+                        canvas.className = 'pdf-page-canvas';
+                        viewer.append(canvas);
+                        renderPage(page, canvas);
+                    }
+                    $("#myModal").modal('show');
+                }).then(null, function (error) {
+                    console.log("Error occurred", error);
+                    swal({
+                        title: "Error",
+                        text: atob(pdfData),
+                        type: 'error',
+                        showConfirmButton: true
+                    });
+                });
+            }
+        });
+    }
+
+    var thePdf = null;
+    const scale = 1.3;
+
+    function renderPage(pageNumber, canvas) {
+        thePdf.getPage(pageNumber).then(function (page) {
+            viewport = page.getViewport(scale);
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            page.render({canvasContext: canvas.getContext('2d'), viewport: viewport});
+        });
+    }
+
+    $(function () {
+        $('#catId').select2({});
+        $('#documentValidRank').select2({});
+    });
+
+    $('.dropify').dropify({
+        tpl: {
+            loader: '<div class="dropify-loader"></div>',
+            filename: '<p class="dropify-filename"><span class="fa fa-file"></span> <span class="dropify-filename-inner"></span></p>'
+        }
+    });
+
+    $("#enableAcknowledgement").click(function () {
+        var txtAra = $("#acknowledgement");
+        var val = txtAra.val();
+        txtAra.attr("readonly", false);
+        txtAra.addClass("enable");
+        txtAra.focus().val('').val(val);
+        $(this).attr("disabled", true);
+        $("#saveAcknowledgement").attr("disabled", false);
+
+    });
+
+    $('#acknowledgement').keyup(function () {
+        if ($('.ackn').hasClass('has-error')) {
+            $('#saveAcknowledgement').prop('disabled', true);
+        } else {
+            $('#saveAcknowledgement').prop('disabled', false);
+        }
+    });
+
+
+    $("#saveAcknowledgement").click(function () {
+        var txtAra = $("#acknowledgement");
+        txtAra.attr("readonly", true);
+        txtAra.removeClass("enable");
+        $(this).attr("disabled", true);
+        $("#enableAcknowledgement").attr("disabled", false);
+    });
+
+
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = CONTEXT_PATH + '/js/pdf.worker.js';
+    $("#documentFile").change(function () {
+        if ($(this).val() !== "") {
+            // $('#documentUploadForm').formValidation('revalidateField', 'startPage');
+
+            var input = document.getElementById("documentFile");
+
+            var fileReader = new FileReader();
+            var file = input.files[0];
+            fileReader.onload = function () {
+                //Step 4:turn array buffer into typed array
+                var typedarray = new Uint8Array(this.result);
+
+                //Step 5:PDFJS should be able to read this
+                pdfjsLib.getDocument(typedarray, false, null, function (progress) {
+                }).promise.then(function (pdf) {
+                    var count = pdf.numPages;
+                    var val = $("#startPage").val();
+                    $("#startPage").attr("max", count - 1);
+                    $("#pageCountPreview").text(count);
+                    $("#pageCount").val(count);
+                    if (parseInt(val) > pdf.numPages) {
+                        swal({
+                            title: "Warning",
+                            text: "Start page value can not be greater than pdf page count.!",
+                            type: 'warning',
+                            allowOutsideClick: false
+                        });
+                        $("#startPage").val(count - 1);
+                    } else {
+                        $("#startPage").val("");
+                    }
+                }).then(null, function (error) {
+                    console.log("Error occurred", error);
+                    swal({
+                        title: "Error",
+                        text: "PDF File is corrupted or invalid.",
+                        type: 'error',
+                        showConfirmButton: true
+                    }).then(function () {
+                        $("#startPage").val("");
+                        $("#startPage").attr("max", 0);
+                        $("#pageCountPreview").text("0");
+                        $("#pageCount").val(0);
+                    });
+                });
+
+            };
+
+            //Step 3:Read the file as ArrayBuffer
+            fileReader.readAsArrayBuffer(file);
+        } else {
+            $("#startPage").attr("max", 0);
+            $("#startPage").val("");
+            $("#pageCountPreview").text("0");
+            $("#pageCount").val(0);
+        }
+    });
+
+    $("#catId").change(function () {
+        var catId = $(this).val();
+        $.get(CONTEXT_PATH + "/mcg/getLatestVersion/" + catId, function (data) {
+
+            $("#documentVersion").val((data) ? "v1" : data);
+            $('#documentUploadForm').formValidation('revalidateField', 'documentVersion');
+        })
+    });
+
+</script>
+
+<script>
+
+    // checkbox validation
+
+    var ckbox = $('.checkboxval');
+    $(ckbox).on('click', function () {
+        if (ckbox.is(':checked')) {
+            // $('#documentUploadForm').data('formValidation').enableFieldValidators('startPage', true);
+            $(".pagecountDIV").show();
+            $(".switchYES").show();
+            $(".switchNO").hide();
+        } else {
+            // $('#documentUploadForm').data('formValidation').enableFieldValidators('startPage', false);
+            // $('#documentUploadForm').formValidation('revalidateField', 'startPage');
+            $(".switchYES").hide();
+            $(".switchNO").show();
+            $(".pagecountDIV").hide();
+            $("#startPage").val('');
+        }
+    });
+</script>
+</body>
+</html>

@@ -11,6 +11,11 @@ public class UserDto {
     private String mobile;
     private String nic;
     private String email;
+    private String userName;
+    private String password;
+    private String userEdit;
+    private String userRoleId;
+
 
     public String getId() {
         return id;
@@ -92,5 +97,37 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserEdit() {
+        return userEdit;
+    }
+
+    public void setUserEdit(String userEdit) {
+        this.userEdit = userEdit;
+    }
+
+    public String getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(String userRoleId) {
+        this.userRoleId = userRoleId;
     }
 }

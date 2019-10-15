@@ -23,6 +23,7 @@ public class DocumentUploadMaster implements Serializable {
     private Date expireDate;
     private String channel;
     private String path;
+    private List<DocumentUploadMasterSystemRole> documentUploadMasterSystemRoles;
 
     @Id
     @Column(name = "doc_upload_mst_id")
@@ -161,5 +162,14 @@ public class DocumentUploadMaster implements Serializable {
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    @OneToMany(mappedBy = "systemRole", cascade = CascadeType.ALL)
+    public List<DocumentUploadMasterSystemRole> getDocumentUploadMasterSystemRoles() {
+        return documentUploadMasterSystemRoles;
+    }
+
+    public void setDocumentUploadMasterSystemRoles(List<DocumentUploadMasterSystemRole> documentUploadMasterSystemRoles) {
+        this.documentUploadMasterSystemRoles = documentUploadMasterSystemRoles;
     }
 }

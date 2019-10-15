@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <title>docME Login</title>
     <!--    <style th:inline="text">-->
     <!--        body {-->
     <!--            /*background-image: url('\'+@{}+\'');*/-->
@@ -24,11 +25,14 @@
                 <h2 class="title text-uppercase font-weight-bold m-0"><i class="fas fa-user mr-1"></i> Sign In</h2>
             </div>
             <div class="card-body">
-                <form action="index.html" method="post" style="opacity: 1 !important;">
+                <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/login}"
+                      method="post"
+                      style="opacity: 1 !important;">
                     <div class="form-group mb-3">
                         <label>Username</label>
                         <div class="input-group">
-                            <input name="username" type="text" class="form-control form-control-lg"/>
+                            <input name="userName" th:field="*{userName}" type="text"
+                                   class="form-control form-control-lg"/>
                             <span class="input-group-append">
 										<span class="input-group-text">
 											<i class="fas fa-user"></i>
@@ -39,7 +43,8 @@
 
                     <div class="form-group mb-3">
                         <div class="input-group">
-                            <input name="pwd" type="password" class="form-control form-control-lg"/>
+                            <input name="password" th:field="*{password}" type="password"
+                                   class="form-control form-control-lg"/>
                             <span class="input-group-append">
 										<span class="input-group-text">
 											<i class="fas fa-lock"></i>
@@ -49,24 +54,19 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-8">
-                            <div class="checkbox-custom checkbox-default">
-                                <input id="RememberMe" name="rememberme" type="checkbox"/>
-                                <label for="RememberMe">Remember Me</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 text-right">
+                        <div class="col-lg-12 text-right">
+<!--                            <a role="menuitem" tabindex="-1" class="btn btn-primary mt-2" th:href="@{/user/register}">Sign-->
+<!--                                Up</a>-->
                             <button type="submit" class="btn btn-primary mt-2">Sign In</button>
                         </div>
                     </div>
 
-                    <span class="mt-3 mb-3 line-thru text-center text-uppercase">
-							</span>
+                    <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
                 </form>
             </div>
         </div>
 
-        <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
+
     </div>
 </section>
 </body>
@@ -74,4 +74,23 @@
 <!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
 <!--end: footer-->
 
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var message = [[${msg}]];
+    var isSucsess = [[${isSucsess}]];
+    var action = [[${action}]];
+
+    if (isSucsess == false) {
+        swal({
+            title: 'Error',
+            text: message,
+            type: 'error',
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            closeOnClickOutside: false
+        });
+    }
+    /*]]>*/
+</script>
 </html>

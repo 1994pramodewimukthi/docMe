@@ -1,6 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
-      class="fixed sidebar-left-collapsed sidebar-light sidebar-left-sm" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" class="fixed       sidebar-left-sm" lang="en">
 <head>
 
     <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
@@ -14,7 +13,7 @@
     <!-- end: header -->
 
 </head>
-<body>
+<body id="loginBody">
 <section class="body">
     <!-- start: header -->
     <header class="header">
@@ -29,7 +28,7 @@
         <!-- end: sidebar -->
         <section role="main" class="content-body pb-0">
             <header class="page-header ">
-                <h2 class="">Category Creation</h2>
+                <h2 class="">Document Creation</h2>
                 <div class="right-wrapper text-right">
                     <ol class="breadcrumbs ">
                         <!--<li>-->
@@ -45,15 +44,15 @@
                 <div class="col-lg-12">
                     <section class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-right mb-md-3">
-                                    <button type="button" class="btn btn-primary btn-sm "
-                                            data-target="#addSubCatModal"
-                                            data-toggle="modal">
-                                        Add Sub Category
-                                    </button>
-                                </div>
-                            </div>
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-12 text-right mb-md-3">-->
+                                    <!--<button type="button" class="btn btn-primary btn-sm "-->
+                                            <!--data-target="#addSubCatModal"-->
+                                            <!--data-toggle="modal">-->
+                                        <!--Add Sub Category-->
+                                    <!--</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div id="webixtablecontainerDocUpload"></div>
@@ -67,13 +66,12 @@
         </section>
     </div>
 
-
-    <input type="hidden" id="catId" name="catId"></input>
     <form th:action="@{/documentUploadController/save}"
           th:id="docUploadTempForm"
           th:object="${documentUploadDto}"
           th:name="docUploadTempForm" method="POST" enctype="multipart/form-data">
 
+        <input type="hidden" id="catId" name="catId">
         <div class="modal fade" id="uploadDocModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalCenterTitle"
              aria-hidden="true">
@@ -91,13 +89,16 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Name</label>
-                                        <input class="form-control"/></input>
+                                        <input class="form-control" type="text" name="documentName"
+                                               th:field="${documentUploadDto.documentName}"
+                                        /></input>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Head Line</label>
-                                        <input class="form-control"/></input>
+                                        <input class="form-control" name="headLine" id="headLine"
+                                               th:field="${documentUploadDto.headLine}"/></input>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -107,8 +108,12 @@
                                                 <span class="input-group-text"><i
                                                         class="fas fa-calendar-alt"></i></span>
                                                                                 </span>
-                                            <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="publishedDate"/></input>
+                                            <!--<input type="text" data-plugin-datepicker="" class="form-control"-->
+                                                   <!--id="publishedDate" th:name="publishDate"-->
+                                                   <!--th:id="publishDate"/></input>-->
+
+                                            <input  th:name="publishDate" id="publishedDate" type="text"
+                                                   class="form-control form-control-lg">
                                         </div>
                                     </div>
                                 </div>
@@ -121,32 +126,36 @@
                                                         <i class="fas fa-calendar-alt"></i>
                                                     </span>
                                               </span>
-                                            <input type="text" data-plugin-datepicker="" class="form-control"
-                                                   id="expiryDate"/></input>
+                                            <!--<input type="text" data-plugin-datepicker="" class="form-control"-->
+                                                   <!--id="expiryDate" th:name="expireDate"-->
+                                                   <!--th:id="expireDate"/></input>-->
+
+
+                                            <input  th:name="expireDate" id="expireDate" type="text"
+                                                    class="form-control form-control-lg">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Description</label>
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea id="documentDescription" class="form-control" rows="3" th:field="${documentUploadDto.documentDescription}"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Access User</label>
-                                        <select class="form-control" id="accessUser">
-                                            <option value="user 01">user 01</option>
-                                            <option value="user 02">user 02</option>
-                                            <option value="user 03">user 03</option>
-                                            <option value="user 04">user 04</option>
+                                        <select class="form-control" id="accessUser" th:field="${documentUploadDto.documentDescription}">
+                                            <option th:each="system : ${systemList}"
+                                                    th:value="${{system}}"
+                                                    th:text="${system.systemRoleName}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Document Upload(PDF files only)</label>
-                                        <input type="file" class="dropify" data-show-loader="true"
+                                        <input type="file" class="dropify" data-show-loader="true" th:field="${documentUploadDto.attachment}"
                                                data-plugin="dropify" id="fileUpload" data-height="200"
                                                data-allowed-file-extensions="pdf" accept=".pdf"/></input>
                                         <div class="row showerrordiv mt-2" style="display: none">
@@ -165,7 +174,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-close"></i> Delete</button>
-                        <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
                             Upload
                         </button>
                     </div>
@@ -201,7 +210,7 @@
 </script>
 
 <script th:inline="javascript">
-    $('#publishedDate,#expiryDate').datepicker({
+    $('#publishedDate,#expireDate').datepicker({
         language: 'en',
         autoClose: true,
         dateFormat: 'dd-mm-yyyy'
@@ -233,7 +242,8 @@
         $('#headLine').val('');
         $('#publishDate').val('');
         $('#expireDate').val('');
-        $('#docDescription').val('');
+//        $('#docDescription').val('');
+        $('#documentDescription').val('');
 //        $('#attachment').val('');
 //        $('#attachment').addClass("dropify-clear");
         $('#acessTypes').val('').trigger('chosen:updated');
@@ -244,8 +254,75 @@
         $('#uploadDocModal').modal('show');
 
     }
+    function modifyDocument(id) {
+        catId = id;
+        $.ajax({
+            url: CONTEXT_PATH + "/documentUploadController/modifyDocument?id=" + id,
+            type: 'GET',
+            cache: false,
+            dataType: 'html',
+            success: function (result) {
+                $('#modifyDiv').html(result);
+                $('#resubmitViwerModal').modal('show');
+                return false;
+                location.replace(CONTEXT_PATH + '/ui/documentUpload')
+            },
+            error: function (result) {
+
+            }
+
+        });
+    }
+    function downloadAttachment(id) {
+        var url = CONTEXT_PATH + '/documentUploadController/viewMSTDocumemt?docId=' + id;
+        window.location.href = url;
+    }
+
+    function MasterDocumentDelete() {
+        var masterId = $("#mstId").val();
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete this Document!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+        }).then(function () {
+            jQuery.ajax({
+                url: CONTEXT_PATH + "/documentUploadController/delete_auth_doc?document_id=" + masterId,
+                type: 'GET',
+                success: function (data) {
+                    if (data.isSucsess == 1) {
+                        swal({
+                            title: data.message,
+                            type: 'success',
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            closeOnClickOutside: false
+                        }).then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentUpload')
+                        });
+                    } else {
+                        swal({
+                            title: data.message,
+                            type: 'error',
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            closeOnClickOutside: false
+                        }).then(function () {
+                            location.replace(CONTEXT_PATH + '/ui/documentUpload')
+                        });
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
 
 
+    }
 </script>
 <script th:inline="javascript">
     $(document).ready(function () {
@@ -264,7 +341,7 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+                location.replace(CONTEXT_PATH + '/ui/documentUpload');
             });
         } else if (isSucsess == false) {
             swal({
@@ -275,7 +352,7 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+                location.replace(CONTEXT_PATH + '/ui/documentUpload');
             });
         }
 

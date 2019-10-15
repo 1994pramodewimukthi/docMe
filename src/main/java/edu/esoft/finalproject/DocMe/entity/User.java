@@ -29,6 +29,7 @@ public class User implements Serializable {
     private String email;
     private String userName;
     private String password;
+    private Integer userRoleId;
 
     public Integer getId() {
         return id;
@@ -126,5 +127,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(Integer userRoleId) {
+        this.userRoleId = userRoleId;
     }
 }

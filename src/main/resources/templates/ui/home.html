@@ -1,0 +1,205 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed       sidebar-left-sm" lang="en">
+<head>
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+
+    <meta name="context-path" th:content="@{/}"/>
+
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+</head>
+<body id="loginBody">
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+        <!-- end: sidebar -->
+    </div>
+
+    <!-- end: page -->
+    <div class="modal fade" id="addSubCatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <form th:action="@{/documentManagement/save}" id="docCategoryTempForm" th:object="${docCategoryTemp}"
+                  th:name="docCategoryTemp" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle">Add Sub Category</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" id="parentId"
+                                   th:value="${docCategoryTemp.parentDocCategoryTemp}"
+                                   th:field="${docCategoryTemp.parentDocCategoryTemp}"></input>
+
+                            <div class="col-md-6 form-group">
+                                <label class="material-label-fixed">Category Name * :</label>
+                                <div class="form-material ">
+                                    <input class="form-control" type="text" th:name="catName"
+                                           th:field="${docCategoryTemp.docCategoryName}" th:id="catName"></input>
+                                    <span class="material-line"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="material-label-fixed">Sorting Order * :</label>
+                                <div class="form-material ">
+                                    <input class="form-control" type="text" name="sortingOrder"
+                                           th:field="${docCategoryTemp.sortingOrder}" id="sortingOrder"></input>
+                                    <span class="material-line"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label class="material-label-fixed">Category Description:</label>
+                                <div class="form-material ">
+                                    <textarea class="form-control" rows="3" id="desc" name="desc"
+                                              th:field="${docCategoryTemp.docCategoryDescription}"></textarea>
+                                    <span class="material-line"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary " data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+
+
+                        <button type="submit" name="action1" value="Insert" class="btn btn-primary "><i class="fa fa-save"></i> Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="modifyDiv">
+
+    </div>
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script th:src="@{/js/categorycreationdatatable.js}"></script>
+
+<!--<script src="../../static/js/categorycreationdatatable.js" th:src="@{/js/categorycreationdatatable.js}"></script>-->
+
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+
+<script th:inline="javascript">
+    $('#publishedDate,#expiryDate').datepicker({
+        language: 'en',
+        autoClose: true,
+        dateFormat: 'dd-mm-yyyy'
+
+    });
+    $('#accessUser').select2({
+        multiple: true
+
+    });
+
+    function saveCategory() {
+        swal({
+            text: 'Sub category created successfully',
+            type: 'success'
+        });
+    }
+
+
+    //    --------------------------------------------------------------------------------------
+
+    function modifyCategory(id) {
+        $.ajax({
+            url: CONTEXT_PATH + "/documentManagement/load_category_Modify_content?category_id=" + id,
+            type: 'GET',
+            cache: false,
+            dataType: 'html',
+            success: function (result) {
+                $('#modifyDiv').html(result);
+                $('#modifyModal').modal('show');
+                return false;
+            },
+            error: function (result) {
+                console.log(result);
+            }
+
+        });
+    }
+
+    function addCategory(id) {
+
+        $('#parentId').val(id);
+        $('#catTitle').text("Add Sub Category")
+        $('#addSubCatModal').modal('show');
+
+        // $('#parentId').val(id);
+        // $('#catTitle').text("Add Sub Category")
+        // $('#myModal').modal('show');
+    }
+
+
+</script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+
+
+        if (isSucsess) {
+            swal({
+                title: "Success",
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: "Error",
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/categoryCreation');
+            });
+        }
+
+
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

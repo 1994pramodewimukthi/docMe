@@ -4,20 +4,23 @@ package edu.esoft.finalproject.DocMe.contoller;
 import edu.esoft.finalproject.DocMe.config.*;
 import edu.esoft.finalproject.DocMe.dto.AuthRejectCategoryWebix;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
-import edu.esoft.finalproject.DocMe.entity.DocCategoryMaster;
-import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
-import edu.esoft.finalproject.DocMe.entity.User;
+import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.dto.Email;
+import edu.esoft.finalproject.DocMe.entity.*;
 import edu.esoft.finalproject.DocMe.service.DocCategoryService;
+import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MessageService;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(AppURL.DOCUMENT_MANAGEMENT)
@@ -35,6 +38,8 @@ public class DocumentManageController {
     private MessageService messageService;
     @Autowired
     private DocumentUploadService documentUploadService;
+    @Autowired
+    private DocumentUploadSFTPService documentUploadSFTPService;
 
     @RequestMapping(value = AppURL.SAVE, method = RequestMethod.POST)
     public ModelAndView saveCategory(@ModelAttribute("docCategoryTemp") DocCategoryTemp docCategoryTemp1, BindingResult bindingResult, ModelAndView modelAndView, @ModelAttribute("user") User user) {
@@ -42,7 +47,7 @@ public class DocumentManageController {
             DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
             int checkCatagorySortingExist = docCategoryService.checkCatagorySortingExistTemp(docCategoryTemp1);
             modelAndView.addObject("docCategoryTemp", docCategoryTemp);
-            modelAndView.setViewName("/ui/category-creation");
+            modelAndView.setViewName("/ui/category/category-creation");
             docCategoryTemp1.setInpUserId(user.getUserName());
             int result = docCategoryService.createNewCategory(docCategoryTemp1);
             if (result == SUCSESS) {
@@ -72,7 +77,7 @@ public class DocumentManageController {
                 master.setParentDocCategoryMst(new DocCategoryMaster());
             }
             modelAndView.addObject("master", master);
-            modelAndView.setViewName("/ui/modifycategorycontent");
+            modelAndView.setViewName("/ui/category/modifycategorycontent");
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
@@ -107,7 +112,7 @@ public class DocumentManageController {
         }
         DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
         modelAndView.addObject("docCategoryTemp", docCategoryTemp);
-        modelAndView.setViewName("/ui/category-creation");
+        modelAndView.setViewName("/ui/category/category-creation");
         return modelAndView;
     }
 
@@ -123,7 +128,7 @@ public class DocumentManageController {
 
     @RequestMapping("/authRejectModalViwer")
     public ModelAndView athRejectCategoryModalContent(@RequestParam(AppConstant.CATEGORY_ID) int category_id, @ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView("/ui/authrizeviwer");
+        ModelAndView modelAndView = new ModelAndView("/ui/category/authrizeviwer");
         try {
             DocCategoryTemp categoryTemp = docCategoryService.getCategoryById(category_id);
             if (categoryTemp.getParentDocCategoryTemp() == null) {
@@ -180,7 +185,7 @@ public class DocumentManageController {
 
     @GetMapping(AppURL.RESUBMIT)
     public ModelAndView Resubmit(@RequestParam(AppConstant.CATEGORY_ID) int category_id, @ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView("/ui/categoryresubmit1");
+        ModelAndView modelAndView = new ModelAndView("/ui/category/categoryresubmit1");
         try {
             DocCategoryTemp categoryTemp = docCategoryService.getCategoryById(category_id);
             if (categoryTemp.getParentDocCategoryTemp() == null) {
@@ -228,7 +233,7 @@ public class DocumentManageController {
             modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
             modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.ERROR_ADMINISTRATOR_FOR_MORE_DETAIL));
         }
-        modelAndView.setViewName("/ui/category-resubmit");
+        modelAndView.setViewName("/ui/category/category-resubmit");
         return modelAndView;
     }
 
@@ -242,4 +247,64 @@ public class DocumentManageController {
         }
         return categoryMasters;
     }
+
+    @RequestMapping("/authRejectDocModalViwer")
+    public ModelAndView athRejectDocModalContent(@RequestParam(value = "docId") int docId, @ModelAttribute("user") User user) {
+        ModelAndView modelAndView = new ModelAndView("/ui/document/documentauthrizeviwer");
+        List<SystemRole> systemRoles = new ArrayList<>();
+        try {
+            List<AccessUserType> accessUserTypes = new ArrayList<>();
+            /*try {
+                accessUserTypes = accessUserTypeService.searchAllByChannelCode(user);
+                for (AccessUserType accessUserType : accessUserTypes) {
+                    List<SystemRole> roles = systemRoleService.searchAllUserRolesByAccessUserType(accessUserType);
+                    for (SystemRole role : roles) {
+                        systemRoles.add(role);
+                    }
+                }
+
+            } catch (MisynJDBCException e) {
+                LOGGER.error(e.getMessage());
+            }*/
+            modelAndView.addObject("systemList", systemRoles);
+            DocumentUploadTemp documentUploadTemp = documentUploadService.searchTempDocumentById(docId);
+            DocumentUploadDto documentUploadDto = new DocumentUploadDto();
+            documentUploadDto.setDocumentUploadTempId(documentUploadTemp.getDocumentUploadTempId());
+            documentUploadDto.setDocCategoryMasterId(documentUploadTemp.getDocCategoryMaster().getDocCategoryMstId());
+            documentUploadDto.setDocumentName(documentUploadTemp.getDocumentName());
+            documentUploadDto.setHeadLine(documentUploadTemp.getHeadline());
+            documentUploadDto.setDocumentDescription(documentUploadTemp.getDocumentDescription());
+            List<String> acessTypes = documentUploadDto.getAcessTypes();
+            for (DocumentUploadTempSystemRole documentUploadTempSystemRole : documentUploadTemp.getDocumentUploadTempSystemRoles()) {
+                acessTypes.add(Integer.toString(documentUploadTempSystemRole.getSystemRole().getSystemRoleId()));
+            }
+            documentUploadDto.setAcessTypes(acessTypes);
+            documentUploadDto.setRecordStatus(documentUploadTemp.getRecordStatus());
+            documentUploadDto.setInpDateTime(Utility.getDateString(documentUploadTemp.getInpDateTime(), AppConstant.DATE_FORMAT));
+            documentUploadDto.setPublishDate(documentUploadTemp.getPublishDate());
+            documentUploadDto.setExpireDate(documentUploadTemp.getExpireDate());
+            documentUploadDto.setPath(documentUploadTemp.getPath());
+            modelAndView.addObject("documentUploadDto", documentUploadDto);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
+
+    }
+
+
+    @RequestMapping(value = "/email-send", method = RequestMethod.POST)
+    public ModelAndView sendEmail(@ModelAttribute("email") Email email, ModelAndView modelAndView) {
+        try {
+            InputStream inputStream = documentUploadSFTPService.viewUploadedFile(Integer.parseInt(email.getDocId()), AppConstant.MST);
+            email.setDocInputStream(IOUtils.toByteArray(inputStream));
+            int result = documentUploadService.sendEmail(email);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
+            modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.ERROR_ADMINISTRATOR_FOR_MORE_DETAIL));
+        }
+        return modelAndView;
+    }
+
 }

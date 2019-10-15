@@ -1,0 +1,345 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-sm" lang="en">
+<head>
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/basic.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/dropzone.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/form-validation/css/formValidation.min.css}">
+    <meta name="context-path" th:content="@{/}"/>
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+
+
+</head>
+<body id="loginBody">
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+        <!-- end: sidebar -->
+        <section role="main" class="content-body pb-0">
+            <div class="site-content-title">
+                <div class="col-xl-6  col-lg-12">
+                    <h3 class="popheading">Update Current Agreement</h3>
+                </div>
+                <div class="col-xl-6  col-lg-12">
+                </div>
+            </div>
+            <!-- END PAGE TITLE -->
+            <!--  START DASHBOARD -->
+            <div class="contain-inner dashboard-v2">
+                <div class="col-md-12">
+                    <div class="divider25"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row ">
+                                <div class="offset-xl-1 col-xl-10 col-lg-12 col-md-12 col-sm-12 dashboard_v4_box_block"
+                                     style="margin-bottom: 30px;">
+                                    <div class="content reportpage">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div aria-multiselectable="true" role="tablist" id="accordion">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h6 class="mb-0 text-uppercase">
+                                                                Agreement Details
+                                                            </h6>
+                                                        </div>
+                                                        <div class="collapse in" id="collapseOne">
+                                                            <div class="card-block">
+                                                                <form class="form-horizontal"
+                                                                      th:action="@{/mcg/updateDocument}"
+                                                                      th:id="documentUpdateForm"
+                                                                      th:name="documentUpdateForm"
+                                                                      th:object="${mcgDocumentUpdateDto}"
+                                                                      method="POST" enctype="multipart/form-data">
+                                                                    <input readonly type='hidden' th:id="*{docId}"
+                                                                           th:field="*{docId}" th:name="*{docId}"/>
+                                                                    <input readonly type='hidden'
+                                                                           th:id="*{pageCount}"
+                                                                           th:field="*{pageCount}"
+                                                                           th:name="*{pageCount}"/>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <label class="material-label-fixed">Agreement
+                                                                                Name
+                                                                                : </label>
+                                                                            <div class="form-material ">
+                                                                                <input readonly type='text'
+                                                                                       class="form-control"
+                                                                                       th:id="*{docName}"
+                                                                                       th:field="*{docName}"
+                                                                                       th:name="*{docName}"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label class="material-label-fixed">Agreement
+                                                                                Input Date : </label>
+                                                                            <div class="form-material ">
+                                                                                <input readonly type='text'
+                                                                                       class="form-control"
+                                                                                       th:id="*{uploadedDate}"
+                                                                                       th:field="*{uploadedDate}"
+                                                                                       th:name="*{uploadedDate}"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <label class="material-label-fixed">Maximum
+                                                                                skip days count <span
+                                                                                        class="text-danger">*</span>:
+                                                                            </label>
+                                                                            <div class="form-material ">
+                                                                                <input type='text'
+                                                                                       class="form-control"
+                                                                                       th:id="*{skipDateCount}"
+                                                                                       th:field="*{skipDateCount}"
+                                                                                       th:name="*{skipDateCount}"
+                                                                                       onkeypress="return isNumber(event)"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label class="material-label-fixed">Include
+                                                                                Signature From Page No :</label>
+                                                                            <div class='input-group date'>
+                                                                                <input type='text'
+                                                                                       class="form-control"
+                                                                                       th:id="*{startPage}"
+                                                                                       th:field="*{startPage}"
+                                                                                       th:name="*{startPage}"
+                                                                                       onkeypress="return isNumber(event)"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <label class="material-label-fixed">Footer
+                                                                                Height <span
+                                                                                        class="text-danger">*</span>:</label>
+                                                                            <div class='input-group date'>
+                                                                                <input type='text'
+                                                                                       class="form-control"
+                                                                                       th:id="*{footerHeight}"
+                                                                                       th:field="*{footerHeight}"
+                                                                                       th:name="*{footerHeight}"
+                                                                                       onkeypress="return isNumber(event)"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 col-sm-12">
+                                                                            <button type="submit"
+                                                                                    id="submitbtn"
+                                                                                    class="btn btn-primary flat-buttons btn-icon-hover fa fa-save waves-effect waves-button floatRight CusFormBtn">
+                                                                                <span>Update</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- end: page -->
+    </div>
+<!--    <div class="modal fade" id="addAgreementTypeModal" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="exampleModalCenterTitle"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-lg" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <form th:action="@{/mcg/saveCategory}" th:object="${documentCategoryDto}"-->
+<!--                      th:name="documentCategoryDto" id="addNewCategoryForm"-->
+<!--                      method="POST">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h4 class="modal-title" id="">Add Agreement Type</h4>-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <div class="card-body">-->
+<!--                            <div class="form-group row">-->
+<!--                                <div class="col-lg-12">-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label class="col-form-label">Agreement Type</label>-->
+<!--                                        <input th:value="${documentCategoryDto.categoryName}"-->
+<!--                                               th:field="${documentCategoryDto.categoryName}"-->
+<!--                                               th:id="${documentCategoryDto.categoryName}"-->
+<!--                                               th:name="${documentCategoryDto.categoryName}" class="form-control"-->
+<!--                                               type="text"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <div class="col-md-12 text-right">-->
+<!--                            <button type="button" onclick="closeModal()" class="btn btn-primary " data-dismiss="modal">-->
+<!--                                <i class="fas fa-times-circle"></i>-->
+<!--                                Close-->
+<!--                            </button>-->
+<!--                            <button type="submit" name="action1" value="Insert" class="btn btn-primary "><i-->
+<!--                                    class="fa fa-plus"></i> Add-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="modal fade" id="updateAgreementTypeModal" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">-->
+
+<!--    </div>-->
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/form-validation/js/formValidation.min.js}"></script>
+
+<script th:inline="javascript">
+
+    $('#addAgreementTable').DataTable({});
+
+    var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
+
+    $('#addNewCategoryForm').formValidation({
+        framework: 'bootstrap',
+        excluded: ':disabled',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            categoryName: {
+                validators: {
+                    notEmpty: {
+                        message: 'This field is required and cannot be empty.'
+                    },
+                    regexp: {
+                        regexp: nospecial,
+                        message: 'Special characters are not allowed.'
+                    },
+                    stringLength: {
+                        message: 'Post content must be less than 100 characters',
+                        max: 100
+                    }
+                }
+            }
+        }
+    }).on('success.form.fv', function (e) {
+        $('.loader-overlay').show();
+
+    });
+
+    $('#addcategtable').DataTable({
+        "lengthMenu": [10, 50, 150, 500],
+        "processing": true,
+        "serverSide": false,
+        "searching": true,
+        "responsive": true,
+    });
+
+</script>
+
+<script th:inline="javascript">
+    function updateCategoryForm(id) {
+        $.ajax({
+            type: "GET",
+            url: CONTEXT_PATH + "/mcg/viewUpdateCategory/" + id,
+            success: function (data) {
+                $('#updateAgreementTypeModal').html(data);
+                $('#updateAgreementTypeModal').modal('show');
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+            }
+        });
+    }
+
+
+    function closeModal() {
+        location.replace(CONTEXT_PATH + '/ui/agreementCategory');
+    }
+
+    $(document).ready(function () {
+
+        /*<![CDATA[*/
+        var message = [[${msg}]];
+        var isSucsess = [[${isSucsess}]];
+        var action = [[${action}]];
+
+
+        if (isSucsess) {
+            swal({
+                title: 'Success',
+                text: message,
+                type: 'success',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                location.replace(CONTEXT_PATH + '/ui/agreementCategory');
+            });
+        } else if (isSucsess == false) {
+            swal({
+                title: 'Error',
+                text: message,
+                type: 'error',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                closeOnClickOutside: false
+            }).then(function () {
+                if (action == "ADD") {
+                    $("#addModal").modal('show');
+                } else {
+                    location.replace(CONTEXT_PATH + '/ui/agreementCategory');
+                }
+
+            });
+        }
+
+
+    });
+    /*]]>*/
+</script>
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+</body>
+</html>

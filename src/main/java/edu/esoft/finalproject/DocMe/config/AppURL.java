@@ -36,15 +36,16 @@ public class AppURL {
     final public static String MCG_UPLOAD_NEW_SIGNATURE = "/uploadSignature";
     final public static String MCG_UPLOAD_SIGN_PDF = "/uploadSignPdf";
     final public static String MCG_SKIP_SIGN_PDF = "/skipSign";
+    final public static String LOGOUT = "/logout";
     final public static String MCG_GET_DOCUMENT_VERSION = "/getLatestVersion/{catId}";
 
     final public static String MCG_VIEW_UPDATE_CATEGORY_MODEL = "rpmc/category_update_modal";
     final public static String MCG_ADD_CATEGORY_MODEL = "rpmc/add_category";
-    final public static String MCG_ADD_DOCUMENT_MODEL = "rpmc/add_document";
-    final public static String MCG_ADD_DOCUMENT_VIEW_MODEL = "rpmc/doc_view_for_sign";
+    final public static String MCG_ADD_DOCUMENT_MODEL = "/ui/mcg/upload-agreement";
+    final public static String MCG_ADD_DOCUMENT_VIEW_MODEL = "ui/mcg/view_pdf";
     final public static String MCG_ADD_DOCUMENT_REPORT_VIEW_MODEL = "rpmc/report";
     final public static String MCG_ADD_DOCUMENT_EXPIRE_DATE = "rpmc/doc_expire_date";
-    final public static String MCG_UPDATE_DOCUMENT = "rpmc/update_doc";
+    final public static String MCG_UPDATE_DOCUMENT = "ui/mcg/update_doc";
     final public static String MCG_UPLOADED_DOCUMENT = "rpmc/view_uploaded_doc";
     final public static String MCG_RELATED_DOCUMENT = "rpmc/view_signed_doc";
     final public static String MCG_VIEW_SELECT_DOCUMENT = "rpmc/mcg_doc_view";
@@ -64,7 +65,10 @@ public class AppURL {
     final public static String GET_REJECTED_LIST = "/get_rejected_lst";
     public final static String UPDATE_CRESUBMIT_CATEGORY = "/updateresubmitcategory";
     final public static String DOCUMENT_UPLOAD = "/documentUpload";
+
     final public static String DOCUMENT_UPLOAD_WEBIX_CAT = "/document_upload_webix_Category";
 
     final public static String DOCUMENT_UPLOAD_CONTROLLER = "/documentUploadController";
+    final public static String DOCUMENT_UPLOAD_SAVE = "/save";
+    final public static String DOCUMENT_UPLOAD_LIST = "/getPendingDocList";
 }

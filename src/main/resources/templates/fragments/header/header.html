@@ -1,85 +1,178 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-collapsed sidebar-light sidebar-left-sm" lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:fragment="side-menu">
+  <aside id="sidebar-left" class="sidebar-left">
+    <div class="sidebar-header">
+      <div class="sidebar-title">
+        Navigation
+      </div>
+      <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed" data-target="html"
+           data-fire-event="sidebar-left-toggle">
+        <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
+      </div>
+    </div>
+    <div class="nano">
+      <div class="nano-content">
+        <nav id="menu" class="nav-main" role="navigation">
 
-<head>
-  <link rel="stylesheet" th:href="@{/vendor/select2/css/select2.min.css}">
-  <link rel="stylesheet" th:href="@{/vendor/select2-bootstrap-theme/select2-bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/vendor/datatables/custom-datatables/css/select.dataTables.min.css}">
-  <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}">
-  <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}">
-
-  <!-- start: header -->
-  <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
-  <!-- end: header -->
-</head>
-<body>
-<section class="body">
-  <!-- start: header -->
-  <header class="header">
-    <!--start: top-nav-->
-    <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
-    <!--end: top-nav-->
-  </header>
-  <!-- end: header -->
-  <div class="inner-wrapper">
-    <!-- start: sidebar -->
-    <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
-    <!-- end: sidebar -->
-    <section role="main" class="content-body pb-0">
-      <header class="page-header">
-        <h2>Batch Delivery Status Update</h2>
-        <div class="right-wrapper text-right">
-          <ol class="breadcrumbs">
-            <!--<li>-->
-            <!--<a href="index.html">-->
-            <!--<i class="fas fa-home"></i>-->
+          <ul class="nav nav-main">
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(1)">
+                <i class="fas fa-home" aria-hidden="true"></i>
+                <span>Home</span>
+              </a>
+            </li>
+            <!--<li class="nav-active">-->
+            <!--<a class="nav-link" href="#" onclick="loadPage(2)">-->
+            <!--<i class="fas fa-truck" aria-hidden="true"></i>-->
+            <!--<span>Set Delivery Method</span>-->
             <!--</a>-->
             <!--</li>-->
-          </ol>
-        </div>
-      </header>
-      <!-- start: page -->
-      <div class="row">
-        <div class="col-md-12">
-          <section class="card">
-            <div class="card-body">
-              <form enctype="multipart/form-data" id="fileupload" name="fileupload">
-                <input type="file" id="file" name="file" class="dropify" data-height="300"
-                       data-allowed-file-extensions="xls xlsx"/>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(3)">
+                <i class="fas fa-calendar" aria-hidden="true"></i>
+                <span>Set Dispatch Date</span>
+              </a>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(4)">
+                <i class="fas fa-print" aria-hidden="true"></i>
+                <span>View Print Batch Summary</span>
+              </a>
+            </li>
+            <li class="nav-parent nav-expanded">
+              <a class="nav-link" href="#">
+                <i class="fas fa-truck" aria-hidden="true"></i>
+                <span>Delivery Status Update</span>
+              </a>
+              <ul class="nav nav-children">
+                <li>
+                  <a class="nav-link" onclick="loadPage(5)">Batch Update (Courier)</a>
+                </li>
+                <li>
+                  <a class="nav-link" onclick="loadPage(2)">Manual Update (Admin)</a>
+                </li>
+                <li>
+                  <a class="nav-link" onclick="loadPage(7)">Batch Update (Admin)</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(6)">
+                <i class="fas fa-phone" aria-hidden="true"></i>
+                <span>Call Center Confirmation</span>
+              </a>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(8)">
+                <i class="fas fa-users-cog" aria-hidden="true"></i>
+                <span>LP Status Maintenance</span>
+              </a>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(9)">
+                <i class="fas fa-truck" aria-hidden="true"></i>
+                <span>Courier Maintenance</span>
+              </a>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(10)">
+                <i class="fas fa-envelope-open" aria-hidden="true"></i>
+                <span>SMS Template</span>
+              </a>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(11)">
+                <i class="fas fa-comment-dots" aria-hidden="true"></i>
+                <span>SMS Log</span>
+              </a>
+            </li>
+            <li class="nav-active">
+              <a class="nav-link" href="#" onclick="loadPage(12)">
+                <i class="fas fa-user" aria-hidden="true"></i>
+                <span>Pre LP Assignment</span>
+              </a>
+            </li>
 
-                <div class="row showerrordiv mt-2" style="display: none">
-                  <div class="col-md-12">
-                    <div class="alert alert-warning alert-icon-left" role="alert">
-                      <div class="float-xs-left errormsg">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <footer class="card-footer text-right">
-              <!--<button class="btn btn-primary" onclick="setDispatchDate()"><i class="fas fa-edit"></i> Update-->
-              <!--Dispatch Date-->
-              <!--</button>-->
-              <button class="btn btn-primary" onclick="deliveryStatusUpdate()"><i class="fas fa-edit"></i>
-                Update Batch
-                Delivery Status
-              </button>
-
-            </footer>
-          </section>
-        </div>
+            <!--<li class="nav-active">-->
+            <!--<a class="nav-link" href="#" onclick="loadPage(5)">-->
+            <!--<i class="fas fa-envelope" aria-hidden="true"></i>-->
+            <!--<span>View Delivery Batch Summary</span>-->
+            <!--</a>-->
+            <!--</li>-->
+          </ul>
+        </nav>
       </div>
+      <form id="sidemenu-form" action="/"></form>
 
-      <!-- end: page -->
-    </section>
-  </div>
+      <form id="home" action="#" th:action="@{/#}" method="get"></form>
+      <form id="deliveryMethod" action="#" th:action="@{/deliveryMethod}" method="get"></form>
+      <form id="dispatchDate" action="#" th:action="@{/dispatchDate}" method="get"></form>
+      <form id="printBatchSummary" action="#" th:action="@{/printBatchSummary}" method="get"></form>
+      <form id="deliveryStatusSummary" action="#" th:action="@{/deliveryStatus}" method="get"></form>
+      <form id="updateManualAdmin" action="#" th:action="@{/getFilterSelections}" method="get"></form>
+      <form id="batchUploadCourier" action="#" th:action="@{/batchUpdateCourier}" method="get"></form>
+      <form id="batchUploadAdmin" action="#" th:action="@{/batchUpdateAdmin}" method="get"></form>
+      <form action="#" id="callCenterConfirmation" method="get" th:action="@{/callCenter}"></form>
+      <form action="#" id="lpMaintenance" method="get" th:action="@{/lpMaintenance}"></form>
+      <form action="#" id="courierMaintenance" method="get" th:action="@{/courierMaintenance}"></form>
+      <form action="#" id="smsTemplate" method="get" th:action="@{/smsTemplate}"></form>
+      <form action="#" id="smsLog" method="get" th:action="@{/smsLog}"></form>
+      <form action="#" id="autoAssignCoi" method="get" th:action="@{/autoAssignLp}"></form>
 
-</section>
-<!--start: footer-->
-<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
-<!--end: footer-->
+      <script>
+          function loadPage(pageNo) {
+              switch (pageNo) {
+                  case 1:
+                      $('#home').submit();
+                      break;
+                  case 2:
+                      $('#updateManualAdmin').submit();
+                      break;
+                  case 3:
+                      $('#dispatchDate').submit();
+                      break;
+                  case 4:
+                      $('#printBatchSummary').submit();
+                      break;
+                  case 5:
+                      $('#batchUploadCourier').submit();
+                      break;
+                  case 6:
+                      $('#callCenterConfirmation').submit();
+                      break;
+                  case 7:
+                      $('#batchUploadAdmin').submit();
+                      break;
+                  case 8:
+                      $('#lpMaintenance').submit();
+                      break;
+                  case 9:
+                      $('#courierMaintenance').submit();
+                      break;
+                  case 10:
+                      $('#smsTemplate').submit();
+                      break;
+                  case 11:
+                      $('#smsLog').submit();
+                      break;
+                  case 12:
+                      $('#autoAssignCoi').submit();
+                      break;
+              }
+          }
 
+          // Maintain Scroll Position
+          if (typeof localStorage !== 'undefined') {
+              if (localStorage.getItem('sidebar-left-position') !== null) {
+                  var initialPosition = localStorage.getItem('sidebar-left-position'),
+                      sidebarLeft = document.querySelector('#sidebar-left .nano-content');
 
-</body>
+                  sidebarLeft.scrollTop = initialPosition;
+              }
+          }
+      </script>
+    </div>
+  </aside>
+</div>
 </html>

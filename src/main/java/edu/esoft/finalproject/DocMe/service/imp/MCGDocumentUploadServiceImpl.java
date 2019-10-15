@@ -128,7 +128,6 @@ public class MCGDocumentUploadServiceImpl implements MCGDocumentUploadService {
 
                 mcgDocument.setCatId(new MCGCategory(Integer.parseInt(uploadDto.getCatId().trim())));
                 mcgDocument.setDocVersion(uploadDto.getDocumentVersion().trim());
-                mcgDocument.setAccessUserType(Integer.parseInt(uploadDto.getDocumentValidRank().trim()));
                 mcgDocument.setFooterHight(Integer.parseInt(uploadDto.getDocumentFooterHeight().trim()));
                 if (null != storeDocName) {
                     mcgDocument.setFileStoreName(storeDocName.trim());
@@ -161,9 +160,6 @@ public class MCGDocumentUploadServiceImpl implements MCGDocumentUploadService {
     }
 
     private Long validateUploadDocument(McgDocumentUploadDto mcgDocumentUploadDto) {
-        if (mcgDocumentUploadDto.getDocumentValidRank().trim().isEmpty() || Integer.parseInt(mcgDocumentUploadDto.getDocumentValidRank().trim()) < 0) {
-            return MessageConstant.INVALIDE_USER_RANK;
-        }
 
         if (mcgDocumentUploadDto.getCatId().trim().isEmpty() || Integer.parseInt(mcgDocumentUploadDto.getCatId().trim()) <= 0) {
             return MessageConstant.INVALIDE_DOC_NAME;
