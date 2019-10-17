@@ -203,6 +203,7 @@ public class UserController {
             boolean result = systemRoleDockUpService.changeSystemRolePrivileges(systemRolePrivileges);
 
             modelAndView.setViewName("/ui/system/system-role-privilege");
+            modelAndView.addObject("systemRoleDto", new SystemRoleDto());
 
             if (result) {
                 modelAndView.addObject(IS_SUCSESS, result);

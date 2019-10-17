@@ -33,22 +33,27 @@
                     <tr th:each="privilege,i :${systemRolePrivileges.systemMenuItemPrivilegeDtos}">
                         <td th:text="${privilege.systemMenuItemName}"></td>
                         <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
                             <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
                             <input type="checkbox" name="viewPrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].viewPrivilege}" >
                         </td >
                         <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
                             <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
                             <input type="checkbox" name="authorizationPrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].authorizationPrivilege}" >
                         </td>
                         <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
                             <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
                             <input type="checkbox"  name="savePrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].savePrivilege}" >
                         </td>
                         <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
                             <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
                             <input type="checkbox" name="deletePrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].deletePrivilege}" >
                         </td>
                         <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
                             <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
                             <input type="checkbox" name="updatePrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].updatePrivilege}" >
                         </td>
