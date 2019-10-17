@@ -1,6 +1,7 @@
 package edu.esoft.finalproject.DocMe.dto;
 
 public class SystemMenuItemPrivilegeDto {
+    private Integer id;
     private Integer systemMenuItemId;
     private String systemMenuItemName;
     private String systemRoleId;
@@ -9,6 +10,14 @@ public class SystemMenuItemPrivilegeDto {
     private boolean savePrivilege;
     private boolean deletePrivilege;
     private boolean updatePrivilege;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getSystemRoleId() {
         return systemRoleId;

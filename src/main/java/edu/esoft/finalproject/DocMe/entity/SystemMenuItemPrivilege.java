@@ -6,6 +6,8 @@ import javax.persistence.*;
 @Table(name = "system_menu_item_privilege")
 public class SystemMenuItemPrivilege {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer systemMenuItemId;
     private String systemRoleId;
     private boolean viewPrivilege;
@@ -15,6 +17,14 @@ public class SystemMenuItemPrivilege {
     private boolean updatePrivilege;
 
     public SystemMenuItemPrivilege() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getSystemMenuItemId() {

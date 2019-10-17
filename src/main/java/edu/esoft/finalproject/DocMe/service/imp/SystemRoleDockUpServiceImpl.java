@@ -116,8 +116,10 @@ public class SystemRoleDockUpServiceImpl implements SystemRoleDockUpService {
         try {
             for (SystemMenuItemPrivilegeDto systemMenuItemPrivilegeDto : systemMenuItemPrivilegeDtos) {
                 SystemMenuItemPrivilege systemMenuItemPrivilege = new SystemMenuItemPrivilege();
-                systemMenuItemPrivilege.setSystemRoleId(systemRolePrivileges.getSystemRoleId());
+
                 BeanUtils.copyProperties(systemMenuItemPrivilegeDto, systemMenuItemPrivilege);
+
+                systemMenuItemPrivilege.setSystemRoleId(systemRolePrivileges.getSystemRoleId());
                 systemMenuItemPrivilegeRepository.save(systemMenuItemPrivilege);
             }
             return true;
