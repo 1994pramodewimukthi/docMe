@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div class="modal fade" id="modifySystemRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <form th:action="@{/user/add-system-role}" id="docCategoryTempForm" th:object="${systemRoleDto}"
+              method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Modify New Role</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" id="parentId">
+                        <div class="col-md-6 form-group">
+                            <label class="material-label-fixed">System Role Name * :</label>
+                            <div class="form-material ">
+                                <input class="form-control" type="text" th:field="${systemRoleDto.systemRoleName}">
+                                <input class="form-control" type="text" hidden th:field="${systemRoleDto.systemRoleId}">
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="material-label-fixed">Role Status * :</label>
+                            <div class="form-material ">
+                                <select class="form-control" th:field="${systemRoleDto.systemRoleStatus}">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                                <!--                                    <input class="form-control" type="text" name="accUsrLevel"-->
+                                <!--                                           id="accUsrLevel">-->
+                                <span class="material-line"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary " data-dismiss="modal"><i
+                            class="fas fa-times-circle"></i> Close
+                    </button>
+
+
+                    <button type="submit" name="action1" value="Insert" class="btn btn-primary "><i
+                            class="fa fa-save"></i> Update
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+
+
+
+
+</script>
+</html>

@@ -74,10 +74,10 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Access User</label>
-                                    <select class="form-control" id="accessUser" th:field="${documentUploadDto.documentDescription}">
-                                        <option th:each="system : ${systemList}"
-                                                th:value="${{system}}"
-                                                th:text="${system.systemRoleName}"></option>
+                                    <select id="accessUser" th:field="${documentUploadDto.systemRoleId}" required class="form-control">
+                                    <option th:each="system : ${documentUploadDto.systemRoleDtos}"
+                                            th:value="${system.systemRoleId}"
+                                            th:text="${system.systemRoleName}"></option>
                                     </select>
                                 </div>
                             </div>

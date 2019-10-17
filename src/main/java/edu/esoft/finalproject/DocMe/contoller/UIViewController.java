@@ -6,6 +6,8 @@ import edu.esoft.finalproject.DocMe.config.ModuleConstant;
 import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
 import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
+import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
+import edu.esoft.finalproject.DocMe.service.UserService;
 import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/ui")
@@ -28,6 +31,9 @@ public class UIViewController {
 
     @Autowired
     private MarketingConductGridlinesService marketingConductGridlinesService;
+
+    @Autowired
+    private SystemRoleDockUpService systemRoleDockUpService;
 
     @GetMapping(value = "/view")
     public ModelAndView viewPage() {
@@ -89,7 +95,12 @@ public class UIViewController {
     public ModelAndView viewDocumentUploadList() {
         ModelAndView modelAndView = new ModelAndView("/ui/document/document-creation");
         DocumentUploadDto documentUploadDto = new DocumentUploadDto();
-
+        try {
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllSystemRoles();
+            documentUploadDto.setSystemRoleDtos(allSystemRoles);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
         modelAndView.addObject("documentUploadDto", documentUploadDto);
         return modelAndView;
     }

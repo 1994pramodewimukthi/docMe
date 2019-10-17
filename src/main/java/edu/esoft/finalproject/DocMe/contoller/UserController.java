@@ -3,6 +3,7 @@ package edu.esoft.finalproject.DocMe.contoller;
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
 import edu.esoft.finalproject.DocMe.dto.SystemRoleDto;
+import edu.esoft.finalproject.DocMe.dto.SystemRolePrivilagesWrapperDto;
 import edu.esoft.finalproject.DocMe.dto.UserDto;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
 import edu.esoft.finalproject.DocMe.entity.SystemRole;
@@ -131,16 +132,24 @@ public class UserController {
     @PostMapping("/add-system-role")
     public ModelAndView addNewSystemRole(@ModelAttribute("systemRoleStatus") SystemRoleDto systemRoleDto, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("/ui/system/system-role-privilege");
+        String message = messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_FAILED_TO_ADD);
         try {
             User user = (User) session.getAttribute("user");
             systemRoleDto.setInpUserId(user.getId().toString());
+
+            if (systemRoleDto.getSystemRoleId() != 0) {
+                message = messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_UPDATED_SUCCESSFULLY);
+            } else {
+                message = messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_ADDED_SUCCESSFULLY);
+            }
+
             boolean result = systemRoleDockUpService.addSystemRole(systemRoleDto);
             if (result) {
                 modelAndView.addObject(IS_SUCSESS, result);
-                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_ADDED_SUCCESSFULLY));
+                modelAndView.addObject(MSG, message);
             } else {
                 modelAndView.addObject(IS_SUCSESS, result);
-                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_FAILED_TO_ADD));
+                modelAndView.addObject(MSG, message);
             }
             modelAndView.addObject("systemRoleDto", new SystemRoleDto());
         } catch (Exception e) {
@@ -161,13 +170,52 @@ public class UserController {
     }
 
     @GetMapping(value = "/find-system-role-by-id/{id}")
-    public ResponseEntity getSystemRoleById(@PathVariable("id") Integer id) {
-        SystemRole allSystemRoles = new SystemRole();
+    public ModelAndView getSystemRoleById(@PathVariable("id") Integer id) {
+        ModelAndView modelAndView = new ModelAndView();
         try {
-            allSystemRoles = systemRoleDockUpService.getSystemRoleById(id);
+            SystemRole systemRole = systemRoleDockUpService.getSystemRoleById(id);
+            modelAndView.addObject("systemRoleDto", (null != systemRole) ? systemRole : new SystemRoleDto());
+            modelAndView.setViewName("/ui/system/systemroleviewer");
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
-        return ResponseEntity.ok(allSystemRoles);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/get-all-system-menu-item-privileges/{id}")
+    public ModelAndView getSystemMenuItemPrivileges(@PathVariable("id") String id) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        try {
+            SystemRolePrivilagesWrapperDto systemRolePrivileges = systemRoleDockUpService.getAllSystemMenuItemPrivilagesForSystemRoleId(id);
+            modelAndView.addObject("systemRolePrivileges", systemRolePrivileges);
+            modelAndView.setViewName("/ui/system/changeprivilege");
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/change-system-role-privilege")
+    public ModelAndView changeSystemRolePrivileges(@ModelAttribute("systemRolePrivileges") SystemRolePrivilagesWrapperDto systemRolePrivileges) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            boolean result = systemRoleDockUpService.changeSystemRolePrivileges(systemRolePrivileges);
+
+            modelAndView.setViewName("/ui/system/system-role-privilege");
+
+            if (result) {
+                modelAndView.addObject(IS_SUCSESS, result);
+                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_PRIVILEGE_UPDATED_SUCCESSFULLY));
+            } else {
+                modelAndView.addObject(IS_SUCSESS, result);
+                modelAndView.addObject(MSG,  messageService.getSystemMessage(MessageConstant.SYSTEM_ERROR_PLEASE_CONTACT_SYSTEM_ADMIN));
+            }
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return modelAndView;
     }
 }

@@ -153,9 +153,9 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Access User</label>
-                                        <select class="form-control" id="accessUser" th:field="${documentUploadDto.documentDescription}">
-                                            <option th:each="system : ${systemList}"
-                                                    th:value="${{system}}"
+                                        <select class="form-control" id="accessUser" th:field="${documentUploadDto.systemRoleId}">
+                                            <option th:each="system : ${documentUploadDto.systemRoleDtos}"
+                                                    th:value="${system.systemRoleId}"
                                                     th:text="${system.systemRoleName}"></option>
                                         </select>
                                     </div>
@@ -211,7 +211,7 @@
 <script th:src="@{/js/catergoryDocUpload.js}"></script>
 
 <!--<script src="../../static/js/categorycreationdatatable.js" th:src="@{/js/categorycreationdatatable.js}"></script>-->
-
+<!---->
 <script>
     var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
     CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
@@ -221,13 +221,13 @@
     $('#publishedDate,#expireDate').datepicker({
         language: 'en',
         autoClose: true,
-        dateFormat: 'dd-mm-yyyy'
+        dateFormat: 'yyyy-mm-dd'
 
     });
-    $('#accessUser').select2({
-        multiple: true
-
-    });
+    // $('#accessUser').select2({
+    //     multiple: true
+    //
+    // });
 
     function saveCategory() {
         swal({
@@ -270,6 +270,7 @@
             cache: false,
             dataType: 'html',
             success: function (result) {
+                console.log(result)
                 $('#modifyDiv').html(result);
                 $('#resubmitViwerModal').modal('show');
                 return false;

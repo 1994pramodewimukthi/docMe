@@ -166,13 +166,14 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                         documentUploadTemp.setExpireDate(documentUploadDto.getExpireDate());
                         documentUploadTemp.setPath(sftpPath);
                         documentUploadTemp.setRecordStatus(new RecordStatus(6));
-                        for (String id : documentUploadDto.getAcessTypes()) {
-                            SystemRole systemRoleById = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(id));
-                            DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
-                            documentUploadTempSystemRole.setDocumentUploadTemp(documentUploadTemp);
-                            documentUploadTempSystemRole.setSystemRole(systemRoleById);
-                            documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
-                        }
+                        documentUploadTemp.setSystemRoleId(documentUploadDto.getSystemRoleId());
+//                        for (String id : documentUploadDto.getAcessTypes()) {
+//                            SystemRole systemRoleById = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(id));
+//                            DocumentUploadTempSystemRole documentUploadTempSystemRole = new DocumentUploadTempSystemRole();
+//                            documentUploadTempSystemRole.setDocumentUploadTemp(documentUploadTemp);
+//                            documentUploadTempSystemRole.setSystemRole(systemRoleById);
+//                            documentUploadTempSystemRoles.add(documentUploadTempSystemRole);
+//                        }
                         /*if (null != user.getSelectedAgent().getAgentCode()) {
                             documentUploadTemp.setChannel(user.getSelectedAgent().getChannel().getChannelType().toString());
                         } else {

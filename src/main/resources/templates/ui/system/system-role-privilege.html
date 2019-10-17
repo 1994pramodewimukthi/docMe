@@ -147,6 +147,8 @@
 </script>
 
 <script th:inline="javascript">
+    import {getDataToDataTable} from "../../../static/js/change_privileges";
+
     $('#publishedDate,#expiryDate').datepicker({
         language: 'en',
         autoClose: true,
@@ -168,24 +170,8 @@
 
     //    --------------------------------------------------------------------------------------
 
-    function loadModalWithData(id) {
-        $.ajax({
-            url: CONTEXT_PATH + "/user/find-system-role-by-id/" + id,
-            type: 'GET',
-            cache: false,
-            dataType: 'html',
-            success: function (result) {
-                $('#modifyDiv').html(result);
-                $('#resubmitViwerModal').modal('show');
-                return false;
-                location.replace(CONTEXT_PATH + '/ui/documentUpload')
-            },
-            error: function (result) {
 
-            }
 
-        });
-    }
 
 
 </script>

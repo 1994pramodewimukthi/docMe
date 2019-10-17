@@ -26,7 +26,17 @@ public class DocumentUploadTemp implements Serializable {
     private String actionUserId;
     private Date actionDateTime;
 //    private AccessUserType accessUserType;
+    private String systemRoleId;
     private List<DocumentUploadTempSystemRole> documentUploadTempSystemRoles;
+
+
+    public String getSystemRoleId() {
+        return systemRoleId;
+    }
+
+    public void setSystemRoleId(String systemRoleId) {
+        this.systemRoleId = systemRoleId;
+    }
 
     public DocumentUploadTemp() {
     }
