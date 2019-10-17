@@ -23,6 +23,7 @@ public class ActiveMQEmail {
     private static final String BODY_KEY = "BODY";
     private static final String DOC_NAME = "DOC_NAME";
     private static final String DOC_INPUT_STREAM = "DOC_INPUT_STREAM";
+    private static final String TYPE = "TYPE";
 
     private String jmsQueueName = "Esoft-Email-Queue";
 
@@ -42,6 +43,7 @@ public class ActiveMQEmail {
                 mapMessage.setObject(BODY_KEY, email.getBody());// save Body
                 mapMessage.setObject(DOC_NAME, email.getDocumentNAme());// save Body
                 mapMessage.setObject(DOC_INPUT_STREAM, email.getDocInputStream());// save Body
+                mapMessage.setObject(TYPE, email.getType());// save Body
                 return mapMessage;
             };
             jmsTemplate.send(jmsQueueName, messageCreator);
