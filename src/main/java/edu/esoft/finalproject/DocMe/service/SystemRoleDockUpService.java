@@ -16,4 +16,6 @@ public interface SystemRoleDockUpService {
     SystemRolePrivilagesWrapperDto getAllSystemMenuItemPrivilagesForSystemRoleId(String id) throws Exception;
 
     boolean changeSystemRolePrivileges(SystemRolePrivilagesWrapperDto systemRolePrivileges) throws Exception;
+
+    List<SystemRoleDto> getAllActiveSystemRoles() throws Exception;
 }

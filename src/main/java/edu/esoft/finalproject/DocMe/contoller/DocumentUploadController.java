@@ -300,7 +300,7 @@ public class DocumentUploadController {
             documentUploadDto.setSystemRoleId(documentUploadTemp.getSystemRoleId());
             List<String> acessTypes = documentUploadDto.getAcessTypes();
 
-            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllSystemRoles();
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
             documentUploadDto.setSystemRoleDtos(allSystemRoles);
             /*for (DocumentUploadTempSystemRole documentUploadTempSystemRole : documentUploadTemp.getDocumentUploadTempSystemRoles()) {
                 acessTypes.add(Integer.toString(documentUploadTempSystemRole.getSystemRole().getSystemRoleId()));
@@ -352,7 +352,7 @@ public class DocumentUploadController {
             documentUploadDto.setHeadLine(documentUploadTemp.getHeadline());
             documentUploadDto.setDocumentDescription(documentUploadTemp.getDocumentDescription());
 
-            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllSystemRoles();
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
             documentUploadDto.setSystemRoleDtos(allSystemRoles);
 
             List<String> acessTypes = documentUploadDto.getAcessTypes();

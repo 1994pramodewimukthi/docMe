@@ -96,7 +96,7 @@ public class UIViewController {
         ModelAndView modelAndView = new ModelAndView("/ui/document/document-creation");
         DocumentUploadDto documentUploadDto = new DocumentUploadDto();
         try {
-            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllSystemRoles();
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
             documentUploadDto.setSystemRoleDtos(allSystemRoles);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

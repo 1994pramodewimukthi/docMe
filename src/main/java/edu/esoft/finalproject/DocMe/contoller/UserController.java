@@ -5,6 +5,7 @@ import edu.esoft.finalproject.DocMe.config.MessageConstant;
 import edu.esoft.finalproject.DocMe.dto.SystemRoleDto;
 import edu.esoft.finalproject.DocMe.dto.SystemRolePrivilagesWrapperDto;
 import edu.esoft.finalproject.DocMe.dto.UserDto;
+import edu.esoft.finalproject.DocMe.dto.UserRoleTableDto;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
 import edu.esoft.finalproject.DocMe.entity.SystemRole;
 import edu.esoft.finalproject.DocMe.entity.User;
@@ -38,8 +39,14 @@ public class UserController {
 
     @GetMapping(value = "/register")
     public ModelAndView userView() {
-        ModelAndView modelAndView = new ModelAndView("/user/register");
+        ModelAndView modelAndView = new ModelAndView("/ui/system/user-creation");
         UserDto userDto = new UserDto();
+        try {
+            List<SystemRoleDto> allActiveSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
+            modelAndView.addObject("systemUserRoles",allActiveSystemRoles);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
         modelAndView.addObject("userDetailsDto", userDto);
         return modelAndView;
     }
@@ -47,7 +54,7 @@ public class UserController {
     @PostMapping("/save")
     public ModelAndView userSave(@ModelAttribute("userDetailsDto") UserDto userDto, HttpSession session) {
 
-        ModelAndView modelAndView = new ModelAndView("/user/register");
+        ModelAndView modelAndView = new ModelAndView("/ui/system/user-creation");
         try {
             Long save = userService.userSave(userDto);
 
@@ -218,5 +225,16 @@ public class UserController {
         }
 
         return modelAndView;
+    }
+
+    @GetMapping(value = "/get-all-user-roles")
+    public ResponseEntity getAllUserRoles() {
+        List<UserRoleTableDto> userRoleTableDtos = new ArrayList<>();
+        try {
+            userRoleTableDtos = userService.getAllUsers();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return ResponseEntity.ok(userRoleTableDtos);
     }
 }

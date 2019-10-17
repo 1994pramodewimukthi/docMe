@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 public class SystemRoleDockUpServiceImpl implements SystemRoleDockUpService {
 
+    private static final String ACTIVE_STATUS = "Active";
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(SystemRoleDockUpServiceImpl.class);
 
     @Autowired
@@ -64,6 +65,29 @@ public class SystemRoleDockUpServiceImpl implements SystemRoleDockUpService {
         List<SystemRoleDto> systemRoleDtoList = new ArrayList<>();
         try {
             Iterable<SystemRole> all = systemRoleDockUpRepository.findAll();
+            all.forEach(systemRole -> {
+                SystemRoleDto systemRoleDto = new SystemRoleDto();
+
+                systemRoleDto.setInpUserId(systemRole.getInpUserId());
+                systemRoleDto.setInpDateTime(systemRole.getInpDateTime());
+                systemRoleDto.setSystemRoleId(systemRole.getSystemRoleId());
+                systemRoleDto.setSystemRoleStatus(systemRole.getSystemRoleStatus());
+                systemRoleDto.setSystemRoleName(systemRole.getSystemRoleName());
+
+                systemRoleDtoList.add(systemRoleDto);
+            });
+            return systemRoleDtoList;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<SystemRoleDto> getAllActiveSystemRoles() throws Exception {
+        List<SystemRoleDto> systemRoleDtoList = new ArrayList<>();
+        try {
+            Iterable<SystemRole> all = systemRoleDockUpRepository.findAllBySystemRoleStatus(ACTIVE_STATUS);
             all.forEach(systemRole -> {
                 SystemRoleDto systemRoleDto = new SystemRoleDto();
 
