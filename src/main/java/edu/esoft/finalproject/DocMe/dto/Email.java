@@ -13,6 +13,7 @@ public class Email  implements Serializable {
     private String emailMessage;
     private String body;
     private String documentNAme;
+    private String type;
     private byte[] docInputStream;
 
     public String getEmailLogId() {
@@ -93,5 +94,13 @@ public class Email  implements Serializable {
 
     public void setDocInputStream(byte[] docInputStream) {
         this.docInputStream = docInputStream;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -2,6 +2,7 @@ package edu.esoft.finalproject.DocMe.service.imp;
 
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
+import edu.esoft.finalproject.DocMe.dto.Email;
 import edu.esoft.finalproject.DocMe.dto.UserDto;
 import edu.esoft.finalproject.DocMe.dto.UserRoleTableDto;
 import edu.esoft.finalproject.DocMe.entity.SystemRole;
@@ -9,6 +10,7 @@ import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.repository.SystemRoleDockUpRepository;
 import edu.esoft.finalproject.DocMe.repository.UserRepository;
 import edu.esoft.finalproject.DocMe.service.UserService;
+import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import edu.esoft.finalproject.DocMe.utility.Cryptography;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +33,15 @@ public class UserSeveiceImp implements UserService {
     private Cryptography cryptography;
 
     @Autowired
+    private ActiveMQEmail activeMQEmail;
+
+    @Autowired
     private SystemRoleDockUpRepository systemRoleDockUpRepository;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Long SUCCESS = 1L;
     private Long ERROR = 0L;
+    private String WITHOUT_FILE = "WITHOUT-FILE";
 
     @Override
     public Long userSave(UserDto userDto) throws Exception {
@@ -65,6 +71,32 @@ public class UserSeveiceImp implements UserService {
                 }
                 User save = userRepository.save(user);
 
+                // Email Sent Start
+                Email email = new Email();
+                email.setType("WITHOUT-FILE");
+                email.setToAddress(user.getEmail());
+                email.setSubject("- DocuMe Authentication -");
+                email.setBody("Dear DocuMe user,\n" +
+                        "\n" +
+                        "\n" +
+                        " It is with great pleasure we welcome you to DocuMe.\n" +
+                        " Please login in through your DocuMe Account using the below\n" +
+                        " credential.\n" +
+                        " \n" +
+                        "     ⚬     User ID : "+userDto.getUserName()+"\n" +
+                        "     ⚬    Password : "+userDto.getPassword()+"\n" +
+                        " \n" +
+                        "\n" +
+                        "Thanks,\n" +
+                        "DocuMe system\n" +
+                        "----------------------------------------------------------------\n" +
+                        "        ⚡ This is a system genarated email do not reply .⚡\n" +
+                        "----------------------------------------------------------------\n" +
+                        "                     - D O C U M E -\n" +
+                        "---------------------esoft metro campus--------------------------");
+                activeMQEmail.sendFromEmail(email);
+
+                // Email Sent End
                 if (null != save) {
                     return SUCCESS;
                 }
