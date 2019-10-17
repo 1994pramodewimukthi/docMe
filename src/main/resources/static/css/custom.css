@@ -167,7 +167,9 @@ header {
 .webix_dd_drag_column, .webix_ss_header, .webix_ss_header TD, .webix_ss_vscroll_header {
     font-size: 15px;
     color: #fff;
-    background: #1d2127!important;
+    /*background: #1d2127!important;*/
+    border-bottom: none !important;
+    border-left: none !important;
 }
 
 .btn-primary:hover, .btn-primary.hover {
@@ -177,7 +179,7 @@ header {
 }
 
 .modal-footer{
-    background: #1d2127;
+    background: #eee !important;
 }
 
 
@@ -208,4 +210,65 @@ header {
     color: #3498db!important;
 }
 
+/*new css styles*/
+.webix_hcell {
+    background-color: #656565 !important;
+    color: #fff !important;
+    font-family: "Open Sans", Arial, sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    text-align: center !important;
+}
+
+.webix_ss_vscroll_header {
+    background-color: #656565 !important;
+}
+
+.padding_less .webix_cell {
+    text-align: center !important;
+}
+
+.CategoryAuthorization .webix_cell {
+    text-align: center !important;
+}
+
+.addAgreementTblBody tr {
+    text-align: center;
+}
+
+/*side menu */
+ul.nav-main li .nav-children {
+    padding: unset !important;
+}
+
+.header.header-nav-menu .logo:after {
+    border-right: none !important;
+}
+
+.loadHeading {
+    font-size: -webkit-xxx-large;
+    margin-left: -110px;
+    margin-top: -25px;
+    color: #ddd;
+    font-weight: 400;
+    width: 425%;
+    font-family: monospace;
+}
+
+.loading-overlay {
+    background-color: #333333e6 !important;
+}
+
+form label {
+    font-weight: 600 !important;
+}
+
+.modal-title {
+    font-size: 1.5em !important;
+    font-weight: 500 !important;
+}
+
+.sidebar-left .sidebar-header .sidebar-title {
+    background: #171717 !important;
+}
 /*# sourceMappingURL=custom.css.map */

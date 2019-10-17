@@ -13,7 +13,15 @@
 <!-- start: header -->
 <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
 <!-- end: header -->
-<body id="loginBody">
+<body class="loading-overlay-showing" data-loading-overlay id="loginBody">
+<div class="loading-overlay">
+    <div class="bounce-loader">
+        <h3 class="loadHeading mb-5">L O A D I N G</h3>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
 <section class="body-sign">
     <div class="center-sign">
         <!--<a href="/" class="logo float-left">-->

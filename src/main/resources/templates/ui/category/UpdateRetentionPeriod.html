@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="fixed       sidebar-left-sm" lang="en">
+<html class="fixed       sidebar-left-sm" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
@@ -34,9 +34,9 @@
         <!-- start: sidebar -->
         <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
         <!-- end: sidebar -->
-        <section role="main" class="content-body pb-0">
+        <section class="content-body pb-0" role="main">
             <header class="page-header ">
-                <h2 class="">Category Resubmit</h2>
+                <h2 class="">Update Retention Period</h2>
                 <div class="right-wrapper text-right">
                     <ol class="breadcrumbs ">
                         <!--<li>-->
@@ -52,10 +52,32 @@
                 <div class="col-lg-12">
                     <section class="card">
                         <form>
+                            <div class="card-header">
+                                <h6>EDIT RETENTION YEAR COUNT</h6>
+                            </div>
                             <div class="card-body">
-                                <div class="row ">
-                                    <div class="col-lg-12">
-                                        <div id="webixtablecontainer"></div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="material-label-fixed">Current Year Count : </label>
+                                        <div class="form-material ">
+                                            <input class="form-control" readonly type='text'/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="material-label-fAdd Agreementixed">New Year Count * : </label>
+                                        <div class="form-material ">
+                                            <input class="form-control" type='text'/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 text-right">
+                                        <button class="btn btn-primary"
+                                                id="submitbtn"
+                                                type="submit">
+                                            <span><i class="fas fa-save"></i> Update</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -75,13 +97,13 @@
 <!--start: footer-->
 <!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
 <!--end: footer-->
-<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
-<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
-<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
-<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
-<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
-<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
-<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script th:src="@{/vendor/select2/js/select2.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/sweet-alert/sweetalert2.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}" type="text/javascript"></script>
+<script th:src="@{/js/loadingoverlay.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/rejectdocresubmit.js}"></script>
 <script>
     var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
