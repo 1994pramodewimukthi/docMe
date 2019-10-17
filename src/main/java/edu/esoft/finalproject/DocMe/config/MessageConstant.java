@@ -43,4 +43,6 @@ public class MessageConstant {
     public final static long DUPLICATE_USER = 175;
     public final static long INVALID_LOGINS = 176;
     public final static long INVALID_INPUTS = 177;
+    public final static long SYSTEM_ROLE_ADDED_SUCCESSFULLY = 178;
+    public final static long SYSTEM_ROLE_FAILED_TO_ADD = 179;
 }

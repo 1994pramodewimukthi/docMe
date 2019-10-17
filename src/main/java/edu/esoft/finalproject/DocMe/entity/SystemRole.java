@@ -19,7 +19,7 @@ public class SystemRole implements Serializable {
     private String inpUserId;
     private Date inpDateTime;
 
-//    private Set<SystemRoleSystemMenuItem> systemRoleSystemMenuItems;
+    //    private Set<SystemRoleSystemMenuItem> systemRoleSystemMenuItems;
     private AccessUserType accessUserType;
 
     public SystemRole() {

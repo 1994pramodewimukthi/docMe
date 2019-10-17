@@ -154,4 +154,11 @@ public class UIViewController {
         }
         return modelAndView;
     }
+
+    @GetMapping(AppURL.MCG_SYSTEM_ROLE_PRIVILEGE_UI_VIEW_URL)
+    public ModelAndView viewSystemRolePrivilege() {
+        ModelAndView modelAndView = new ModelAndView("/ui/system/system-role-privilege");
+        modelAndView.addObject("systemRoleDto",new SystemRoleDto());
+        return modelAndView;
+    }
 }

@@ -2,17 +2,23 @@ package edu.esoft.finalproject.DocMe.contoller;
 
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
+import edu.esoft.finalproject.DocMe.dto.SystemRoleDto;
 import edu.esoft.finalproject.DocMe.dto.UserDto;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
+import edu.esoft.finalproject.DocMe.entity.SystemRole;
 import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.service.MessageService;
+import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import edu.esoft.finalproject.DocMe.service.UserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -25,6 +31,9 @@ public class UserController {
     UserService userService;
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private SystemRoleDockUpService systemRoleDockUpService;
 
     @GetMapping(value = "/register")
     public ModelAndView userView() {
@@ -117,5 +126,48 @@ public class UserController {
         DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
         modelAndView.addObject("docCategoryTemp", docCategoryTemp);
         return modelAndView;
+    }
+
+    @PostMapping("/add-system-role")
+    public ModelAndView addNewSystemRole(@ModelAttribute("systemRoleStatus") SystemRoleDto systemRoleDto, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("/ui/system/system-role-privilege");
+        try {
+            User user = (User) session.getAttribute("user");
+            systemRoleDto.setInpUserId(user.getId().toString());
+            boolean result = systemRoleDockUpService.addSystemRole(systemRoleDto);
+            if (result) {
+                modelAndView.addObject(IS_SUCSESS, result);
+                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_ADDED_SUCCESSFULLY));
+            } else {
+                modelAndView.addObject(IS_SUCSESS, result);
+                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_FAILED_TO_ADD));
+            }
+            modelAndView.addObject("systemRoleDto", new SystemRoleDto());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/get-all-system-role")
+    public ResponseEntity getAllSystemRoles() {
+        List<SystemRoleDto> allSystemRoles = new ArrayList<>();
+        try {
+            allSystemRoles = systemRoleDockUpService.getAllSystemRoles();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return ResponseEntity.ok(allSystemRoles);
+    }
+
+    @GetMapping(value = "/find-system-role-by-id/{id}")
+    public ResponseEntity getSystemRoleById(@PathVariable("id") Integer id) {
+        SystemRole allSystemRoles = new SystemRole();
+        try {
+            allSystemRoles = systemRoleDockUpService.getSystemRoleById(id);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return ResponseEntity.ok(allSystemRoles);
     }
 }
