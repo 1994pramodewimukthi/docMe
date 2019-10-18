@@ -72,111 +72,116 @@
     <div class="modal fade" id="addSubCatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">Add New Role</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/save}"
-                              method="post" style="opacity: 1 !important;">
-                            <input id="userEdit" th:field="${userDetailsDto.userEdit}" type="hidden">
-                            <input id="id" th:field="${userDetailsDto.id}" type="hidden">
-                            <div class="row text-center">
-                                <div class="col-lg-12">
-                                    <img th:src="@{/img/user.png}" class="img-circle img-responsive" style="width: 15%">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Username</label><span class="required">&nbsp;*</span>
-                                        <input name="userName" th:field="${userDetailsDto.userName}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Password</label><span class="required">&nbsp;*</span>
-                                        <input th:field="${userDetailsDto.password}" type="password"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>First Name</label><span class="required">&nbsp;*</span>
-                                        <input name="firstname" th:field="${userDetailsDto.firstName}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input name="lastName" th:field="${userDetailsDto.lastName}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Address 1</label><span class="required">&nbsp;*</span>
-                                        <input name="addressLine1" th:field="${userDetailsDto.addressLine1}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Address 2</label><span class="required">&nbsp;*</span>
-                                        <input name="addressLine2" th:field="${userDetailsDto.addressLine2}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Date of Birth</label><span class="required">&nbsp;*</span>
-                                        <input name="dateOfBirth" th:field="${userDetailsDto.dateOfBirth}" id="dob" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Email</label><span class="required">&nbsp;*</span>
-                                        <input name="email" th:field="${userDetailsDto.email}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>NIC</label><span class="required">&nbsp;*</span>
-                                        <input name="nic" th:field="${userDetailsDto.nic}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Mobile Number</label><span class="required">&nbsp;*</span>
-                                        <input name="mobile" th:field="${userDetailsDto.mobile}" type="text"
-                                               class="form-control form-control-lg">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>User role id</label><span class="required">&nbsp;*</span>
-                                        <select name="userRoleId" th:field="${userDetailsDto.systemRoleId}" class="form-control form-control-lg">
-                                            <option th:each="systemRole : ${systemUserRoles}" th:value="${systemRole.systemRoleId}" th:text="${systemRole.systemRoleName}">Admin</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 text-right">
-                                    <button type="submit" class="btn btn-primary mt-2">Register</button>
-                                </div>
-                            </div>
-                            <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
-                        </form>
-
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Add New Role</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <form th:id="userForm" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/save}"
+                          method="post" style="opacity: 1 !important;">
+                        <input id="userEdit" th:field="${userDetailsDto.userEdit}" type="hidden">
+                        <input id="id" th:field="${userDetailsDto.id}" type="hidden">
+                        <div class="row text-center">
+                            <div class="col-lg-12">
+                                <img th:src="@{/img/user.png}" class="img-circle img-responsive" style="width: 15%">
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Username</label><span class="required">&nbsp;*</span>
+                                    <input name="userName" th:field="${userDetailsDto.userName}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Password</label><span class="required">&nbsp;*</span>
+                                    <input th:field="${userDetailsDto.password}" type="password"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>First Name</label><span class="required">&nbsp;*</span>
+                                    <input name="firstname" th:field="${userDetailsDto.firstName}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input name="lastName" th:field="${userDetailsDto.lastName}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Address 1</label><span class="required">&nbsp;*</span>
+                                    <input name="addressLine1" th:field="${userDetailsDto.addressLine1}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Address 2</label><span class="required">&nbsp;*</span>
+                                    <input name="addressLine2" th:field="${userDetailsDto.addressLine2}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Date of Birth</label><span class="required">&nbsp;*</span>
+                                    <input name="dateOfBirth" th:field="${userDetailsDto.dateOfBirth}" id="dob"
+                                           type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label><span class="required">&nbsp;*</span>
+                                    <input name="email" th:field="${userDetailsDto.email}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>NIC</label><span class="required">&nbsp;*</span>
+                                    <input name="nic" th:field="${userDetailsDto.nic}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Mobile Number</label><span class="required">&nbsp;*</span>
+                                    <input name="mobile" th:field="${userDetailsDto.mobile}" type="text"
+                                           class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>User role id</label><span class="required">&nbsp;*</span>
+                                    <select name="userRoleId" th:field="${userDetailsDto.systemRoleId}"
+                                            class="form-control form-control-lg">
+                                        <option th:each="systemRole : ${systemUserRoles}"
+                                                th:value="${systemRole.systemRoleId}"
+                                                th:text="${systemRole.systemRoleName}">Admin
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-primary mt-2">Register</button>
+                            </div>
+                        </div>
+                        <p class="text-center text-muted mt-3 mb-3">&copy; Copyright 2019. All Rights Reserved.</p>
+                    </form>
+
+                </div>
+            </div>
         </div>
     </div>
 
@@ -231,9 +236,6 @@
     //    --------------------------------------------------------------------------------------
 
 
-
-
-
 </script>
 <script th:inline="javascript">
     $(document).ready(function () {
@@ -252,7 +254,8 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/system-role-privilege');
+                location.replace(CONTEXT_PATH + '/user/register');
+
             });
         } else if (isSucsess == false) {
             swal({
@@ -263,13 +266,173 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/system-role-privilege');
+                location.replace(CONTEXT_PATH + '/user/register');
             });
         }
 
 
     });
     /*]]>*/
+</script>
+<script th:inline="javascript">
+    $(function () {
+        var faIcon = {
+            valid: 'fa fa-check-circle fa-lg text-success',
+            invalid: 'fa fa-times-circle fa-lg',
+            validating: 'fa fa-refresh'
+        };
+
+        $('#userForm').formValidation({
+            framework: 'bootstrap',
+            excluded: ':disabled',
+            fields: {
+                userName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                firstName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                lastName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                addressLine1: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                addressLine2: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                dateOfBirth: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        emailAddress: {
+                            message: '* The value is not a valid email address'
+                        }
+                    }
+                },
+                nic: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^(([0-9]{9}[vVxX])|([0-9]{12}))$/i,
+                            message: '* Invalid nic number.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                mobile: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[0-9\s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 10,
+                            message: '* This field must be less than 10 characters'
+                        }
+                    }
+                },
+
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

@@ -349,14 +349,14 @@
                 documentVersion: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         },
                         regexp: {
                             regexp: nospecial,
-                            message: 'Special characters are not allowed.'
+                            message: '* Special characters are not allowed.'
                         },
                         stringLength: {
-                            message: 'Version content must be less than 30 characters',
+                            message: '* Version content must be less than 30 characters',
                             max: 30
                         }
                     }
@@ -364,10 +364,10 @@
                 documentFooterHeight: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         },
                         integer: {
-                            message: 'Decimal value not allowed.',
+                            message: '* Decimal value not allowed.',
                             thousandsSeparator: '',
                             decimalSeparator: '.',
 
@@ -375,39 +375,39 @@
                         between: {
                             min: 8,
                             max: 26,
-                            message: 'The number must be between 8 and 26'
+                            message: '* The number must be between 8 and 26'
                         }
                     }
                 },
                 startPage: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         },
                         integer: {
-                            message: 'Decimal value not allowed.',
+                            message: '* Decimal value not allowed.',
                             thousandsSeparator: '',
                             decimalSeparator: '.'
                         },
                         between: {
                             min: 0,
                             max: 'pageCount',
-                            message: 'The number  must be between %s and %s'
+                            message: '* The number  must be between %s and %s'
                         }
                     }
                 },
                 skipDateCount: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         },
                         integer: {
-                            message: 'Decimal value not allowed.',
+                            message: '* Decimal value not allowed.',
                             thousandsSeparator: '',
                             decimalSeparator: '.'
                         },
                         stringLength: {
-                            message: 'Date Count content must be less than 3 digits.',
+                            message: '* Date Count content must be less than 3 digits.',
                             max: 3
                         }
                     }
@@ -415,45 +415,45 @@
                 documentAcknowledgement: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         },
                         stringLength: {
-                            message: 'Acknowledgement content must be less than 1000 characters',
+                            message: '* Acknowledgement content must be less than 1000 characters',
                             max: 1000
                         },
                         regexp: {
                             regexp: nospecial,
-                            message: 'Special characters are not allowed.'
+                            message: '* Special characters are not allowed.'
                         }
                     }
                 },
                 catId: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         }
                     }
                 },
                 documentValidRank: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         }
                     }
                 },
                 documentFile: {
                     validators: {
                         notEmpty: {
-                            message: 'Please select a pdf file.'
+                            message: '* Please select a pdf file.'
                         },
                         stringLength: {
-                            message: 'Post content must be less than 255 characters',
+                            message: '* Post content must be less than 255 characters',
                             max: 255
                         },
                         file: {
                             extension: 'pdf',
                             type: 'application/pdf',
-                            message: 'Please choose a PDF file'
+                            message: '* Please choose a PDF file'
                         }
                     }
                 }

@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <form th:action="@{/documentUploadController/save}"
-      th:id="docUploadTempForm"
+      th:id="docUploadModifyForm"
       th:object="${documentUploadDto}"
       th:name="docUploadTempForm" method="POST" enctype="multipart/form-data">
 
@@ -25,7 +25,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Document Name</label>
-                                    <input class="form-control" type="text" name="documentName"
+                                    <input class="form-control" type="text"
                                            th:field="${documentUploadDto.documentName}"
                                     /></input>
                                 </div>
@@ -33,7 +33,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Head Line</label>
-                                    <input class="form-control" name="headLine" id="headLine"
+                                    <input class="form-control"
                                            th:field="${documentUploadDto.headLine}"/></input>
                                 </div>
                             </div>
@@ -159,4 +159,98 @@
 
 
 </script>
+<script th:inline="javascript">
+    $(function () {
+        var faIcon = {
+            valid: 'fa fa-check-circle fa-lg text-success',
+            invalid: 'fa fa-times-circle fa-lg',
+            validating: 'fa fa-refresh'
+        };
+
+        $('#docUploadModifyForm').formValidation({
+            framework: 'bootstrap',
+            excluded: ':disabled',
+            fields: {
+                documentName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The category name must be less than 255 characters'
+                        }
+                    }
+                },
+                headLine: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The category name must be less than 255 characters'
+                        }
+                    }
+                },
+                documentDescription: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The category name must be less than 255 characters'
+                        }
+                    }
+                },
+                expireDate: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[0-9-\s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        }
+                    }
+                },
+                publishDate: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[0-9-\s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                    }
+                },
+                attachment: {
+                    validators: {
+                        file: {
+                            extension: 'pdf',
+                            type: 'application/pdf',
+                            message: 'Please choose a pdf file'
+                        }
+                    }
+                },
+            }
+        });
+    });
+
+</script>
+
 </html>

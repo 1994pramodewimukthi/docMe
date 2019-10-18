@@ -2,15 +2,9 @@ package edu.esoft.finalproject.DocMe.contoller;
 
 
 import edu.esoft.finalproject.DocMe.config.*;
-import edu.esoft.finalproject.DocMe.dto.AuthRejectCategoryWebix;
-import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
-import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
-import edu.esoft.finalproject.DocMe.dto.Email;
+import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.*;
-import edu.esoft.finalproject.DocMe.service.DocCategoryService;
-import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
-import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
-import edu.esoft.finalproject.DocMe.service.MessageService;
+import edu.esoft.finalproject.DocMe.service.*;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +34,9 @@ public class DocumentManageController {
     private DocumentUploadService documentUploadService;
     @Autowired
     private DocumentUploadSFTPService documentUploadSFTPService;
+
+    @Autowired
+    private SystemRoleDockUpService systemRoleDockUpService;
 
     @RequestMapping(value = AppURL.SAVE, method = RequestMethod.POST)
     public ModelAndView saveCategory(@ModelAttribute("docCategoryTemp") DocCategoryTemp docCategoryTemp1, BindingResult bindingResult, ModelAndView modelAndView, @ModelAttribute("user") User user) {
@@ -251,7 +248,6 @@ public class DocumentManageController {
     @RequestMapping("/authRejectDocModalViwer")
     public ModelAndView athRejectDocModalContent(@RequestParam(value = "docId") int docId, @ModelAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView("/ui/document/documentauthrizeviwer");
-        List<SystemRole> systemRoles = new ArrayList<>();
         try {
             List<AccessUserType> accessUserTypes = new ArrayList<>();
             /*try {
@@ -266,7 +262,9 @@ public class DocumentManageController {
             } catch (MisynJDBCException e) {
                 LOGGER.error(e.getMessage());
             }*/
-            modelAndView.addObject("systemList", systemRoles);
+            List<SystemRoleDto> allActiveSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
+
+            modelAndView.addObject("systemList", allActiveSystemRoles);
             DocumentUploadTemp documentUploadTemp = documentUploadService.searchTempDocumentById(docId);
             DocumentUploadDto documentUploadDto = new DocumentUploadDto();
             documentUploadDto.setDocumentUploadTempId(documentUploadTemp.getDocumentUploadTempId());
@@ -274,6 +272,7 @@ public class DocumentManageController {
             documentUploadDto.setDocumentName(documentUploadTemp.getDocumentName());
             documentUploadDto.setHeadLine(documentUploadTemp.getHeadline());
             documentUploadDto.setDocumentDescription(documentUploadTemp.getDocumentDescription());
+            documentUploadDto.setSystemRoleId(documentUploadTemp.getSystemRoleId());
             List<String> acessTypes = documentUploadDto.getAcessTypes();
             for (DocumentUploadTempSystemRole documentUploadTempSystemRole : documentUploadTemp.getDocumentUploadTempSystemRoles()) {
                 acessTypes.add(Integer.toString(documentUploadTempSystemRole.getSystemRole().getSystemRoleId()));

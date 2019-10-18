@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="material-label-fixed">Category Description:</label>
+                            <label class="material-label-fixed">Category Description * :</label>
                             <div class="form-material ">
                                 <textarea class="form-control" rows="3"
                                           th:field="${master.docCategoryDescription}"></textarea>
@@ -90,28 +90,40 @@
                 docCategoryName: {
                     validators: {
                         notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* This field is required and cannot be empty.'
                         },
                         stringLength: {
                             max: 255,
-                            message: 'The category name must be less than 255 characters'
-                        }
+                            message: '* The category name must be less than 255 characters'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
                     }
                 },
                 docCategoryDescription: {
                     validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
                         stringLength: {
                             max: 255,
-                            message: 'The category description must be less than 255 characters'
-                        }
+                            message: '* The category description must be less than 255 characters'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
                     }
                 },
                 sortingOrder: {
                     validators: {
                         integer: {
-                            message: 'The value is not an integer'
-                        }, notEmpty: {
-                            message: 'This field is required and cannot be empty.'
+                            message: '* The value is not an integer'
+                        },
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
                         }
                     }
                 }

@@ -168,7 +168,6 @@
 <script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
 <script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.js}"></script>
-<script type="text/javascript" th:src="@{/vendor/form-validation/js/formValidation.min.js}"></script>
 
 <script th:inline="javascript">
 
@@ -188,14 +187,14 @@
             categoryName: {
                 validators: {
                     notEmpty: {
-                        message: 'This field is required and cannot be empty.'
+                        message: '* This field is required and cannot be empty.'
                     },
                     regexp: {
                         regexp: nospecial,
-                        message: 'Special characters are not allowed.'
+                        message: '* Special characters are not allowed.'
                     },
                     stringLength: {
-                        message: 'Post content must be less than 100 characters',
+                        message: '* Post content must be less than 100 characters',
                         max: 100
                     }
                 }

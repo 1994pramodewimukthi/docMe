@@ -70,6 +70,10 @@
                     validators: {
                         notEmpty: {
                             message: '* This field is required and cannot be empty.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The system role name must be less than 255 characters'
                         }
                     }
                 }

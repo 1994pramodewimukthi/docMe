@@ -28,6 +28,7 @@ public class UserController {
     private static final Long SUCCESS = 1L;
     private static final String IS_SUCSESS = "isSucsess";
     private static final String MSG = "msg";
+    private static final String USER_SAVE = "userSave";
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     @Autowired
     UserService userService;
