@@ -14,7 +14,7 @@
     <meta name="context-path" th:content="@{/}"/>
 
 </head>
-<body class="loading-overlay-showing" data-loading-overlay id="loginBody">
+<body class="loading-overlay-showing" data-loading-overlay>
 <div class="loading-overlay">
     <div class="bounce-loader">
         <h3 class="loadHeading mb-5">L O A D I N G</h3>
@@ -26,24 +26,34 @@
 <section class="body">
     <!-- start: header -->
     <header class="header">
-        <!--start: top-nav-->
-        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
-        <!--end: top-nav-->
+        <div class="row">
+            <div class="col-lg-3">
+                <img alt="Admin" class="ml-3 mt-2" height="35" th:src="@{/img/1.png}" width="50"/>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="popheading text-center mt-3"
+                    th:text="${mcgPdfDto.docName != null}?${mcgPdfDto.docName}:'Document Name'">
+                    Document
+                    Creation</h3>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+
     </header>
     <!-- end: header -->
-    <div class="inner-wrapper">
+    <div class="inner-wrapper darkBackground">
         <div class="row">
 
             <!-- START RIGHT CONTENT -->
             <section id="content-wrapper" class="form-elements">
                 <!-- START PAGE TITLE -->
                 <div class="site-content-title">
-                    <div class="col-xl-6  col-lg-12">
-                        <h3 class="popheading"
-                            th:text="${mcgPdfDto.docName != null}?${mcgPdfDto.docName}:'Document Name'">
-                            Document
-                            Creation</h3>
-                    </div>
+                    <!--                    <div class="col-xl-6  col-lg-12">-->
+                    <!--                        <h3 class="popheading"-->
+                    <!--                            th:text="${mcgPdfDto.docName != null}?${mcgPdfDto.docName}:'Document Name'">-->
+                    <!--                            Document-->
+                    <!--                            Creation</h3>-->
+                    <!--                    </div>-->
                     <div class="col-md-12">
                         <span class="sexy_line"></span>
                     </div>
@@ -59,27 +69,11 @@
                                 <div class="content">
                                     <div class="row marginTop pdfviewdiv">
                                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 pdfviewdiv">
-                                            <div class="pdfContainer">
+                                            <div class="pdfContainer" style="margin-bottom: 150px;">
                                                 <input id="pdfData" name="pdfData" type="hidden"
                                                        th:value="${mcgPdfDto.pdfFile}">
                                                 <div id='pdf-viewer' class="text-center"></div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row marginTop">
-                                        <div class="col-md-6" style="text-align: left;">
-                                            <button type="button" class="btn btn-primary" id="skipButton"
-                                                    onclick="skipSign()"
-                                                    th:text="|Skip (${mcgPdfDto.remainingDates} days remaining)|"></button>
-                                        </div>
-                                        <div class="col-md-6" style="text-align: right;">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#signModal">Accept & Sign
-                                            </button>
-                                            <button id="upload" type="button" class="btn btn-primary" disabled
-                                                    onclick="uploadPdf()">Submit
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +104,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-lg-12 ml-3">
+                                                    <div class="col-lg-12 ml-3 text-center">
                                                         <canvas style="border: #0b0c0d 1px solid" id="signature-pad"
                                                                 class="signature-pad" width=450
                                                                 height=200></canvas>
@@ -143,6 +137,27 @@
             </section>
         </div>
     </div>
+
+    <footer class="fixed-bottom footer" style="
+    background-color: #323232de;">
+        <div class="row mt-4 mb-4">
+            <div class="col-md-1"></div>
+            <div class="col-md-5" style="text-align: left;">
+                <button class="btn btn-primary" id="skipButton" onclick="skipSign()"
+                        th:text="|Skip (${mcgPdfDto.remainingDates} days remaining)|"
+                        type="button"></button>
+            </div>
+            <div class="col-md-5" style="text-align: right;">
+                <button class="btn btn-primary mr-2" data-target="#signModal" data-toggle="modal"
+                        type="button">Accept & Sign
+                </button>
+                <button class="btn btn-primary" disabled id="upload" onclick="uploadPdf()"
+                        type="button">Submit
+                </button>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </footer>
     <form th:action="@{/mcg/uploadSignPdf}" th:id="uploadSignaturePdf" th:name="uploadSignaturePdf"
           th:object="${mcgPdfDto}" method="POST">
 

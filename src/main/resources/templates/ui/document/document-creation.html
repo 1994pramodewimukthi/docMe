@@ -120,8 +120,8 @@
                                                    <!--id="publishedDate" th:name="publishDate"-->
                                                    <!--th:id="publishDate"/></input>-->
 
-                                            <input  th:name="publishDate" id="publishedDate" type="text"
-                                                   class="form-control form-control-lg">
+                                            <input th:name="publishDate" id="publishedDate" type="text"
+                                                   class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -139,8 +139,8 @@
                                                    <!--th:id="expireDate"/></input>-->
 
 
-                                            <input  th:name="expireDate" id="expireDate" type="text"
-                                                    class="form-control form-control-lg">
+                                            <input th:name="expireDate" id="expireDate" type="text"
+                                                   class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +181,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-close"></i> Delete</button>
+                        <button class="btn btn-outline-danger" data-dismiss="modal" type="button"><i
+                                class="fas fa-close"></i> Delete
+                        </button>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
                             Upload
                         </button>
