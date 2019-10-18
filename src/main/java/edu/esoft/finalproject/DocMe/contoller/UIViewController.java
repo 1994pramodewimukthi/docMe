@@ -102,7 +102,7 @@ public class UIViewController {
         DocumentUploadDto documentUploadDto = new DocumentUploadDto();
         try {
             List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
-            documentUploadDto.setSystemRoleDtos(allSystemRoles);
+            modelAndView.addObject("systemList",allSystemRoles);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
@@ -119,6 +119,14 @@ public class UIViewController {
     @GetMapping(value = "/documentAuth")
     public ModelAndView getDocumentAuthPage() {
         ModelAndView modelAndView = new ModelAndView("/ui/document/document-auth");
+        DocumentUploadDto documentUploadDto = new DocumentUploadDto();
+        try {
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
+            documentUploadDto.setSystemRoleDtos(allSystemRoles);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        modelAndView.addObject("documentUploadDto", documentUploadDto);
         return modelAndView;
     }
 

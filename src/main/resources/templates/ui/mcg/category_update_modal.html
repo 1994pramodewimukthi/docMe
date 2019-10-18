@@ -22,7 +22,7 @@
                                 <label class="col-form-label">Input User</label>
                                 <input th:value="${documentCategoryDto.categoryInputUser}"
                                        th:field="${documentCategoryDto.categoryInputUser}" class="form-control"
-                                       type="text"/>
+                                       type="text" disabled/>
 
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <label class="col-form-label">Input Date</label>
                                 <input th:value="${documentCategoryDto.categoryInputDateTime}"
                                        th:field="${documentCategoryDto.categoryInputDateTime}" class="form-control"
-                                       type="text"/>
+                                       type="text" disabled/>
                             </div>
                         </div>
                     </div>
@@ -77,14 +77,14 @@
             categoryName: {
                 validators: {
                     notEmpty: {
-                        message: 'This field is required and cannot be empty.'
+                        message: '* This field is required and cannot be empty.'
                     },
                     regexp: {
                         regexp: nospecial,
-                        message: 'Special characters are not allowed.'
+                        message: '* Special characters are not allowed.'
                     },
                     stringLength: {
-                        message: 'Post content must be less than 255 characters',
+                        message: '* Post content must be less than 255 characters',
                         max: 255
                     },
                 }

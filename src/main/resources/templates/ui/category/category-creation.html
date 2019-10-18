@@ -93,30 +93,30 @@
                         <div class="row">
                             <input type="hidden" id="parentId"
                                    th:value="${docCategoryTemp.parentDocCategoryTemp}"
-                                   th:field="${docCategoryTemp.parentDocCategoryTemp}"></input>
+                                   th:field="${docCategoryTemp.parentDocCategoryTemp}">
 
                             <div class="col-md-6 form-group">
                                 <label class="material-label-fixed">Category Name * :</label>
                                 <div class="form-material ">
-                                    <input class="form-control" type="text" th:name="catName"
-                                           th:field="${docCategoryTemp.docCategoryName}" th:id="catName"></input>
+                                    <input class="form-control" type="text"
+                                           th:field="${docCategoryTemp.docCategoryName}" id="catName">
                                     <span class="material-line"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="material-label-fixed">Sorting Order * :</label>
                                 <div class="form-material ">
-                                    <input class="form-control" type="text" th:name="sortingOrder"
-                                           th:field="${docCategoryTemp.sortingOrder}" id="sortingOrder"></input>
+                                    <input class="form-control" type="text"
+                                           th:field="${docCategoryTemp.sortingOrder}" id="sortingOrder">
                                     <span class="material-line"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-group">
-                                <label class="material-label-fixed">Category Description:</label>
+                                <label class="material-label-fixed">Category Description * :</label>
                                 <div class="form-material ">
-                                    <textarea class="form-control" rows="3" id="desc" th:name="desc"
+                                    <textarea class="form-control" rows="3" id="desc"
                                               th:field="${docCategoryTemp.docCategoryDescription}"></textarea>
                                     <span class="material-line"></span>
                                 </div>
@@ -263,7 +263,7 @@
             framework: 'bootstrap',
             excluded: ':disabled',
             fields: {
-                catName: {
+                docCategoryName: {
                     validators: {
                         notEmpty: {
                             message: '* This field is required and cannot be empty.'
@@ -271,6 +271,10 @@
                         regexp: {
                             regexp: /^[a-z,A-Z,0-9., \s]+$/i,
                             message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The category name must be less than 255 characters'
                         }
                     }
                 },
@@ -279,17 +283,27 @@
                         notEmpty: {
                             message: '* This field is required and cannot be empty.'
                         },
-                        regexp: {
-                            regexp: /^[0-9\s]+$/i,
-                            message: '* Special characters are not allowed in this field.'
+                        integer: {
+                            message: '* The value is not an integer'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The category name must be less than 255 characters'
                         }
                     }
                 },
-                desc: {
+                docCategoryDescription: {
                     validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
                         regexp: {
                             regexp: /^[a-z,A-Z,0-9., \s]+$/i,
                             message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* The category name must be less than 255 characters'
                         }
                     }
                 }

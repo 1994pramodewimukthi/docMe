@@ -185,17 +185,17 @@
             newExpireYear: {
                 validators: {
                     notEmpty: {
-                        message: 'This field is required and cannot be empty.'
+                        message: '* This field is required and cannot be empty.'
                     },
                     integer: {
-                        message: 'Decimal value not allowed.',
+                        message: '* Decimal value not allowed.',
                         thousandsSeparator: '',
                         decimalSeparator: '.'
                     },
                     between: {
                         min: 1,
                         max: 50,
-                        message: 'The number must be between 1 and 50'
+                        message: '* The number must be between 1 and 50'
                     }
                 }
             },

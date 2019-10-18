@@ -235,9 +235,6 @@
     //    --------------------------------------------------------------------------------------
 
 
-
-
-
 </script>
 <script th:inline="javascript">
     $(document).ready(function () {
@@ -256,7 +253,8 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/system-role-privilege');
+                location.replace(CONTEXT_PATH + '/user/register');
+
             });
         } else if (isSucsess == false) {
             swal({
@@ -267,13 +265,173 @@
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/system-role-privilege');
+                location.replace(CONTEXT_PATH + '/user/register');
             });
         }
 
 
     });
     /*]]>*/
+</script>
+<script th:inline="javascript">
+    $(function () {
+        var faIcon = {
+            valid: 'fa fa-check-circle fa-lg text-success',
+            invalid: 'fa fa-times-circle fa-lg',
+            validating: 'fa fa-refresh'
+        };
+
+        $('#userForm').formValidation({
+            framework: 'bootstrap',
+            excluded: ':disabled',
+            fields: {
+                userName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                firstName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                lastName: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                addressLine1: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                addressLine2: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[a-z,A-Z,0-9., \s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                dateOfBirth: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^\d{4}-((0\d)|(1[012]))-(([012]\d)|3[01])$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        emailAddress: {
+                            message: '* The value is not a valid email address'
+                        }
+                    }
+                },
+                nic: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^(([0-9]{9}[vVxX])|([0-9]{12}))$/i,
+                            message: '* Invalid nic number.'
+                        },
+                        stringLength: {
+                            max: 255,
+                            message: '* This field must be less than 255 characters'
+                        }
+                    }
+                },
+                mobile: {
+                    validators: {
+                        notEmpty: {
+                            message: '* This field is required and cannot be empty.'
+                        },
+                        regexp: {
+                            regexp: /^[0-9\s]+$/i,
+                            message: '* Special characters are not allowed in this field.'
+                        },
+                        stringLength: {
+                            max: 10,
+                            message: '* This field must be less than 10 characters'
+                        }
+                    }
+                },
+
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

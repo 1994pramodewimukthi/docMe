@@ -190,7 +190,8 @@
                 showConfirmButton: true,
                 allowOutsideClick: false,
                 closeOnClickOutside: false
-            }).then(function () {
+            }).then(function (result) {
+
                 location.replace(CONTEXT_PATH + '/ui/system-role-privilege');
             });
         } else if (isSucsess == false) {
