@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div class="modal fade bd-example-modal-lg" id="modifySystemPrivilages" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form th:action="@{/user/change-system-role-privilege}" th:object="${systemRolePrivileges}"
+              method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Manage System Role Privilege</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <table class="table mb-3 table-bordered dataTables_scrollBody" id="allPoliciesDataTable">
+                    <thead>
+                    <tr class="center">
+                        <th rowspan="2">System Menu Item</th>
+                        <th colspan="5">Privilege</th>
+                    </tr>
+                    <tr class="center">
+                        <th>View</th>
+                        <th>Authorization</th>
+                        <th>Save</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <input type="text" hidden th:field="${systemRolePrivileges.systemRoleId}">
+                    <tr th:each="privilege,i :${systemRolePrivileges.systemMenuItemPrivilegeDtos}">
+                        <td th:text="${privilege.systemMenuItemName}"></td>
+                        <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
+                            <input type="checkbox" name="viewPrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].viewPrivilege}" >
+                        </td >
+                        <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
+                            <input type="checkbox" name="authorizationPrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].authorizationPrivilege}" >
+                        </td>
+                        <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
+                            <input type="checkbox"  name="savePrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].savePrivilege}" >
+                        </td>
+                        <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
+                            <input type="checkbox" name="deletePrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].deletePrivilege}" >
+                        </td>
+                        <td class="center">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].id}">
+                            <input type="text" hidden th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].systemMenuItemId}">
+                            <input type="checkbox" name="updatePrivilege" th:field="${systemRolePrivileges.systemMenuItemPrivilegeDtos[__${i.index}__].updatePrivilege}" >
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary " data-dismiss="modal"><i
+                            class="fas fa-times-circle"></i> Close
+                    </button>
+
+
+                    <button type="submit" name="action1" value="Insert" class="btn btn-primary "><i
+                            class="fa fa-save"></i> Update
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/change_privileges.js}"></script>
+
+
+</html>

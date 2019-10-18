@@ -4,9 +4,11 @@ package edu.esoft.finalproject.DocMe.contoller;
 import edu.esoft.finalproject.DocMe.config.*;
 import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
 import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
+import edu.esoft.finalproject.DocMe.dto.SystemRoleDto;
 import edu.esoft.finalproject.DocMe.entity.*;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadService;
+import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,9 @@ public class DocumentUploadController {
 //    AccessUserTypeService accessUserTypeService;
     @Autowired
     private CommonFunction commonFunction;
+
+    @Autowired
+    private SystemRoleDockUpService systemRoleDockUpService;
 
     @Value("${document.multipart.magic-extension-types}")
     private String DOCUMENT_VALID_FILE_MAGIC_TYPES;
@@ -292,7 +297,11 @@ public class DocumentUploadController {
             documentUploadDto.setDocumentName(documentUploadTemp.getDocumentName());
             documentUploadDto.setHeadLine(documentUploadTemp.getHeadline());
             documentUploadDto.setDocumentDescription(documentUploadTemp.getDocumentDescription());
+            documentUploadDto.setSystemRoleId(documentUploadTemp.getSystemRoleId());
             List<String> acessTypes = documentUploadDto.getAcessTypes();
+
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
+            documentUploadDto.setSystemRoleDtos(allSystemRoles);
             /*for (DocumentUploadTempSystemRole documentUploadTempSystemRole : documentUploadTemp.getDocumentUploadTempSystemRoles()) {
                 acessTypes.add(Integer.toString(documentUploadTempSystemRole.getSystemRole().getSystemRoleId()));
             }*/
@@ -342,6 +351,10 @@ public class DocumentUploadController {
             documentUploadDto.setDocumentName(documentUploadTemp.getDocumentName());
             documentUploadDto.setHeadLine(documentUploadTemp.getHeadline());
             documentUploadDto.setDocumentDescription(documentUploadTemp.getDocumentDescription());
+
+            List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
+            documentUploadDto.setSystemRoleDtos(allSystemRoles);
+
             List<String> acessTypes = documentUploadDto.getAcessTypes();
             for (DocumentUploadMasterSystemRole documentUploadTempSystemRole : documentUploadTemp.getDocumentUploadMasterSystemRoles()) {
                 acessTypes.add(Integer.toString(documentUploadTempSystemRole.getSystemRole().getSystemRoleId()));
@@ -351,6 +364,7 @@ public class DocumentUploadController {
             documentUploadDto.setPublishDate(documentUploadTemp.getPublishDate());
             documentUploadDto.setExpireDate(documentUploadTemp.getExpireDate());
             documentUploadDto.setPath(documentUploadTemp.getPath());
+            documentUploadDto.setSystemRoleId(documentUploadTemp.getSystemRoleId());
             modelAndView.addObject("documentUploadDto", documentUploadDto);
             modelAndView.addObject("accessList", documentUploadDto.getAcessTypes());
             modelAndView.setViewName("ui/document/documentresubmitviwer");

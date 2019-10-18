@@ -232,6 +232,9 @@ header {
     text-align: center !important;
 }
 
+.sysRoleList .webix_cell {
+    text-align: center !important;
+}
 .addAgreementTblBody tr {
     text-align: center;
 }
@@ -249,16 +252,19 @@ ul.nav-main li .nav-children {
     font-size: -webkit-xxx-large;
     margin-left: -110px;
     margin-top: -25px;
-    color: #ddd;
-    font-weight: 400;
+    color: #171717;
+    font-weight: 600;
     width: 425%;
     font-family: monospace;
 }
 
 .loading-overlay {
-    background-color: #333333e6 !important;
+    background-color: #eeeeee9c !important;
 }
 
+.bounce1, .bounce2, .bounce3 {
+    background-color: #171717 !important;
+}
 form label {
     font-weight: 600 !important;
 }
@@ -271,4 +277,10 @@ form label {
 .sidebar-left .sidebar-header .sidebar-title {
     background: #171717 !important;
 }
+
+.darkBackground {
+    background-color: currentColor;
+}
+
+
 /*# sourceMappingURL=custom.css.map */

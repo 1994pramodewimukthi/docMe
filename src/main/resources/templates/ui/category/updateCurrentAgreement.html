@@ -49,20 +49,37 @@
             <div class="row ">
                 <div class="col-lg-12">
                     <section class="card">
-                        <form>
+                        <form class="form-horizontal"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{/mcg/updateDocument}"
+                              th:id="documentUpdateForm"
+                              th:name="documentUpdateForm" th:object="${mcgDocumentUpdateDto}">
+                            <input readonly th:field="*{docId}" th:id="*{docId}"
+                                   th:name="*{docId}" type='hidden'/>
+                            <input readonly th:field="*{pageCount}"
+                                   th:id="*{pageCount}"
+                                   th:name="*{pageCount}"
+                                   type='hidden'/>
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="material-label-fixed">Agreement Name : </label>
                                         <div class="form-material ">
-                                            <input class="form-control" readonly type='text'/>
+                                            <input class="form-control" readonly th:field="*{docName}"
+                                                   th:id="*{docName}"
+                                                   th:name="*{docName}"
+                                                   type='text'/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="material-label-fAdd Agreementixed">Agreement
                                             Input Date : </label>
                                         <div class="form-material ">
-                                            <input class="form-control" readonly type='text'/>
+                                            <input class="form-control" readonly th:field="*{uploadedDate}"
+                                                   th:id="*{uploadedDate}"
+                                                   th:name="*{uploadedDate}"
+                                                   type='text'/>
                                         </div>
                                     </div>
                                 </div>
@@ -73,14 +90,22 @@
                                                     class="text-danger">*</span>:
                                         </label>
                                         <div class="form-material ">
-                                            <input class="form-control" type='text'/>
+                                            <input class="form-control" onkeypress="return isNumber(event)"
+                                                   th:field="*{skipDateCount}"
+                                                   th:id="*{skipDateCount}"
+                                                   th:name="*{skipDateCount}"
+                                                   type='text'/>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="material-label-fixed">Include
                                             Signature From Page No :</label>
                                         <div class='input-group date'>
-                                            <input class="form-control" type='text'/>
+                                            <input class="form-control" onkeypress="return isNumber(event)"
+                                                   th:field="*{startPage}"
+                                                   th:id="*{startPage}"
+                                                   th:name="*{startPage}"
+                                                   type='text'/>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -88,7 +113,11 @@
                                             Height <span
                                                     class="text-danger">*</span>:</label>
                                         <div class='input-group date'>
-                                            <input class="form-control" type='text'>
+                                            <input class="form-control" onkeypress="return isNumber(event)"
+                                                   th:field="*{footerHeight}"
+                                                   th:id="*{footerHeight}"
+                                                   th:name="*{footerHeight}"
+                                                   type='text'>
                                         </div>
                                     </div>
                                 </div>
@@ -125,64 +154,10 @@
 <script th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}" type="text/javascript"></script>
 <script th:src="@{/js/loadingoverlay.min.js}" type="text/javascript"></script>
 <script th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}" type="text/javascript"></script>
-<script th:src="@{/js/rejectdocresubmit.js}"></script>
+<!--<script th:src="@{/js/rejectdocresubmit.js}"></script>-->
 <script>
     var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
     CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
-</script>
-
-<script>
-    function resubmit(category_id) {
-        $.ajax({
-            url: CONTEXT_PATH + '/documentManagement/resubmit?category_id=' + category_id,
-            type: 'GET',
-            cache: false,
-            dataType: 'html',
-            success: function (result) {
-                $('#modifyDiv').html(result);
-                $('#modifyModal').modal('show');
-                return false;
-            },
-            error: function (result) {
-                console.log(result);
-            }
-
-        });
-
-    }
-
-    function deleteCategory() {
-        var category_id = $('#tempId').val();
-        swal({
-            title: 'Are you sure?',
-            text: "Do you want to delete this category!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Delete'
-        }).then(function () {
-            $.ajax({
-                url: CONTEXT_PATH + "/documentManagement/delete_resubmit_category?category_id=" + category_id,
-                type: 'GET',
-                success: function (data) {
-                    if (data.isSucsess == 1) {
-                        swal(data.message, "", "success").then(function () {
-                            window.location.href = CONTEXT_PATH + '/ui/categoryResubmit';
-                        });
-                    } else {
-                        swal(data.message, "", "error").then(function () {
-                            window.location.href = CONTEXT_PATH + '/ui/categoryResubmit';
-                        });
-                    }
-                },
-                error: function (result) {
-                    console.log(result);
-                }
-//
-            });
-        });
-    }
 </script>
 
 <script th:inline="javascript">
@@ -191,35 +166,107 @@
         /*<![CDATA[*/
         var message = [[${msg}]];
         var isSucsess = [[${isSucsess}]];
-
-
         if (isSucsess) {
             swal({
-                title: "Success",
+                title: 'Success',
                 text: message,
                 type: 'success',
                 showConfirmButton: true,
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/categoryResubmit');
+                location.replace(CONTEXT_PATH + '/ui/mcgDocUpdate');
             });
         } else if (isSucsess == false) {
             swal({
-                title: "Error",
+                title: 'Error',
                 text: message,
                 type: 'error',
                 showConfirmButton: true,
                 allowOutsideClick: false,
                 closeOnClickOutside: false
             }).then(function () {
-                location.replace(CONTEXT_PATH + '/ui/categoryResubmit');
+                location.replace(CONTEXT_PATH + '/ui/mcgDocUpdate');
+
             });
         }
 
 
     });
     /*]]>*/
+</script>
+<script>
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode > 31 && charCode < 48) || charCode > 57) {
+            return false;
+        }
+        return true;
+    }
+
+    // $('#documentUpdateForm').formValidation({
+    //     framework: 'bootstrap',
+    //     excluded: ':disabled',
+    //     icon: {
+    //         valid: 'glyphicon glyphicon-ok',
+    //         invalid: 'glyphicon glyphicon-remove',
+    //         validating: 'glyphicon glyphicon-refresh'
+    //     },
+    //     fields: {
+    //         footerHeight: {
+    //             validators: {
+    //                 notEmpty: {
+    //                     message: 'This field is required and cannot be empty.'
+    //                 },
+    //                 integer: {
+    //                     message: 'Decimal value not allowed.',
+    //                     thousandsSeparator: '',
+    //                     decimalSeparator: '.'
+    //                 },
+    //                 between: {
+    //                     min: 8,
+    //                     max: 26,
+    //                     message: 'The number must be between 8 and 26'
+    //                 }
+    //             }
+    //         },
+    //         startPage: {
+    //             validators: {
+    //                 integer: {
+    //                     message: 'Decimal value not allowed.',
+    //                     thousandsSeparator: '',
+    //                     decimalSeparator: '.'
+    //                 },
+    //                 between: {
+    //                     min: 1,
+    //                     max: 'pageCount',
+    //                     message: 'The number  must be between %s and %s'
+    //                 }
+    //             }
+    //         },
+    //         skipDateCount: {
+    //             validators: {
+    //                 notEmpty: {
+    //                     message: 'This field is required and cannot be empty.'
+    //                 },
+    //                 integer: {
+    //                     message: 'Decimal value not allowed.',
+    //                     thousandsSeparator: '',
+    //                     decimalSeparator: '.'
+    //                 },
+    //                 stringLength: {
+    //                     message: 'Date Count content must be less than 3 digits.',
+    //                     max: 3
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }).on('success.form.fv', function (e) {
+    //     $('.loader-overlay').show();
+    //
+    // });
+
 </script>
 </body>
 </html>

@@ -5,10 +5,7 @@ import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.AppURL;
 import edu.esoft.finalproject.DocMe.config.EmailMessageConstant;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
-import edu.esoft.finalproject.DocMe.dto.DocumentCategoryDto;
-import edu.esoft.finalproject.DocMe.dto.McgDocumentUpdateDto;
-import edu.esoft.finalproject.DocMe.dto.McgDocumentUploadDto;
-import edu.esoft.finalproject.DocMe.dto.McgPdfDto;
+import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.service.MCGDocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
@@ -235,23 +232,10 @@ public class MarketingConductGridlinesController {
     }
 
 
-    @GetMapping(value = AppURL.MCG_DOC_UPDATE)
-    public ModelAndView updateDocument(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_UPDATE_DOCUMENT);
-
-        User user = (User) session.getAttribute(AppConstant.USER);
-        try {
-            modelAndView.addObject("mcgDocumentUpdateDto", mcgDocumentUploadService.getValidDocument(user));
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
-
-        return modelAndView;
-    }
 
     @PostMapping(value = AppURL.MCG_SAVE_DOC_UPDATE)
     public ModelAndView saveDocumentUpdate(@ModelAttribute("mcgDocumentUpdateDto") McgDocumentUpdateDto mcgDocumentUpdateDto, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_UPDATE_DOCUMENT);
+        ModelAndView modelAndView = new ModelAndView("/ui/category/updateCurrentAgreement");
 
         User user = (User) session.getAttribute(AppConstant.USER);
         try {
@@ -277,18 +261,7 @@ public class MarketingConductGridlinesController {
         return modelAndView;
     }
 
-    @GetMapping(value = AppURL.MCG_VIEW_UPLOADED_DOC)
-    public ModelAndView viewUploadedDocument() {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_UPLOADED_DOCUMENT);
 
-        try {
-            modelAndView.addObject("mcgDocumentUploadDtos", mcgDocumentUploadService.getAllDocument());
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
-
-        return modelAndView;
-    }
 
     //view doc list related to user role
     @GetMapping(value = AppURL.MCG_VIEW_RELATED_DOC)
@@ -380,6 +353,30 @@ public class MarketingConductGridlinesController {
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
+    }
+
+    @PostMapping(value = AppURL.MCG_SAVE_EXPIRE)
+    public ModelAndView saveExpireYear(@ModelAttribute("documentExpireDto") DocumentExpireDto documentExpireDto, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("/ui/category/UpdateRetentionPeriod");
+
+        try {
+            User user = (User) request.getSession().getAttribute(AppConstant.USER);
+            Long result = marketingConductGridlinesService.saveExpireYear(documentExpireDto, user);
+            modelAndView.addObject("documentExpireDto", marketingConductGridlinesService.getExpireYear());
+            if (result.equals(SUCSESS)) {
+                modelAndView.addObject(IS_SUCSESS, true);
+                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.INFO_MESSAGE_SUCCESSFULLY_UPDATED));
+            } else {
+                modelAndView.addObject(IS_SUCSESS, false);
+                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.DOCUMENT_UPDATE_FAILED));
+            }
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            modelAndView.addObject(IS_SUCSESS, false);
+            modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.DOCUMENT_UPLOAD_FAILD));
         }
         return modelAndView;
     }

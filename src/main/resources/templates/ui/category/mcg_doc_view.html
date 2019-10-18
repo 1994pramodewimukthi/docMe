@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="fixed sidebar-left-sm" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/basic.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropzone/dropzone.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/form-validation/css/formValidation.min.css}">
+    <meta name="context-path" th:content="@{/}"/>
+
+</head>
+<body class="loading-overlay-showing" data-loading-overlay id="loginBody">
+<div class="loading-overlay">
+    <div class="bounce-loader">
+        <h3 class="loadHeading mb-5">L O A D I N G</h3>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
+<section class="body mt-3 mb-3">
+    <div class="text-center" id='pdf-viewer'></div>
+</section>
+
+</body>
+</html>

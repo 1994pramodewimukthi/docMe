@@ -23,7 +23,16 @@ public class DocumentUploadMaster implements Serializable {
     private Date expireDate;
     private String channel;
     private String path;
+    private String systemRoleId;
     private List<DocumentUploadMasterSystemRole> documentUploadMasterSystemRoles;
+
+    public String getSystemRoleId() {
+        return systemRoleId;
+    }
+
+    public void setSystemRoleId(String systemRoleId) {
+        this.systemRoleId = systemRoleId;
+    }
 
     @Id
     @Column(name = "doc_upload_mst_id")

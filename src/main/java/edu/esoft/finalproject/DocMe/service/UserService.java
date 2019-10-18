@@ -1,8 +1,10 @@
 package edu.esoft.finalproject.DocMe.service;
 
 import edu.esoft.finalproject.DocMe.dto.UserDto;
+import edu.esoft.finalproject.DocMe.dto.UserRoleTableDto;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface UserService {
 
@@ -12,4 +14,5 @@ public interface UserService {
 
     UserDto getUser(String  userId) throws Exception;
 
+    List<UserRoleTableDto> getAllUsers() throws Exception;
 }

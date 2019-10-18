@@ -22,8 +22,6 @@ public class MCGDocument implements Serializable {
     private String docVersion;
     @Column(name = "doc_name")
     private String docName;
-    @Column(name = "rank_code")
-    private Integer accessUserType;
     @Column(name = "footer_hight")
     private Integer footerHight;
     @Column(name = "file_store_name")
@@ -70,13 +68,6 @@ public class MCGDocument implements Serializable {
     }
 
 
-    public Integer getAccessUserType() {
-        return accessUserType;
-    }
-
-    public void setAccessUserType(Integer accessUserType) {
-        this.accessUserType = accessUserType;
-    }
 
     public Integer getFooterHight() {
         return footerHight;
