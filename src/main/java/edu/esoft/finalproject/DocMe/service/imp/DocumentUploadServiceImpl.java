@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.jms.JMSException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -286,7 +285,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                 documentUploadMaster.setDocumentUploadMstId(docId);
             }
             BeanUtils.copyProperties(documentUploadTemp, documentUploadMaster);
-            //TODO Set USer
+            //TODO Set User
 //            documentUploadMaster.setAuthUserId(user.getUserId() + AppConstant.STRING_EMPTY);
             documentUploadMaster.setAuthDateTime(new Date());
             documentUploadMaster.setRecordStatus(new RecordStatus(7));

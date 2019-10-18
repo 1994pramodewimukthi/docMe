@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="fixed       sidebar-left-sm" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="">
+    <title>DocuME</title>
+
+    <!-- Mobile Specific -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/jquerysctipttop.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/imageuploadify.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/formvalidation.css}" type="text/css"/>
+
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/font-awesome.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/simple-line-icons.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/owl.carousel.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/owl.theme.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/jquery.bxslider.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/jquery.mobile-menu.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/revslider.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/style.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/blog.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/font-awesome.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/admin/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/jquery-ui.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/jquery-ui.structure.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/jquery-ui.theme.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/overhang.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendor/homepage/css/custom.css}" type="text/css"/>
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600,500,700,800' rel='stylesheet'
+          type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+</head>
+
+<body class="common-home">
+<div id="page">
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="social">
+                            <ul>
+                                <li class="fb pull-left"><a href="#"></a></li>
+                                <li class="tw pull-left"><a href="#" target="_blank"></a></li>
+                                <li class="googleplus pull-left"><a href="#" target="_blank"></a></li>
+                                <li class="rss pull-left"><a href="#" target="_blank"></a></li>
+                                <li class="pintrest pull-left"><a href="#" target="_blank"></a></li>
+                                <li class="linkedin pull-left"><a href="#" target="_blank"></a></li>
+                                <li class="youtube pull-left"><a href="#" target="_blank"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 logo-block">
+                        <!-- Header Logo -->
+                        <div class="logo">
+                            <img alt="Admin" style="width: 12vw;" th:src="@{/img/1.png}"/>
+                        </div>
+                        <!-- End Header Logo -->
+                    </div>
+                    <div class="col-lg-8 col-md-9 col-sm-9 col-xs-12 thm-top-cart">
+                        <div class="cart-account">
+                            <div class="dropdown login">
+                                <button class="btn btn-outline-primary" type="button">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+    <!-- Navigation -->
+    <nav class="">
+        <div class="container">
+            <div class="mm-toggle-wrap">
+                <div class="mm-toggle"><i class="fa fa-bars"></i><span class="mm-label">Menu</span></div>
+            </div>
+            <div class="nav-inner">
+            </div>
+        </div>
+    </nav>
+
+    <!-- start Slider -->
+    <div>
+        <div id="content">
+            <!-- Slider -->
+            <div class="thmsoft-slideshow" id="thmsoft-slideshow">
+                <div class="">
+                    <div>
+                        <div class="thm_topsection">
+                            <div>
+                                <div class='rev_slider_wrapper fullwidthbanner-container' id='rev_slider_4_wrapper'>
+                                    <div class='rev_slider fullwidthabanner' id='rev_slider_4'>
+                                        <ul>
+                                            <li data-masterspeed='1000' data-slotamount='7' data-transition='random'
+                                                th:data-thumb='@{/img/homepage/slider-img1.jpg}'>
+                                                <img
+                                                        alt="slide-img" data-bgfit='cover' data-bgposition='left top'
+                                                        data-bgrepeat='no-repeat'
+                                                        th:src="@{/img/homepage/slide3-min.jpg}"/>
+                                                <div class="info">
+                                                    <div class='tp-caption LargeTitle sfl  tp-resizeme '
+                                                         data-easing='Linear.easeNone' data-elementdelay='0.1'
+                                                         data-endelementdelay='0.1' data-endspeed='500' data-speed='500'
+                                                         data-splitin='none' data-splitout='none' data-start='1300'
+                                                         style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'>
+                                                        <span>New Arrivals</span></div>
+                                                    <div class='tp-caption Title sft  tp-resizeme '
+                                                         data-easing='Power2.easeInOut' data-elementdelay='0.1'
+                                                         data-endelementdelay='0.1' data-endspeed='500' data-speed='500'
+                                                         data-splitin='none' data-splitout='none' data-start='1450'
+                                                         style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>
+                                                        Big Sale 20% off
+                                                    </div>
+                                                    <!--                                                        <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1500' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'><a href='#' class="buy-btn">See product</a> </div>-->
+                                                </div>
+                                            </li>
+                                            <li data-masterspeed='1000' data-slotamount='7' data-transition='random'
+                                                th:data-thumb='@{/img/homepage/slider-img2.jpg}'>
+                                                <img alt="slide-img" data-bgfit='cover' data-bgposition='left top'
+                                                     data-bgrepeat='no-repeat'
+                                                     th:src="@{/img/homepage/slide1-min.jpg}"/>
+                                                <div class="info1">
+                                                    <div class='tp-caption LargeTitle sfl  tp-resizeme '
+                                                         data-easing='Linear.easeNone' data-elementdelay='0.1'
+                                                         data-endelementdelay='0.1' data-endspeed='500' data-speed='500'
+                                                         data-splitin='none' data-splitout='none' data-start='1300'
+                                                         style='z-index:3;max-width:auto;max-height:auto;white-space:nowrap;'>
+                                                        Wooden Sofa
+                                                    </div>
+                                                    <div class='tp-caption Title sft  tp-resizeme '
+                                                         data-easing='Power2.easeInOut' data-elementdelay='0.1'
+                                                         data-endelementdelay='0.1' data-endspeed='500' data-speed='500'
+                                                         data-splitin='none' data-splitout='none' data-start='1500'
+                                                         style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'>
+                                                        Get 30% Discount
+                                                    </div>
+                                                    <!--                                                        <div class='tp-caption sfb  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1500' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4;max-width:auto;max-height:auto;white-space:nowrap;'><a href='#' class="buy-btn">Learn More</a> </div>-->
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+
+        <footer id="footer">
+            <div class="footer-container">
+                <div class="footer-bottom">
+                    <div class="copyright"><a class="_blank" href="#" target="_blank"> &copy; 2019 DocuMe. All Rights
+                        Reserved. </a></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+<!-- js -->
+<script th:src="@{/vendor/homepage/js/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/jquery-ui.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/imageuploadify.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/formValidation.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/revslider.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/common.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/owl.carousel.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/jquery.mobile-menu.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/overhang.min.js}" type="text/javascript"></script>
+<script th:src="@{/vendor/homepage/js/countdown.js}" type="text/javascript"></script>
+
+
+<script type='text/javascript'>
+    jQuery(document).ready(function () {
+        jQuery('#rev_slider_4').show().revolution({
+            dottedOverlay: 'none',
+            delay: 5000,
+            startwidth: 1170,
+            startheight: 684,
+            hideThumbs: 200,
+            thumbWidth: 200,
+            thumbHeight: 50,
+            thumbAmount: 2,
+            navigationType: 'thumb',
+            navigationArrows: 'solo',
+            navigationStyle: 'round',
+            touchenabled: 'on',
+            onHoverStop: 'on',
+            swipe_velocity: 0.7,
+            swipe_min_touches: 1,
+            swipe_max_touches: 1,
+            drag_block_vertical: false,
+            spinner: 'spinner0',
+            keyboardNavigation: 'off',
+            navigationHAlign: 'center',
+            navigationVAlign: 'bottom',
+            navigationHOffset: 0,
+            navigationVOffset: 20,
+            soloArrowLeftHalign: 'left',
+            soloArrowLeftValign: 'center',
+            soloArrowLeftHOffset: 20,
+            soloArrowLeftVOffset: 0,
+            soloArrowRightHalign: 'right',
+            soloArrowRightValign: 'center',
+            soloArrowRightHOffset: 20,
+            soloArrowRightVOffset: 0,
+            shadow: 0,
+            fullWidth: 'on',
+            fullScreen: 'off',
+            stopLoop: 'off',
+            stopAfterLoops: -1,
+            stopAtSlide: -1,
+            shuffle: 'off',
+            autoHeight: 'off',
+            forceFullWidth: 'on',
+            fullScreenAlignForce: 'on',
+            minFullScreenHeight: 0,
+            hideNavDelayOnMobile: 1500,
+            hideThumbsOnMobile: 'off',
+            hideBulletsOnMobile: 'off',
+            hideArrowsOnMobile: 'off',
+            hideThumbsUnderResolution: 0,
+            hideSliderAtLimit: 0,
+            hideCaptionAtLimit: 0,
+            hideAllCaptionAtLilmit: 0,
+            startWithSlide: 0,
+            fullScreenOffsetContainer: ''
+        });
+    });
+</script>
+<!-- Hot Deals Timer 1-->
+<script type="text/javascript">
+    var dthen1 = new Date("12/25/17 11:59:00 PM");
+    start = "05/09/15 03:02:11 AM";
+    start_date = Date.parse(start);
+    var dnow1 = new Date(start_date);
+    if (CountStepper > 0)
+        ddiff = new Date((dnow1) - (dthen1));
+    else
+        ddiff = new Date((dthen1) - (dnow1));
+    gsecs1 = Math.floor(ddiff.valueOf() / 1000);
+
+    var iid1 = "countbox_1";
+    CountBack_slider(gsecs1, "countbox_1", 1);
+</script>
+
+
+<!-- Mirrored from htmldemo.themesmart.net/floral/version1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Nov 2017 10:40:38 GMT -->
+</body>
+</html>
