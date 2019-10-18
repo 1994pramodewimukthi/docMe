@@ -217,7 +217,7 @@ public class UserController {
                 modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ROLE_PRIVILEGE_UPDATED_SUCCESSFULLY));
             } else {
                 modelAndView.addObject(IS_SUCSESS, result);
-                modelAndView.addObject(MSG,  messageService.getSystemMessage(MessageConstant.SYSTEM_ERROR_PLEASE_CONTACT_SYSTEM_ADMIN));
+                modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.SYSTEM_ERROR_PLEASE_CONTACT_SYSTEM_ADMIN));
             }
 
         } catch (Exception e) {
@@ -236,5 +236,19 @@ public class UserController {
             LOGGER.error(e.getMessage());
         }
         return ResponseEntity.ok(userRoleTableDtos);
+    }
+
+    @GetMapping(value = "/get-side-menu")
+    public ResponseEntity getUserSideMenu(HttpSession httpSession) {
+        SystemRolePrivilagesWrapperDto menuPrivilege = new SystemRolePrivilagesWrapperDto();
+        try {
+            User user = (User) httpSession.getAttribute("user");
+            menuPrivilege = systemRoleDockUpService.getAllSystemMenuItemPrivilagesForSystemRoleId(user.getSystemRoleId());
+
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return ResponseEntity.ok(menuPrivilege);
     }
 }
