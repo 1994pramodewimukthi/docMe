@@ -48,7 +48,7 @@ public class AppURL {
     final public static String MCG_UPDATE_DOCUMENT = "ui/mcg/update_doc";
     final public static String MCG_UPLOADED_DOCUMENT = "rpmc/view_uploaded_doc";
     final public static String MCG_RELATED_DOCUMENT = "rpmc/view_signed_doc";
-    final public static String MCG_VIEW_SELECT_DOCUMENT = "rpmc/mcg_doc_view";
+    final public static String MCG_VIEW_SELECT_DOCUMENT = "ui/category/mcg_doc_view";
 
     public final static String DOCUMENT_MANAGEMENT = "/documentManagement";
     public final static String SAVE = "/save";

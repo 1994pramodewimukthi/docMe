@@ -23,8 +23,8 @@ public interface MCGDocumentRepository extends CrudRepository<MCGDocument, Integ
     @Query(value = "SELECT * FROM mcg_document WHERE input_date_time >=?1  AND rank_code IN (0,?2) ORDER BY doc_id DESC ", nativeQuery = true)
     ArrayList<MCGDocument> findDocumentByRankAndAppointDate(String date, String rank) throws Exception;
 
-    @Query(value = "SELECT * FROM mcg_document WHERE status=?1", nativeQuery = true)
-    MCGDocument findDocumentByStatus(String status) throws Exception;
+    @Query(value = "SELECT * FROM mcg_document WHERE status=?1 AND rank_code= ?2", nativeQuery = true)
+    MCGDocument findDocumentByStatusAndRoleId(String status, String roleId) throws Exception;
 
     @Query(value = "SELECT doc_version FROM mcg_document WHERE cat_id =?1 ORDER BY doc_id DESC LIMIT 1", nativeQuery = true)
     String findVersionByCatId(String catId) throws Exception;

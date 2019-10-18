@@ -43,8 +43,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("/ui/system/user-creation");
         UserDto userDto = new UserDto();
         try {
-            List<SystemRoleDto> allActiveSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
-            modelAndView.addObject("systemUserRoles",allActiveSystemRoles);
+            modelAndView.addObject("systemUserRoles", systemRoleDockUpService.getAllActiveSystemRoles());
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }

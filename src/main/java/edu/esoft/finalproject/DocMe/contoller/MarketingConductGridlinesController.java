@@ -10,6 +10,7 @@ import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.service.MCGDocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
 import edu.esoft.finalproject.DocMe.service.MessageService;
+import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class MarketingConductGridlinesController {
     private MessageService messageService;
     @Autowired
     private MCGDocumentUploadService mcgDocumentUploadService;
+    @Autowired
+    private SystemRoleDockUpService systemRoleDockUpService;
 
 
     @GetMapping(value = AppURL.MCG_VIEW_UPDATE_CATEGORY)
@@ -117,6 +120,7 @@ public class MarketingConductGridlinesController {
         try {
             Long result = mcgDocumentUploadService.mcgDocumentUpload(mcgDocumentUploadDto, user);
             ArrayList<DocumentCategoryDto> categoryList = (ArrayList<DocumentCategoryDto>) marketingConductGridlinesService.getAllCategorys();
+            modelAndView.addObject("systemUserRoles", systemRoleDockUpService.getAllActiveSystemRoles());
             modelAndView.addObject("categoryList", categoryList);
             modelAndView.addObject("mcgDocumentUploadDto", mcgDocumentUploadDto);
             if (result.equals(SUCSESS)) {
@@ -206,6 +210,7 @@ public class MarketingConductGridlinesController {
             mcgPdfDto.setPdfFile(mcgPdfDto.getPdfFile());
             modelAndView.addObject("mcgPdfDto", mcgPdfDto);
             if (result.equals(SUCSESS)) {
+                session.setAttribute("mcgSkip", false);
                 modelAndView.addObject(IS_SUCSESS, true);
                 modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.DOCUMENT_UPLOAD_SUCCESS));
             } else {
@@ -261,22 +266,6 @@ public class MarketingConductGridlinesController {
         return modelAndView;
     }
 
-
-
-    //view doc list related to user role
-    @GetMapping(value = AppURL.MCG_VIEW_RELATED_DOC)
-    public ModelAndView viewSignedDocument(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView(AppURL.MCG_RELATED_DOCUMENT);
-
-        User user = (User) session.getAttribute(AppConstant.USER);
-        try {
-            modelAndView.addObject("mcgDocumentUploadDtos", mcgDocumentUploadService.getAllDocumentForUser(user));
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-        }
-
-        return modelAndView;
-    }
 
     @GetMapping(value = AppURL.MCG_VIEW_DOCUMENT_IS_VALID)
     public Boolean viewDocumentIsValid(@PathVariable("docId") String docId) {

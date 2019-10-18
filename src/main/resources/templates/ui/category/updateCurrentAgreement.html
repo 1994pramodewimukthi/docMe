@@ -205,67 +205,67 @@
         return true;
     }
 
-    // $('#documentUpdateForm').formValidation({
-    //     framework: 'bootstrap',
-    //     excluded: ':disabled',
-    //     icon: {
-    //         valid: 'glyphicon glyphicon-ok',
-    //         invalid: 'glyphicon glyphicon-remove',
-    //         validating: 'glyphicon glyphicon-refresh'
-    //     },
-    //     fields: {
-    //         footerHeight: {
-    //             validators: {
-    //                 notEmpty: {
-    //                     message: 'This field is required and cannot be empty.'
-    //                 },
-    //                 integer: {
-    //                     message: 'Decimal value not allowed.',
-    //                     thousandsSeparator: '',
-    //                     decimalSeparator: '.'
-    //                 },
-    //                 between: {
-    //                     min: 8,
-    //                     max: 26,
-    //                     message: 'The number must be between 8 and 26'
-    //                 }
-    //             }
-    //         },
-    //         startPage: {
-    //             validators: {
-    //                 integer: {
-    //                     message: 'Decimal value not allowed.',
-    //                     thousandsSeparator: '',
-    //                     decimalSeparator: '.'
-    //                 },
-    //                 between: {
-    //                     min: 1,
-    //                     max: 'pageCount',
-    //                     message: 'The number  must be between %s and %s'
-    //                 }
-    //             }
-    //         },
-    //         skipDateCount: {
-    //             validators: {
-    //                 notEmpty: {
-    //                     message: 'This field is required and cannot be empty.'
-    //                 },
-    //                 integer: {
-    //                     message: 'Decimal value not allowed.',
-    //                     thousandsSeparator: '',
-    //                     decimalSeparator: '.'
-    //                 },
-    //                 stringLength: {
-    //                     message: 'Date Count content must be less than 3 digits.',
-    //                     max: 3
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }).on('success.form.fv', function (e) {
-    //     $('.loader-overlay').show();
-    //
-    // });
+    $('#documentUpdateForm').formValidation({
+        framework: 'bootstrap',
+        excluded: ':disabled',
+        icon: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            footerHeight: {
+                validators: {
+                    notEmpty: {
+                        message: 'This field is required and cannot be empty.'
+                    },
+                    integer: {
+                        message: 'Decimal value not allowed.',
+                        thousandsSeparator: '',
+                        decimalSeparator: '.'
+                    },
+                    between: {
+                        min: 8,
+                        max: 26,
+                        message: 'The number must be between 8 and 26'
+                    }
+                }
+            },
+            startPage: {
+                validators: {
+                    integer: {
+                        message: 'Decimal value not allowed.',
+                        thousandsSeparator: '',
+                        decimalSeparator: '.'
+                    },
+                    between: {
+                        min: 1,
+                        max: 'pageCount',
+                        message: 'The number  must be between %s and %s'
+                    }
+                }
+            },
+            skipDateCount: {
+                validators: {
+                    notEmpty: {
+                        message: 'This field is required and cannot be empty.'
+                    },
+                    integer: {
+                        message: 'Decimal value not allowed.',
+                        thousandsSeparator: '',
+                        decimalSeparator: '.'
+                    },
+                    stringLength: {
+                        message: 'Date Count content must be less than 3 digits.',
+                        max: 3
+                    }
+                }
+            }
+        }
+    }).on('success.form.fv', function (e) {
+        $('.loader-overlay').show();
+
+    });
 
 </script>
 </body>

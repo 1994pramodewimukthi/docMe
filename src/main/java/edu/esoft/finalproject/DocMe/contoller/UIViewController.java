@@ -9,7 +9,6 @@ import edu.esoft.finalproject.DocMe.entity.User;
 import edu.esoft.finalproject.DocMe.service.MCGDocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
 import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
-import edu.esoft.finalproject.DocMe.service.UserService;
 import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,6 +170,7 @@ public class UIViewController {
             McgDocumentUploadDto mcgDocumentUploadDto = new McgDocumentUploadDto();
             mcgDocumentUploadDto.setDocumentAcknowledgement(ModuleConstant.ACKNOWLEDGMENT);
             ArrayList<DocumentCategoryDto> categoryList = (ArrayList<DocumentCategoryDto>) marketingConductGridlinesService.getAllCategorys();
+            modelAndView.addObject("systemUserRoles", systemRoleDockUpService.getAllActiveSystemRoles());
             modelAndView.addObject("categoryList", categoryList);
             modelAndView.addObject("mcgDocumentUploadDto", mcgDocumentUploadDto);
         } catch (Exception e) {
@@ -218,6 +218,22 @@ public class UIViewController {
 
         try {
             modelAndView.addObject("mcgDocumentUploadDtos", mcgDocumentUploadService.getAllDocument());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return modelAndView;
+    }
+
+
+    //view doc list related to user role
+    @GetMapping(value = AppURL.MCG_VIEW_RELATED_DOC)
+    public ModelAndView viewSignedDocument(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("/ui/category/relatedAgreementList");
+
+        User user = (User) session.getAttribute(AppConstant.USER);
+        try {
+            modelAndView.addObject("mcgDocumentUploadDtos", mcgDocumentUploadService.getAllDocumentForUser(user));
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }

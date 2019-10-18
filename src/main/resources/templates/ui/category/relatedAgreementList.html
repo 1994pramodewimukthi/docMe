@@ -56,30 +56,45 @@
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="col-lg-12">
-                                        <table class="table" id="viewuploadededoctable">
-                                            <thead>
+                                        <table class="table" id="viewsigneddoctable">
+                                            <thead class="thead-dark">
                                             <tr>
                                                 <th hidden></th>
-                                                <th>Agreement Name</th>
-                                                <th>Updated Date</th>
-                                                <th>Skip Days Count</th>
-                                                <th>Document Status</th>
-                                                <th>Action</th>
+                                                <th scope="col">Agreement Name</th>
+                                                <th scope="col">Active Role</th>
+                                                <th scope="col">Uploaded Date</th>
+                                                <th scope="col">Remaining Days Count</th>
+                                                <th scope="col">Agreement Status</th>
+                                                <th scope="col">Sign Status</th>
+                                                <th class="text-center" scope="col">Action</th>
                                             </tr>
                                             </thead>
-                                            <tbody class="addAgreementTblBody">
-                                            <tr th:each="document : *{mcgDocumentUploadDtos}">
+                                            <tbody>
+                                            <tr th:each="document : ${mcgDocumentUploadDtos}">
+
                                                 <td hidden th:text="${document.docId}">Category 1</td>
-                                                <td th:text="*{document.docName}">Category 1</td>
+                                                <td th:text="${document.docName}">Category 1</td>
+                                                <td th:attr="style=${document.activeRole == 'LP Agency'}?'color:green':(${document.activeRole == 'LP Banca'}?'color:red':'color:blue')"
+                                                    th:text="${document.activeRole}">Category 1
+                                                </td>
                                                 <td th:text="*{document.uploadedDate}">Dan Sena</td>
-                                                <td th:text="*{document.skipDateCount}">Dan Sena</td>
+                                                <td th:text="${document.remainingDates}">Dan Sena</td>
                                                 <td th:attr="style=${document.docStatus == 'INACTIVE'}?'color: red':'color: green'"
                                                     th:text="${document.docStatus}">2019-01-05
                                                 </td>
+                                                <td th:attr="style=${document.docSignStatus == 'UNSIGNED'}?'color: red':'color: green'"
+                                                    th:text="${document.docSignStatus}">2019-01-05
+                                                </td>
                                                 <td class="text-center">
-                                                    <a class="btn btn-primary btn-xs" href="#"
-                                                       th:onclick="'viewDoc(\'' + *{document.docId} + '\')'">
+                                                    <a class="btn btn-primary btn-xs"
+                                                       th:if='${!document.docOpenNewTab}'
+                                                       th:onclick="'viewDoc(\'' + *{document.docId} +'\',\'' + *{document.docOpenNewTab} +'\')'">
                                                         View
+                                                    </a>
+                                                    <a class="btn btn-primary btn-xs"
+                                                       th:if='${document.docOpenNewTab}'
+                                                       th:onclick="'viewDoc(\'' + *{document.docId} +'\',\'' + *{document.docOpenNewTab} +'\')'">
+                                                        Sign
                                                     </a>
                                                 </td>
                                             </tr>
@@ -116,15 +131,15 @@
     CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
 </script>
 <script th:inline="javascript">
-    function viewDoc(id) {
+    function viewDoc(id, sign) {
 
+        var location = (sign === 'true') ? '_self' : '_blank';
         $.ajax({
-
             type: "GET",
             url: CONTEXT_PATH + "/mcg/viewDocIsValid/" + id,
             success: function (data) {
                 if (data == true) {
-                    window.open(CONTEXT_PATH + '/mcg/viewDoc/' + id, '_blank')
+                    window.open(CONTEXT_PATH + '/mcg/viewDoc/' + id, location);
                 } else {
                     swal({
                         title: 'Error',
@@ -142,7 +157,7 @@
     }
 
     $(document).ready(function () {
-        $('#viewuploadededoctable').DataTable({
+        $('#viewsigneddoctable').DataTable({
             "lengthMenu": [10, 50, 150, 500],
             "processing": true,
             "serverSide": false,
@@ -150,7 +165,8 @@
             "responsive": true,
             "order": [0, "desc"]
         });
-    })
+    });
+
 </script>
 </body>
 </html>

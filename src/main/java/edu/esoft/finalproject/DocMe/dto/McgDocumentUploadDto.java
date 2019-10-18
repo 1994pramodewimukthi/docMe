@@ -13,6 +13,7 @@ public class McgDocumentUploadDto implements Serializable {
     private String startPage;
     private String pageCount;
     private String skipDateCount;
+    private String systemRoleId;
 
     public String getCatId() {
         return catId;
@@ -78,5 +79,11 @@ public class McgDocumentUploadDto implements Serializable {
         this.pageCount = pageCount;
     }
 
+    public String getSystemRoleId() {
+        return systemRoleId;
+    }
 
+    public void setSystemRoleId(String systemRoleId) {
+        this.systemRoleId = systemRoleId;
+    }
 }
