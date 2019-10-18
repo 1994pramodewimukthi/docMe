@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional
 public class MarketingConductGridlinesServiceImpl implements MarketingConductGridlinesService {
 
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesServiceImpl.class);
@@ -48,7 +47,12 @@ public class MarketingConductGridlinesServiceImpl implements MarketingConductGri
                     cat.setCategoryName(documentCategoryDto.getCategoryName().trim());
                     cat.setInputUser(user.getFirstName().trim());
                     cat.setInputDateTime(new Date());
-                    MCGCategory save = mcgCategoryRepository.save(cat);
+                    MCGCategory save = new MCGCategory();
+                    try {
+                        save = mcgCategoryRepository.save(cat);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if (null != save) {
                         return SUCSESS;
                     } else {

@@ -26,6 +26,24 @@ public class DocumentUploadDto implements Serializable {
     private Date expireDate;
     private String path;
     private MultipartFile attachment;
+    private List<SystemRoleDto> systemRoleDtos = new ArrayList<>();
+    private String systemRoleId;
+
+    public String getSystemRoleId() {
+        return systemRoleId;
+    }
+
+    public void setSystemRoleId(String systemRoleId) {
+        this.systemRoleId = systemRoleId;
+    }
+
+    public List<SystemRoleDto> getSystemRoleDtos() {
+        return systemRoleDtos;
+    }
+
+    public void setSystemRoleDtos(List<SystemRoleDto> systemRoleDtos) {
+        this.systemRoleDtos = systemRoleDtos;
+    }
 
     public Integer getDocCategoryMasterId() {
         return docCategoryMasterId;
@@ -122,4 +140,5 @@ public class DocumentUploadDto implements Serializable {
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
     }
+
 }

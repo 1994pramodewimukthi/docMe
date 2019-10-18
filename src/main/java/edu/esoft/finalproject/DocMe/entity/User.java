@@ -29,7 +29,7 @@ public class User implements Serializable {
     private String email;
     private String userName;
     private String password;
-    private Integer userRoleId;
+    private String systemRoleId;
 
     public Integer getId() {
         return id;
@@ -129,11 +129,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Integer getUserRoleId() {
-        return userRoleId;
+    public String getSystemRoleId() {
+        return systemRoleId;
     }
 
-    public void setUserRoleId(Integer userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setSystemRoleId(String systemRoleId) {
+        this.systemRoleId = systemRoleId;
     }
 }

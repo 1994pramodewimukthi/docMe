@@ -28,6 +28,15 @@ public class DocumentUploadHistory implements Serializable {
     private String tableType;
     private String actionUserId;
     private Date actionDateTime;
+    private String systemRoleId;
+
+    public String getSystemRoleId() {
+        return systemRoleId;
+    }
+
+    public void setSystemRoleId(String systemRoleId) {
+        this.systemRoleId = systemRoleId;
+    }
 
     @Id
     @Column(name = "doc_upload_hst_id")
