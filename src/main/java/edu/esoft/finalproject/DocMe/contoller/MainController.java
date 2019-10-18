@@ -1,5 +1,6 @@
 package edu.esoft.finalproject.DocMe.contoller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,6 +12,11 @@ public class MainController extends WebMvcConfigurerAdapter {
     @RequestMapping(value = "/")
     public ModelAndView rootLocation() {
         return new ModelAndView("redirect:/ui/login");
+    }
+
+    @GetMapping("/asd")
+    public ModelAndView asd() {
+        return new ModelAndView("/ui/homepage/homepage");
     }
 
 }

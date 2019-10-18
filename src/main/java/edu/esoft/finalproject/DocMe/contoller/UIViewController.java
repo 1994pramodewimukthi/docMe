@@ -5,6 +5,8 @@ import edu.esoft.finalproject.DocMe.config.AppURL;
 import edu.esoft.finalproject.DocMe.config.ModuleConstant;
 import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
+import edu.esoft.finalproject.DocMe.entity.User;
+import edu.esoft.finalproject.DocMe.service.MCGDocumentUploadService;
 import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
 import edu.esoft.finalproject.DocMe.service.SystemRoleDockUpService;
 import edu.esoft.finalproject.DocMe.service.UserService;
@@ -12,6 +14,7 @@ import edu.esoft.finalproject.DocMe.utility.ActiveMQEmail;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +31,8 @@ public class UIViewController {
 
     @Autowired
     private ActiveMQEmail activeMQEmail;
+    @Autowired
+    private MCGDocumentUploadService mcgDocumentUploadService;
 
     @Autowired
     private MarketingConductGridlinesService marketingConductGridlinesService;
@@ -169,7 +174,46 @@ public class UIViewController {
     @GetMapping(AppURL.MCG_SYSTEM_ROLE_PRIVILEGE_UI_VIEW_URL)
     public ModelAndView viewSystemRolePrivilege() {
         ModelAndView modelAndView = new ModelAndView("/ui/system/system-role-privilege");
-        modelAndView.addObject("systemRoleDto",new SystemRoleDto());
+        modelAndView.addObject("systemRoleDto", new SystemRoleDto());
+        return modelAndView;
+    }
+
+    @GetMapping(value = AppURL.MCG_DOC_UPDATE)
+    public ModelAndView updateDocument(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("/ui/category/updateCurrentAgreement");
+
+        User user = (User) session.getAttribute(AppConstant.USER);
+        try {
+            modelAndView.addObject("mcgDocumentUpdateDto", mcgDocumentUploadService.getValidDocument(user));
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping(value = AppURL.MCG_EXPIRE)
+    public ModelAndView viewExpireYearPage(@ModelAttribute("documentExpireDto") DocumentExpireDto documentExpireDto) {
+        ModelAndView modelAndView = new ModelAndView("/ui/category/UpdateRetentionPeriod");
+        try {
+            modelAndView.addObject("documentExpireDto", marketingConductGridlinesService.getExpireYear());
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return modelAndView;
+    }
+
+    @GetMapping(value = AppURL.MCG_VIEW_UPLOADED_DOC)
+    public ModelAndView viewUploadedDocument() {
+        ModelAndView modelAndView = new ModelAndView("/ui/category/uploadedAgreementList");
+
+        try {
+            modelAndView.addObject("mcgDocumentUploadDtos", mcgDocumentUploadService.getAllDocument());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+
         return modelAndView;
     }
 }

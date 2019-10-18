@@ -120,8 +120,8 @@
                                                    <!--id="publishedDate" th:name="publishDate"-->
                                                    <!--th:id="publishDate"/></input>-->
 
-                                            <input  th:name="publishDate" id="publishedDate" type="text"
-                                                   class="form-control form-control-lg">
+                                            <input th:name="publishDate" id="publishedDate" type="text"
+                                                   class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -139,8 +139,8 @@
                                                    <!--th:id="expireDate"/></input>-->
 
 
-                                            <input  th:name="expireDate" id="expireDate" type="text"
-                                                    class="form-control form-control-lg">
+                                            <input th:name="expireDate" id="expireDate" type="text"
+                                                   class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -153,9 +153,9 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Access User</label>
-                                        <select class="form-control" id="accessUser" th:field="${documentUploadDto.systemRoleId}">
-                                            <option th:each="system : ${documentUploadDto.systemRoleDtos}"
-                                                    th:value="${system.systemRoleId}"
+                                        <select class="form-control" id="accessUser" th:field="${documentUploadDto.documentDescription}">
+                                            <option th:each="system : ${systemList}"
+                                                    th:value="${{system}}"
                                                     th:text="${system.systemRoleName}"></option>
                                         </select>
                                     </div>
@@ -181,7 +181,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-close"></i> Delete</button>
+                        <button class="btn btn-outline-danger" data-dismiss="modal" type="button"><i
+                                class="fas fa-close"></i> Delete
+                        </button>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>
                             Upload
                         </button>
@@ -221,7 +223,11 @@
     $('#publishedDate,#expireDate').datepicker({
         language: 'en',
         autoClose: true,
-        dateFormat: 'yyyy-mm-dd'
+        dateFormat: 'dd-mm-yyyy'
+
+    });
+    $('#accessUser').select2({
+        multiple: true
 
     });
     // $('#accessUser').select2({
@@ -270,7 +276,6 @@
             cache: false,
             dataType: 'html',
             success: function (result) {
-                console.log(result)
                 $('#modifyDiv').html(result);
                 $('#resubmitViwerModal').modal('show');
                 return false;

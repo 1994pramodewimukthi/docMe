@@ -667,9 +667,6 @@ public class MCGDocumentUploadServiceImpl implements MCGDocumentUploadService {
                 } else {
                     mcgDocumentUpdateDto.setDocStatus(INACTIVE);
                 }
-                if (mcgDocument.getAccessUserType().toString().equals("0")) {
-                    mcgDocumentUpdateDto.setActiveRole("BOTH");
-                }
                 mcgDocumentUpdateDto.setUploadedDate(simpleDateFormat.format(mcgDocument.getInputDateTime()));
                 mcgDocumentUpdateDto.setPageCount((null != mcgDocument.getPageCount()) ? mcgDocument.getPageCount().toString() : "");
 
@@ -704,9 +701,6 @@ public class MCGDocumentUploadServiceImpl implements MCGDocumentUploadService {
                     mcgDocumentUpdateDto.setDocStatus(INACTIVE);
                 }
 
-                if (mcgDocument.getAccessUserType().toString().equals("0")) {
-                    mcgDocumentUpdateDto.setActiveRole("BOTH");
-                }
                 mcgDocumentUpdateDto.setPageCount((null != mcgDocument.getPageCount()) ? mcgDocument.getPageCount().toString() : "");
                 mcgDocumentUpdateDto.setDocSignStatus((null != signByDocIdAndAgentCode) ? "SIGNED" : "UNSIGNED");
                 mcgDocumentUpdateDto.setDocOpenNewTab(String.valueOf(mcgDocument.getStatus().equals(VALID) && isMCGDocAvilable(user)));
