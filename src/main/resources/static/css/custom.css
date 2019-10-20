@@ -42,8 +42,9 @@
     cursor: auto !important;
 }
 
-img {
-    width: 180px;
+.logo-container img {
+    width: 170px;
+    margin-top: 3px;
 }
 
 .card-header {
@@ -282,5 +283,120 @@ form label {
     background-color: currentColor;
 }
 
+.tp-caption.LargeTitle span {
+    color: #CC0000 !important;
+    font-weight: 700 !important;
+    letter-spacing: 4px !important;
+    /*font-size: 48px !important;*/
+    text-shadow: 1px 2px 5px #ef4749a6;
+}
+
+.tp-caption.Title {
+    color: #ff403a !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    text-shadow: 2px 2px 4px #777;
+    /*font-size: 30px !important;*/
+    margin-bottom: 12px !important;
+}
+
+
+.loginform {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+    padding: 40px;
+    background: rgba(0, 0, 0, .92);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
+    border-radius: 10px;
+
+}
+
+
+.loginform .inputBox {
+    position: relative;
+}
+
+.loginform .inputBox input {
+
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+
+
+}
+
+.loginform .inputBox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+
+}
+
+.loginform .inputBox input:focus ~ label,
+.loginform .inputBox input:valid ~ label {
+
+    top: -24px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+
+}
+
+.loginform h2 {
+    margin: 0 0 15;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.loginform h3 {
+    margin: 0 0 15;
+    padding: 0;
+    color: #b3b3b3;
+    text-align: center;
+    font-size: medium;
+
+}
+
+.loginform h1 {
+    margin: 0 0 15px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+
+
+}
+
+.close, .login {
+    width: 15rem;
+}
+
+
+.custom-modal {
+    background: black !important;;
+    width: 50rem !important;;
+    border-radius: 20px !important;;
+    margin: auto !important;
+    margin-top: 80px !important;
+}
 
 /*# sourceMappingURL=custom.css.map */
