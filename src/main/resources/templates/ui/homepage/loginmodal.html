@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div class="modal-dialog">
+    <div class="modal-content custom-modal">
+        <!-- Modal body -->
+        <div class="modal-body">
+
+            <div class=loginform">
+
+                <div class="">
+                    <div class="">
+                        <div id="info"></div>
+                        <div class="logo-container text-center mb-3">
+                            <a class="logo" href="../">
+                                <img alt="Admin" th:src="@{/img/docume2.png}"/>
+                            </a>
+                        </div>
+                        <h3>USER LOGIN</h3>
+                        <hr>
+                        <form th:id="userDTO" th:name="userDTO" th:object="${userDetailsDto}" th:action="@{/user/login}"
+                              method="post">
+                            <div class="inputBox">
+
+                                <input th:field="*{userName}" required="" type="text"/>
+                                <label>Username</label>
+                            </div>
+                            <div class="inputBox">
+
+                                <input th:field="*{password}" required="" type="password"/>
+                                <label>Password</label>
+                            </div>
+                            <div class="form-group subbtn text-center">
+                                <!--                                            <button type="button" class="btn btn-danger close" data-dismiss="modal">Close</button>-->
+                                <button class="btn btn-primary login" type="submit">Sign
+                                    In
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

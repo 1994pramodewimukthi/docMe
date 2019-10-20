@@ -106,7 +106,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ModelAndView login(@ModelAttribute("userDetailsDto") UserDto userDto, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("/ui/login");
+        ModelAndView modelAndView = new ModelAndView("/ui/homepage/homepage");
         try {
             Long login = userService.userLogin(userDto, session);
             if (login.equals(SUCCESS)) {

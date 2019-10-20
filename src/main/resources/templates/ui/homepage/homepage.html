@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="fixed       sidebar-left-sm" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="fixed sidebar-left-sm" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8"/>
@@ -36,11 +36,16 @@
     <link rel="stylesheet" th:href="@{/vendor/homepage/css/overhang.min.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/vendor/homepage/css/custom.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/css/custom.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600,500,700,800' rel='stylesheet'
           type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+
+    <meta name="context-path" th:content="@{/}"/>
+
 </head>
 
 <body class="common-home">
@@ -79,7 +84,8 @@
                     </div>
                     <div class="col-lg-8 col-md-9 col-sm-9 col-xs-12 thm-top-cart">
                         <div class="cart-account" style="margin-left: 15px;">
-                            <button class="btn btn-outline-primary" data-target="#myModal" data-toggle="modal"
+                            <button class="btn btn-outline-primary" id="loginBtn" data-target="#myModal"
+                                    data-toggle="modal"
                                     type="button">Login
                             </button>
                         </div>
@@ -247,48 +253,8 @@
 
 </div>
 <!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content custom-modal">
-            <!-- Modal body -->
-            <div class="modal-body">
+<div class="modal" id="loginModal">
 
-                <div class=loginform">
-
-                    <div class="">
-                        <div class="">
-                            <div id="info"></div>
-                            <div class="logo-container text-center mb-3">
-                                <a class="logo" href="../">
-                                    <img alt="Admin" th:src="@{/img/docume2.png}"/>
-                                </a>
-                            </div>
-                            <h3>USER LOGIN</h3>
-                            <hr>
-                            <form id="" method="">
-                                <div class="inputBox">
-
-                                    <input id="username" name="username" required="" type="text"/>
-                                    <label>Username</label>
-                                </div>
-                                <div class="inputBox">
-
-                                    <input id="password" name="password" required="" type="password"/>
-                                    <label>Password</label>
-                                </div>
-                                <div class="form-group subbtn text-center">
-                                    <!--                                            <button type="button" class="btn btn-danger close" data-dismiss="modal">Close</button>-->
-                                    <button class="btn btn-primary login" id="login" name="login" type="submit">Sign
-                                        In
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 </div>
 <!-- js -->
@@ -304,6 +270,10 @@
 <script th:src="@{/vendor/homepage/js/overhang.min.js}" type="text/javascript"></script>
 <script th:src="@{/vendor/homepage/js/countdown.js}" type="text/javascript"></script>
 
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
 
 <script type='text/javascript'>
     jQuery(document).ready(function () {
@@ -378,8 +348,46 @@
     var iid1 = "countbox_1";
     CountBack_slider(gsecs1, "countbox_1", 1);
 </script>
+<script>
+    $('#loginBtn').click(function () {
+        $.ajax({
+            url: CONTEXT_PATH + "/ui/login-modal",
+            type: 'GET',
+            cache: false,
+            dataType: 'html',
+            success: function (result) {
+                $('#loginModal').html(result);
+                $('#loginModal').modal('show');
+                return false;
+            },
+            error: function (result) {
+                console.log(result);
+            }
 
+        });
+    })
+</script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var message = [[${msg}]];
+    var isSucsess = [[${isSucsess}]];
+    var action = [[${action}]];
 
+   $(function () {
+       if (isSucsess == false) {
+           debugger;
+           swal({
+               title: 'Error',
+               text: message,
+               type: 'error',
+               showConfirmButton: true,
+               allowOutsideClick: false
+           });
+       }
+   })
+    /*]]>*/
+</script>
 <!-- Mirrored from htmldemo.themesmart.net/floral/version1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Nov 2017 10:40:38 GMT -->
 </body>
 </html>

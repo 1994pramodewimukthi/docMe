@@ -72,4 +72,5 @@ public class AppURL {
     final public static String DOCUMENT_UPLOAD_SAVE = "/save";
     final public static String DOCUMENT_UPLOAD_LIST = "/getPendingDocList";
     public static final String MCG_SYSTEM_ROLE_PRIVILEGE_UI_VIEW_URL = "/system-role-privilege";
+    public static final String LOGIN_MODAL = "/login-modal";
 }

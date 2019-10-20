@@ -26,6 +26,7 @@ import java.util.List;
 @RequestMapping(value = "/ui")
 public class UIViewController {
 
+    private static final String USER_DTO = "userDetailsDto";
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesController.class);
 
     @Autowired
@@ -64,7 +65,7 @@ public class UIViewController {
             modelAndView = new ModelAndView("redirect:/user/home");
         } else {
             UserDto userDto = new UserDto();
-            modelAndView = new ModelAndView("/ui/login");
+            modelAndView = new ModelAndView("/ui/homepage/homepage");
             modelAndView.addObject("userDetailsDto", userDto);
         }
         return modelAndView;
@@ -76,6 +77,14 @@ public class UIViewController {
         ModelAndView modelAndView = new ModelAndView("/ui/category/category-creation");
         DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
         modelAndView.addObject("docCategoryTemp", docCategoryTemp);
+        return modelAndView;
+    }
+
+    @GetMapping(value = AppURL.LOGIN_MODAL)
+    public ModelAndView viewLoginModal() {
+
+        ModelAndView modelAndView = new ModelAndView("/ui/homepage/loginmodal");
+        modelAndView.addObject(USER_DTO, new UserDto());
         return modelAndView;
     }
 
@@ -101,7 +110,7 @@ public class UIViewController {
         DocumentUploadDto documentUploadDto = new DocumentUploadDto();
         try {
             List<SystemRoleDto> allSystemRoles = systemRoleDockUpService.getAllActiveSystemRoles();
-            modelAndView.addObject("systemList",allSystemRoles);
+            modelAndView.addObject("systemList", allSystemRoles);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
@@ -138,7 +147,7 @@ public class UIViewController {
     @RequestMapping("/logout")
     public ModelAndView logout(HttpSession session) {
         session.invalidate();
-        return new ModelAndView("redirect:/ui/login");
+        return new ModelAndView("redirect:/ui/homepage/homepage");
     }
 
 
