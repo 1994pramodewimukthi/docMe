@@ -79,8 +79,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" style="opacity: 1 !important;" th:action="@{/user/save}" th:id="userDTO"
-                          th:name="userDTO" th:object="${userDetailsDto}">
+                    <form method="post" style="opacity: 1 !important;" th:action="@{/user/save}" id="userForm"
+                          th:object="${userDetailsDto}">
                         <div class="modal-body">
                             <input id="userEdit" th:field="${userDetailsDto.userEdit}" type="hidden">
                             <input id="id" th:field="${userDetailsDto.id}" type="hidden">
