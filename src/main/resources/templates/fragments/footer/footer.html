@@ -40,6 +40,26 @@
     <script th:src="@{/js/loadingoverlay.min.js}"></script>
     <script th:src="@{/vendor/ios7-switch/ios7-switch.js}"></script>
 
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $.ajax({
+                    url: CONTEXT_PATH + "/user/get-side-menu",
+                    type: 'GET',
+                    dataType:'html',
+                    success: function (result) {
+                        $('#navContent').html(result);
+                        return false;
+                    },
+                    error: function (result) {
 
+                    }
+
+                });
+            })
+        })
+
+
+    </script>
 </div>
 </html>

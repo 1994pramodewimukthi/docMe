@@ -3,7 +3,26 @@ package edu.esoft.finalproject.DocMe.dto;
 public class SystemMenuItemPrivilegeDto {
     private Integer id;
     private Integer systemMenuItemId;
+    private Integer parentMenuItemId;
     private String systemMenuItemName;
+
+    public Integer getParentMenuItemId() {
+        return parentMenuItemId;
+    }
+
+    public void setParentMenuItemId(Integer parentMenuItemId) {
+        this.parentMenuItemId = parentMenuItemId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    private String url;
     private String systemRoleId;
     private boolean viewPrivilege;
     private boolean authorizationPrivilege;

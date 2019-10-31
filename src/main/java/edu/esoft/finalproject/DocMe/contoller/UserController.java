@@ -2,10 +2,7 @@ package edu.esoft.finalproject.DocMe.contoller;
 
 import edu.esoft.finalproject.DocMe.config.AppConstant;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
-import edu.esoft.finalproject.DocMe.dto.SystemRoleDto;
-import edu.esoft.finalproject.DocMe.dto.SystemRolePrivilagesWrapperDto;
-import edu.esoft.finalproject.DocMe.dto.UserDto;
-import edu.esoft.finalproject.DocMe.dto.UserRoleTableDto;
+import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.DocCategoryTemp;
 import edu.esoft.finalproject.DocMe.entity.SystemRole;
 import edu.esoft.finalproject.DocMe.entity.User;
@@ -239,16 +236,29 @@ public class UserController {
     }
 
     @GetMapping(value = "/get-side-menu")
-    public ResponseEntity getUserSideMenu(HttpSession httpSession) {
+    public ModelAndView getUserSideMenu(HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView("/fragments/menu/menuitems");
         SystemRolePrivilagesWrapperDto menuPrivilege = new SystemRolePrivilagesWrapperDto();
+        List<SystemMenuItemPrivilegeDto> mainMenu = new ArrayList<>();
+        List<SystemMenuItemPrivilegeDto> subMenu = new ArrayList<>();
+
         try {
             User user = (User) httpSession.getAttribute("user");
             menuPrivilege = systemRoleDockUpService.getAllSystemMenuItemPrivilagesForSystemRoleId(user.getSystemRoleId());
 
+            for (SystemMenuItemPrivilegeDto systemMenuItemPrivilegeDto : menuPrivilege.getSystemMenuItemPrivilegeDtos()) {
+                if (systemMenuItemPrivilegeDto.getParentMenuItemId() == 0) {
+                    mainMenu.add(systemMenuItemPrivilegeDto);
+                } else {
+                    subMenu.add(systemMenuItemPrivilegeDto);
+                }
+            }
+            modelAndView.addObject("parentMenu", mainMenu);
+            modelAndView.addObject("subMenu", subMenu);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
-        return ResponseEntity.ok(menuPrivilege);
+        return modelAndView;
     }
 }

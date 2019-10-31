@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <nav id="menu" class="nav-main" role="navigation">
+
+        <ul th:each="main: ${parentMenu}" th:id="${main.systemMenuItemId}" th:if="${main.viewPrivilege}" class="nav nav-main">
+            <li class="nav-parent" >
+                <a href="#" class="nav-link">
+                    <i th:if="${main.systemMenuItemId ==1}" class="fas fa-tasks " aria-hidden="true"></i>
+                    <i th:if="${main.systemMenuItemId ==2}" class="fas fa-book " aria-hidden="true"></i>
+                    <i th:if="${main.systemMenuItemId ==3}" class="fas fa-handshake " aria-hidden="true"></i>
+                    <i th:if="${main.systemMenuItemId ==4}" class="fas fa-users-cog" aria-hidden="true"></i>
+                    <span th:text="${main.systemMenuItemName}">Category Management</span>
+                </a>
+                <ul  class="nav nav-children" >
+                    <li th:each="sub: ${subMenu}" th:if="${main.systemMenuItemId == sub.parentMenuItemId && sub.viewPrivilege}">
+                        <a class="nav-link sub-menu  pb-3 pt-3 " th:href="${sub.url}" th:text="${sub.systemMenuItemName}">
+
+                            Category Creation
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul >
+    </nav>
+    <script>
+        $('li.nav-parent').click(function () {
+            if($(this).attr('class').includes('nav-expanded')) {
+                $(this).removeClass('nav-expanded')
+            }else {
+                $(this).addClass('nav-expanded')
+            }
+        })
+
+        $(function () {
+            $('a.nav-link.sub-menu').prepend('<i class="fas fa-chevron-right"></i>')
+        })
+    </script>
+
+</html>

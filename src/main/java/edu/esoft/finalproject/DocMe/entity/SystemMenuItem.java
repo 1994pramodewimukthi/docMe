@@ -12,8 +12,26 @@ public class SystemMenuItem {
     private String systemMenuName;
     private Date inputDateTime;
     private String inputUser;
+    private Integer parentMenuId;
+    private String url;
 
     public SystemMenuItem() {
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Integer getParentMenuId() {
+        return parentMenuId;
+    }
+
+    public void setParentMenuId(Integer parentMenuId) {
+        this.parentMenuId = parentMenuId;
     }
 
     public Integer getId() {

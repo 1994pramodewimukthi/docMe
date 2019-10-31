@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -110,6 +111,7 @@ public class SystemRoleDockUpServiceImpl implements SystemRoleDockUpService {
     public SystemRolePrivilagesWrapperDto getAllSystemMenuItemPrivilagesForSystemRoleId(String id) throws Exception {
         List<SystemMenuItemPrivilegeDto> systemMenuItemPrivilegeListDtos = new ArrayList<>();
         SystemRolePrivilagesWrapperDto systemRolePrivilagesWrapperDto = new SystemRolePrivilagesWrapperDto();
+        HashMap<String, SystemMenuItemPrivilegeDto> stringSystemMenuItemPrivilegeDtoHashMap = new HashMap<>();
         try {
             Iterable<SystemMenuItem> menuItems = systemMenuItemRepository.findAll();
             for (SystemMenuItem menuItem : menuItems) {
@@ -122,10 +124,13 @@ public class SystemRoleDockUpServiceImpl implements SystemRoleDockUpService {
 
                 systemMenuItemPrivilegeDto.setSystemMenuItemName(menuItem.getSystemMenuName());
                 systemMenuItemPrivilegeDto.setSystemMenuItemId(menuItem.getId());
+                systemMenuItemPrivilegeDto.setParentMenuItemId(menuItem.getParentMenuId());
+                systemMenuItemPrivilegeDto.setUrl(menuItem.getUrl());
                 systemMenuItemPrivilegeListDtos.add(systemMenuItemPrivilegeDto);
 
             }
             systemRolePrivilagesWrapperDto.setSystemMenuItemPrivilegeDtos(systemMenuItemPrivilegeListDtos);
+
             systemRolePrivilagesWrapperDto.setSystemRoleId(id);
             return systemRolePrivilagesWrapperDto;
         } catch (Exception e) {
