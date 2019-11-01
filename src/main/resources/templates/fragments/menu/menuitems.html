@@ -13,7 +13,8 @@
                 </a>
                 <ul  class="nav nav-children" >
                     <li th:each="sub: ${subMenu}" th:if="${main.systemMenuItemId == sub.parentMenuItemId && sub.viewPrivilege}">
-                        <a class="nav-link sub-menu  pb-3 pt-3 " th:href="${sub.url}" th:text="${sub.systemMenuItemName}">
+                        <a class="nav-link sub-menu  pb-2 pt-2 " th:href="${sub.url}"
+                           th:text="${sub.systemMenuItemName}">
 
                             Category Creation
                         </a>
