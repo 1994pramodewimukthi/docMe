@@ -251,6 +251,17 @@
         });
     });
 
+    $('#publishedDate').datepicker({
+        onHide: function (dp, animation) {
+            $('#docUploadTempForm').formValidation('revalidateField', 'publishDate')
+        }
+    })
+    $('#expireDate').datepicker({
+        onHide: function (dp, animation) {
+            $('#docUploadTempForm').formValidation('revalidateField', 'expireDate')
+        }
+    })
+
 </script>
 
 </html>

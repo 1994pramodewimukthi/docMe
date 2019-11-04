@@ -183,7 +183,7 @@
                                 <div class="form-group row">
                                     <div class="col-lg-6">
                                         <label>User role id</label><span class="required">&nbsp;*</span>
-                                        <select class="form-control form-control-lg" name="userRoleId"
+                                        <select class="form-control form-control" name="userRoleId"
                                                 th:field="*{systemRoleId}">
                                             <option th:each="systemRole : ${systemUserRoles}"
                                                     th:text="${systemRole.systemRoleName}"
