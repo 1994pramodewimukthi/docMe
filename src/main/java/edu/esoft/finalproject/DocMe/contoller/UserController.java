@@ -261,4 +261,22 @@ public class UserController {
         }
         return modelAndView;
     }
+
+    @GetMapping(value = "/getUserDetails")
+    public UserDto getUserDetails(HttpSession session) {
+        UserDto userDto=new UserDto();
+        try {
+            User user = (User) session.getAttribute("user");
+            if (null!=user) {
+                SystemRole role = systemRoleDockUpService.getSystemRoleById(Integer.parseInt(user.getSystemRoleId()));
+                userDto.setUserName(user.getFirstName() +" " +user.getLastName());
+                userDto.setSystemRoleId(role.getSystemRoleName());
+            } else {
+                return new UserDto();
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return userDto;
+    }
 }

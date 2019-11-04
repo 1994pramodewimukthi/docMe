@@ -66,9 +66,10 @@ public class DocumentUploadController {
     private Long DOCUMENT_MAX_FILE_SIZE;
 
     @RequestMapping(value = AppURL.DOCUMENT_UPLOAD_WEBIX_CAT, method = RequestMethod.GET)
-    public Object loadAuthorizedUser(@ModelAttribute("user") User user) {
+    public Object loadAuthorizedUser(@ModelAttribute("user") User user,HttpSession session) {
         DocCategoryMasterWebix categoryMasters = new DocCategoryMasterWebix();
         try {
+            user = (User) session.getAttribute(AppConstant.USER);
             categoryMasters.setData(documentUploadService.createCategoryWebixTableWithUploadDocumentAll(user));
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
@@ -149,8 +150,9 @@ public class DocumentUploadController {
     }
 
     @RequestMapping(value = "/rejectDocumemt")
-    public NotificationMessage RejectDocument(@RequestParam(value = "docId") int docId, @RequestParam(value = "reson") String reson, @ModelAttribute("user") User user) {
+    public NotificationMessage RejectDocument(@RequestParam(value = "docId") int docId, @RequestParam(value = "reson") String reson, @ModelAttribute("user") User user,HttpSession session) {
         try {
+             user = (User) session.getAttribute(AppConstant.USER);
             documentUploadService.rejectDocument(reson, docId, user);
             return new NotificationMessage(1, "Record Successfully rejected");
         } catch (Exception e) {
@@ -399,9 +401,10 @@ public class DocumentUploadController {
 
 
     @RequestMapping(value ="/document_upload_webix_email", method = RequestMethod.GET)
-    public Object loadDocForSend(@ModelAttribute("user") User user) {
+    public Object loadDocForSend(@ModelAttribute("user") User user,HttpSession session) {
         DocCategoryMasterWebix categoryMasters = new DocCategoryMasterWebix();
         try {
+            user = (User) session.getAttribute(AppConstant.USER);
             categoryMasters.setData(documentUploadService.createCategoryWebixTableWithUploadDocumentAll(user));
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

@@ -3,16 +3,17 @@ package edu.esoft.finalproject.DocMe.service.imp;
 import edu.esoft.finalproject.DocMe.config.MessageConstant;
 import edu.esoft.finalproject.DocMe.dto.DocumentCategoryDto;
 import edu.esoft.finalproject.DocMe.dto.DocumentExpireDto;
+import edu.esoft.finalproject.DocMe.dto.McgReportDto;
 import edu.esoft.finalproject.DocMe.entity.MCGCategory;
 import edu.esoft.finalproject.DocMe.entity.MCGDocumentExpire;
 import edu.esoft.finalproject.DocMe.entity.User;
+import edu.esoft.finalproject.DocMe.repository.CustomRepository;
 import edu.esoft.finalproject.DocMe.repository.MCGCategoryRepository;
 import edu.esoft.finalproject.DocMe.repository.MCGDocumentExpireRepository;
 import edu.esoft.finalproject.DocMe.service.MarketingConductGridlinesService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,18 +23,18 @@ import java.util.List;
 @Service
 public class MarketingConductGridlinesServiceImpl implements MarketingConductGridlinesService {
 
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesServiceImpl.class);
-
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     private static final Long SUCSESS = 1L;
     private static final Long ERROR = 0L;
     private static final Long LP_AGENCY = 3L;
     private static final Long LP_BANCA = 6L;
-
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MarketingConductGridlinesServiceImpl.class);
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     @Autowired
     private MCGCategoryRepository mcgCategoryRepository;
     @Autowired
     private MCGDocumentExpireRepository mcgDocumentExpireRepository;
+    @Autowired
+    private CustomRepository customRepository;
 
     @Override
     public Long saveCategory(DocumentCategoryDto documentCategoryDto, User user) throws Exception {
@@ -155,7 +156,7 @@ public class MarketingConductGridlinesServiceImpl implements MarketingConductGri
     }
 
 
-       @Override
+    @Override
     public DocumentExpireDto getExpireYear() throws Exception {
         DocumentExpireDto documentExpireDto = null;
         try {
@@ -172,6 +173,30 @@ public class MarketingConductGridlinesServiceImpl implements MarketingConductGri
             throw e;
         }
         return documentExpireDto;
+    }
+
+    @Override
+    public List<McgReportDto> msgReportJson() throws Exception {
+        List reportDtoList = customRepository.msgReportJson();
+        List<McgReportDto> resultList = new ArrayList<>();
+        for (int x = 0; x < reportDtoList.size(); x++) {
+            McgReportDto dto = new McgReportDto();
+            Object username = ((Object[]) reportDtoList.get(x))[0];
+            Object docName = ((Object[]) reportDtoList.get(x))[1];
+            Object issueDateObj = ((Object[]) reportDtoList.get(x))[2];
+            Date issueDate = (Date) issueDateObj;
+            Object signDateObj = ((Object[]) reportDtoList.get(x))[3];
+            Date signDate = (Date) signDateObj;
+            Object signStatus = ((Object[]) reportDtoList.get(x))[4];
+
+            dto.setAgentName(username.toString());
+            dto.setDocName(docName.toString());
+            dto.setDocIssueDateString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(issueDate));
+            dto.setDocSignDateString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(signDate));
+            dto.setSignStatus(signStatus.toString());
+            resultList.add(dto);
+        }
+        return resultList;
     }
 
     @Override

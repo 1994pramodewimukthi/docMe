@@ -1,10 +1,7 @@
 package edu.esoft.finalproject.DocMe.service;
 
 
-import edu.esoft.finalproject.DocMe.dto.DocAuthDto;
-import edu.esoft.finalproject.DocMe.dto.DocCategoryMasterWebix;
-import edu.esoft.finalproject.DocMe.dto.DocumentUploadDto;
-import edu.esoft.finalproject.DocMe.dto.Email;
+import edu.esoft.finalproject.DocMe.dto.*;
 import edu.esoft.finalproject.DocMe.entity.DocumentUploadMaster;
 import edu.esoft.finalproject.DocMe.entity.DocumentUploadTemp;
 import edu.esoft.finalproject.DocMe.entity.User;

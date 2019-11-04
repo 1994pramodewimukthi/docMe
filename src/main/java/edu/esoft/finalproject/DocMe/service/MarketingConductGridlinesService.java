@@ -3,6 +3,7 @@ package edu.esoft.finalproject.DocMe.service;
 import edu.esoft.finalproject.DocMe.dto.AccessUserTypeDto;
 import edu.esoft.finalproject.DocMe.dto.DocumentCategoryDto;
 import edu.esoft.finalproject.DocMe.dto.DocumentExpireDto;
+import edu.esoft.finalproject.DocMe.dto.McgReportDto;
 import edu.esoft.finalproject.DocMe.entity.User;
 
 import java.util.List;
@@ -21,4 +22,5 @@ public interface MarketingConductGridlinesService {
 
     DocumentExpireDto getExpireYear() throws Exception;
 
+    List<McgReportDto> msgReportJson()throws Exception;
 }

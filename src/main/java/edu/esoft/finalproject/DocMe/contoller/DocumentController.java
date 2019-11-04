@@ -27,9 +27,7 @@ public class DocumentController {
     public Object getList() {
         DocCategoryMasterWebix categoryMasters = new DocCategoryMasterWebix();
         try {
-
             categoryMasters.setData(documentService.createCategoryWebixTable());
-
         } catch (Exception e) {
             e.printStackTrace();
         }

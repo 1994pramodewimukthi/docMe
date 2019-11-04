@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org" class="fixed sidebar-left-sm" lang="en">
+<meta name="context-path" th:content="@{/}"/>
+<div class="col-lg-12">
+    <table class="table table-bordered" id="docSearchByKeyword">
+        <thead>
+        <tr>
+            <th>Page No</th>
+            <th>File Name</th>
+            <th>Keyword</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody class="addAgreementTblBody">
+        <tr th:each="result : ${resultDto.emits}">
+            <td th:text="*{result.page_no}">Category 1</td>
+            <td th:text="*{result.filename}">Dan Sena</td>
+            <td th:text="*{result.keyword}">2019-01-05</td>
+            <td class="text-center">
+                <a th:id="*{result.id+'&'+result.page_no+'&'+result.filename+'&'+result.keyword}" style="color: white"
+                   class="btn btn-primary btn-xs" onclick="viewPage(this.id)" target="_blank">View</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:inline="javascript">
+
+    $('#docSearchByKeyword').DataTable({
+        "searching": false,
+        "paging": false
+    });
+
+
+    function viewPage(id) {
+        var res = id.split("&");
+
+        var url = CONTEXT_PATH + '/lucene/preview?page=' + res[1] + "&key=" + res[3] + "&filename=" + res[2];
+        window.location.href = url;
+        // window.location.replace(CONTEXT_PATH + 'documentUploadController/viewDocumemt?docId=' + id);
+
+    }
+
+</script>

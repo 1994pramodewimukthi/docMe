@@ -1,5 +1,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<meta name="context-path" th:content="@{/}"/>
 <form th:action="@{/mcg/updateCategory}" id="updateCategoryForm"
       th:object="${documentCategoryDto}"
       th:name="documentCategoryDto" method="POST">
@@ -48,7 +49,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-outline-danger " data-dismiss="modal" type="button"><i
+                    <button class="btn btn-outline-danger " data-dismiss="modal" type="button" onclick="closeModal()"><i
                             class="fas fa-times-circle"></i>
                         Close
                     </button>
@@ -61,6 +62,11 @@
         </div>
     </div>
 </form>
+
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
 
 <script>
     var nospecial = /^[^*|\":<>[\]{}`\\()';@&$]+$/;
@@ -94,4 +100,10 @@
         $('.loader-overlay').show();
 
     });
+
+
+
+    function closeModal() {
+        location.replace(CONTEXT_PATH + '/ui/agreementCategory');
+    }
 </script>

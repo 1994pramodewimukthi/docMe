@@ -42,14 +42,6 @@ $(function () {
             {id: "categoryId", header: [{text: "Category ID"}], adjust: true, sort: "string"},
             {id: "categoryName", header: [{text: "Category Name", css: "alligncenter"}, {content: "textFilter", placeholder: "Search"}], adjust: true, width: 120, sort: "string"},
             {id: "parentCategoryName", header: [{text: "Parent Category Name"}], adjust: true, width: 170, sort: "string"},
-            {
-                id: "chanel",
-                header: [{text: "Channel", css: "alligncenter"}],
-                css: "alligncenter",
-                fillspace: true,
-                minWidth: 70,
-                sort: "string"
-            },
             {id: "reason", header: [{text: "Rejected Reason", css: 'alligncenter'}], width: 250, css: 'alligncenter', sort: "string"},
             {
                 id: "authButton",

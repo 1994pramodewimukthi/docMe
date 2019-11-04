@@ -14,8 +14,11 @@ public interface DocumentUploadMasterRepository extends CrudRepository<DocumentU
     @Query(value = "SELECT * FROM doc_upload_mst WHERE doc_category_mst_id =?1 AND record_status = 7 AND publish_date<= ?2 AND expire_date > ?2", nativeQuery = true)
     public List<DocumentUploadMaster> findAllByDocCategoryMasterAndPublishDateAndExpireDate(int categoryId, String date);
 
+    @Query(value = "SELECT * FROM doc_upload_mst WHERE doc_category_mst_id =?1 AND record_status = 7 AND  system_role_id= ?2 ", nativeQuery = true)
+    public List<DocumentUploadMaster> findAllByDocCategoryMasterInActive(int categoryId,String roleId);
+
     @Query(value = "SELECT * FROM doc_upload_mst WHERE doc_category_mst_id =?1 AND record_status = 7", nativeQuery = true)
-    public List<DocumentUploadMaster> findAllByDocCategoryMasterInActive(int categoryId);
+    public List<DocumentUploadMaster> findAllByDocCategoryMasterInActiveSupadmin(int categoryId);
 
 
     List<DocumentUploadMaster> findByRecordStatusStatusId(int id);

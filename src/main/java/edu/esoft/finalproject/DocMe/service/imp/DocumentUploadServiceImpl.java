@@ -94,7 +94,12 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                 for (DocCategoryMaster docCategoryMaster1 : docCategoryMaster.getSubCategoryDocList()) {
                     docCategoryMasterWebix.getData().add(getDocCategoryMasterWebixAll(docCategoryMaster1, user));
                     if (isLoop) {
-                        List<DocumentUploadMaster> uploadList2 = documentUploadMasterRepository.findAllByDocCategoryMasterInActive(docCategoryMaster.getDocCategoryMstId());
+                        List<DocumentUploadMaster> uploadList2 =new ArrayList<>();
+                        if (!user.getSystemRoleId().equals("1")) {
+                            uploadList2 = documentUploadMasterRepository.findAllByDocCategoryMasterInActive(docCategoryMaster.getDocCategoryMstId(), user.getSystemRoleId());
+                        }else{
+                            uploadList2 = documentUploadMasterRepository.findAllByDocCategoryMasterInActiveSupadmin(docCategoryMaster.getDocCategoryMstId());
+                        }
                         for (DocumentUploadMaster master : uploadList2) {
 //                            DocumentUploadMasterSystemRole systemRoleMst = documentUploadMasterSystemRoleRepository.findByDocumentUploadMasterAndSystemRole(master.getDocumentUploadMstId(), user.getSystemRole().getSystemRoleId());
 //                            if (null != systemRoleMst) {
@@ -113,7 +118,12 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                 }
                 Collections.sort(docCategoryMasterWebix.getData(), comparator);
             } else {
-                List<DocumentUploadMaster> uploadList = documentUploadMasterRepository.findAllByDocCategoryMasterInActive(docCategoryMaster.getDocCategoryMstId());
+                List<DocumentUploadMaster> uploadList =new ArrayList<>();
+                if (!user.getSystemRoleId().equals("1")) {
+                    uploadList = documentUploadMasterRepository.findAllByDocCategoryMasterInActive(docCategoryMaster.getDocCategoryMstId(), user.getSystemRoleId());
+                }else{
+                    uploadList = documentUploadMasterRepository.findAllByDocCategoryMasterInActiveSupadmin(docCategoryMaster.getDocCategoryMstId());
+                }
                 for (DocumentUploadMaster master : uploadList) {
 //                    DocumentUploadMasterSystemRole systemRoleMst = documentUploadMasterSystemRoleRepository.findByDocumentUploadMasterAndSystemRole(master.getDocumentUploadMstId(), user.getSystemRole().getSystemRoleId());
 //                    if (null != systemRoleMst) {

@@ -55,7 +55,7 @@ $(function () {
 
 function authRec(id) {
     swal({
-        title: 'Are you sure you want to authorize this category ?',
+        title: 'Are you sure you want to authorize this Document ?',
         text: "",
         type: 'warning',
         showCancelButton: true,
@@ -112,8 +112,15 @@ function rejectRec(id) {
             return new Promise(function (resolve, reject) {
                 setTimeout(function () {
                     if (!reason) {
-                        swal.showValidationError('Reject reason is required and cannot be empty.')
-                        reject();
+                        swal.showValidationError('Decline reason is required and cannot be empty.')
+                        reject ();
+                    } else if (/[^a-zA-Z0-9,. \-\/]/.test(reason)) {
+                        swal.showValidationError('Special characters are not allowed.')
+                        reject ();
+                        // swal.showValidationMessage('Special characters are not allowed.')
+                    } else if (reason.length > 255) {
+                        swal.showValidationError('Transfer reason only can contain 255 characters.')
+                        reject ();
                     }
                     resolve();
                 }, 2000)

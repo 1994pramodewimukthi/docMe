@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +40,14 @@ public class DocumentManageController {
     private SystemRoleDockUpService systemRoleDockUpService;
 
     @RequestMapping(value = AppURL.SAVE, method = RequestMethod.POST)
-    public ModelAndView saveCategory(@ModelAttribute("docCategoryTemp") DocCategoryTemp docCategoryTemp1, BindingResult bindingResult, ModelAndView modelAndView, @ModelAttribute("user") User user) {
+    public ModelAndView saveCategory(@ModelAttribute("docCategoryTemp") DocCategoryTemp docCategoryTemp1, HttpSession session, ModelAndView modelAndView, @ModelAttribute("user") User user) {
         try {
             DocCategoryTemp docCategoryTemp = new DocCategoryTemp();
             int checkCatagorySortingExist = docCategoryService.checkCatagorySortingExistTemp(docCategoryTemp1);
             modelAndView.addObject("docCategoryTemp", docCategoryTemp);
             modelAndView.setViewName("/ui/category/category-creation");
-            docCategoryTemp1.setInpUserId(user.getUserName());
+            User user2= (User) session.getAttribute(AppConstant.USER);
+            docCategoryTemp1.setInpUserId(user2.getUserName());
             int result = docCategoryService.createNewCategory(docCategoryTemp1);
             if (result == SUCSESS) {
                 modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, true);
@@ -82,9 +84,10 @@ public class DocumentManageController {
     }
 
     @RequestMapping(value = AppURL.DOCUMENT_CATEGORY_MODIFY, method = RequestMethod.POST)
-    public ModelAndView ModifyCategory(@ModelAttribute("master") DocCategoryMaster master, BindingResult bindingResult, ModelAndView modelAndView, @ModelAttribute("user") User user) {
+    public ModelAndView ModifyCategory(@ModelAttribute("master") DocCategoryMaster master, HttpSession session, ModelAndView modelAndView, @ModelAttribute("user") User user) {
         try {
-            master.setInpUserId(user.getUserName());
+            User user2= (User) session.getAttribute(AppConstant.USER);
+            master.setInpUserId(user2.getUserName());
             int checkCatagorySortingExist = docCategoryService.checkCatagorySortingExistMst(master);
             if (SUCSESS == checkCatagorySortingExist) {
                 int result = docCategoryService.ModifyCategory(master);
@@ -160,9 +163,10 @@ public class DocumentManageController {
     }
 
     @RequestMapping(value = AppURL.REJECT_CATEGORY, method = RequestMethod.GET)
-    public NotificationMessage rejectCategory(@PathVariable(AppConstant.REJECT_REASON) String reason, @PathVariable(AppConstant.CATEGORY_ID) int category_id, @ModelAttribute("user") User user) {
+    public NotificationMessage rejectCategory(@PathVariable(AppConstant.REJECT_REASON) String reason, @PathVariable(AppConstant.CATEGORY_ID) int category_id, @ModelAttribute("user") User user,HttpSession session) {
         NotificationMessage notificationMessage = new NotificationMessage();
         try {
+             user = (User) session.getAttribute(AppConstant.USER);
             int result = docCategoryService.rejectCategory(category_id, reason, user.getUserName());
             if (result == SUCSESS) {
                 notificationMessage.setIsSucsess(1);
@@ -207,16 +211,17 @@ public class DocumentManageController {
     }
 
     @RequestMapping(value = AppURL.UPDATE_CRESUBMIT_CATEGORY, method = RequestMethod.POST)
-    public ModelAndView UpdateRejecedCategory(@ModelAttribute("temp") DocCategoryTemp temp, ModelAndView modelAndView, @ModelAttribute("user") User user) {
+    public ModelAndView UpdateRejecedCategory(@ModelAttribute("temp") DocCategoryTemp temp,HttpSession session, ModelAndView modelAndView, @ModelAttribute("user") User user) {
         try {
             temp.setInpUserId(user.getUserName());
             int checkCatagorySortingExist = docCategoryService.checkCatagorySortingExistTemp(temp);
             if (SUCSESS == checkCatagorySortingExist) {
+                 user= (User) session.getAttribute(AppConstant.USER);
+                temp.setInpUserId(user.getUserName());
                 int result = docCategoryService.updateRejectedCategory(temp);
                 if (result == SUCSESS) {
                     modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, true);
                     modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.RECORD_SUCCESSFULLY_SUBMITTED_FOR_AUTHORIZATION));
-//                modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.CATEGORY_RESUBMIT_SUCSESSFULLY));
                 } else {
                     modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
                     modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.ERROR_ADMINISTRATOR_FOR_MORE_DETAIL));

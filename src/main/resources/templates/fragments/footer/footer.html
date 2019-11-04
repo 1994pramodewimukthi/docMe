@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<script src="../../../static/assets/global/js/global/webix.js"></script>-->
 <div th:fragment="footer">
     <!-- Vendor -->
 
-    <script th:src="@{/vendor/webix/webix.js}"></script>
+    <script th:src="@{/assets/global/js/global/webix.js}"></script>
 
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/datatables/custom-datatables/js/jquery.dataTables.min.js}"></script>
@@ -46,7 +47,7 @@
                 $.ajax({
                     url: CONTEXT_PATH + "/user/get-side-menu",
                     type: 'GET',
-                    dataType:'html',
+                    dataType: 'html',
                     success: function (result) {
                         $('#navContent').html(result);
                         return false;
@@ -56,8 +57,24 @@
                     }
 
                 });
-            })
-        })
+            });
+
+
+            $.ajax({
+                url: CONTEXT_PATH + "/user/getUserDetails",
+                type: 'GET',
+                success: function (result) {
+                    $("#username").html(result.userName);
+                    $("#userrole").html(result.systemRoleId);
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+
+            });
+
+
+        });
 
 
     </script>

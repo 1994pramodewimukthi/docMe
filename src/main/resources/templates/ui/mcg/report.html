@@ -1,0 +1,120 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="fixed       sidebar-left-sm" lang="en">
+<head>
+
+    <link rel="stylesheet" th:href="@{/vendor/sweet-alert/sweetalert2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/airpicker/dist/css/datepicker.min.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/dropify-master/dist/css/dropify.min.css}"/>
+
+    <meta charset="utf-8">
+    <meta name="description" content="AIA Cambodia Application Portal System">
+    <meta name="viewport" content="width=device-width">
+    <meta name="context-path" th:content="@{/}"/>
+    <title th:text="${@environment.getProperty('system.title')}"></title>
+
+    <!-- start: header -->
+    <!--/*/ <th:block th:include="/fragments/header/resources :: resources"></th:block> /*/-->
+    <!-- end: header -->
+
+</head>
+<body class="loading-overlay-showing" data-loading-overlay id="loginBody">
+<div class="loading-overlay">
+    <div class="bounce-loader">
+        <h3 class="loadHeading mb-5">L O A D I N G</h3>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
+<section class="body">
+    <!-- start: header -->
+    <header class="header">
+        <!--start: top-nav-->
+        <!--/*/ <th:block th:include="/fragments/header/top-nav :: top-nav"></th:block> /*/-->
+        <!--end: top-nav-->
+    </header>
+    <!-- end: header -->
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <!--/*/ <th:block th:include="/fragments/menu/side-menu :: side-menu"></th:block> /*/-->
+        <!-- end: sidebar -->
+        <section role="main" class="content-body pb-0">
+            <header class="page-header ">
+                <h2 class="">Sign/Not-Sign Agreement Report</h2>
+                <div class="right-wrapper text-right">
+                    <ol class="breadcrumbs ">
+                        <!--<li>-->
+                        <!--<a href="index.html">-->
+                        <!--<i class="fas fa-home"></i>-->
+                        <!--</a>-->
+                        <!--</li>-->
+                    </ol>
+                </div>
+            </header>
+            <!-- start: page -->
+            <div class="row ">
+                <div class="col-lg-12">
+                    <section class="card">
+                        <form>
+                            <div class="card-body">
+                                <div class="row ">
+                                    <div class="col-lg-12">
+                                        <div id="webixtablecontainer"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mt-2 text-right">
+                                        <button type="button"
+                                                class="btn btn-success flat-buttons btn-icon-hover waves-button floatRight CusFormBtn mr-2"
+                                                onclick="exportToExcel()"
+                                                style="margin-top: 0 !important; ">
+                                           Download Excel
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-primary flat-buttons btn-icon-hover  waves-button floatRight CusFormBtn"
+                                                onclick="exportToPdf()"
+                                                style="margin-top: 0 !important; background-color: #ff5151!important">
+                                            Download PDF
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="sexy_line"></span>
+
+                            <div class="divider25"></div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="authViwerModalDiv">
+
+    </div>
+
+    <!-- end: page -->
+</section>
+
+<!--start: footer-->
+<!--/*/ <th:block th:include="/fragments/footer/footer :: footer"></th:block> /*/-->
+<!--end: footer-->
+
+
+<script>
+    var CONTEXT_PATH = $('meta[name=context-path]').attr("content");
+    CONTEXT_PATH = CONTEXT_PATH.substr(0, CONTEXT_PATH.length - 1);
+</script>
+<script type="text/javascript" th:src="@{/vendor/select2/js/select2.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/sweet-alert/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/airpicker/dist/js/i18n/datepicker.en.js}"></script>
+<script type="text/javascript" th:src="@{/js/loadingoverlay.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/dropify-master/dist/js/dropify.min.js}"></script>
+<script  type="text/javascript" th:src="@{/js/mcgreport.js}"></script>
+
+
+
+</body>
+</html>

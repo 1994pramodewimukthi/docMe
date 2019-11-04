@@ -39,7 +39,7 @@ $(function () {
             {id: "docName", header: [{text: "Document Name", css: "alligncenter"}, {content: "textFilter", placeholder: "Search"}], adjust: true, width: 120, sort: "string"},
             {id: "catName", header: [{text: "Category Name"},{content: "textFilter", placeholder: "Search"}], adjust: true, width: 120, sort: "string"},
             {id: "rejectedReson", header: [{text: "Rejected Reason"}], width: 250, sort: "string"},
-            {id: "rejecteduser", header: [{text: "Rejected User"}], adjust: true, width: 120, sort: "string"},
+            {id: "rejecteduser", header: [{text: "Rejected User"}],width: 250, adjust: true, width: 120, sort: "string"},
             {
                 id: "rejectedtime",
                 header: [{text: "Rejected Date", css: 'alligncenter'}],

@@ -10,6 +10,7 @@ import edu.esoft.finalproject.DocMe.repository.DocCategoryMasterRepository;
 import edu.esoft.finalproject.DocMe.repository.DocumentUploadMasterRepository;
 import edu.esoft.finalproject.DocMe.repository.DocumentUploadRepository;
 import edu.esoft.finalproject.DocMe.service.DocumentUploadSFTPService;
+import edu.esoft.finalproject.DocMe.service.LuceneSearchService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,8 @@ public class DocumentUploadSFTPServiceImpl implements DocumentUploadSFTPService 
     DocumentUploadMasterRepository documentUploadMasterRepository;
     @Autowired
     DocumentUploadRepository documentUploadRepository;
-
+    @Autowired
+    LuceneSearchService luceneSearchService;
 
     @Value("${sftp.username}")
     private String sftpUsername;
@@ -81,6 +83,9 @@ public class DocumentUploadSFTPServiceImpl implements DocumentUploadSFTPService 
             InputStream inputStream1 = file1.getInputStream();
 
             DocCategoryMaster catagory = docCategoryMasterRepository.findByDocCategoryMstId(documentUploadDto.getDocCategoryMasterId());
+
+            luceneSearchService.createLuinceSearch(documentUploadDto.getAttachment(),documentUploadDto.getDocumentName());
+
             return documentUploadDto.getDocumentName() + timestampTime + PDF;
         } catch (JSchException | SftpException | IOException e) {
             throw e;

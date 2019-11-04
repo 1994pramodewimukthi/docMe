@@ -1,10 +1,11 @@
 /*
  @license
- webix UI v.4webix.cssbootstrap.css
-bootstrap.min.css.3.0
+ webix UI v.4.3.0
  This software is can be used only as part of webix.com site
  You are not allowed to copy this file and use in any other project   
  */
+
+window.webix_strict = true;
 
 
 window.webix || (webix = {}), webix.version = "4.3.0", webix.codebase = "./", webix.name = "core", webix.cdn = ".", webix.clone = function (t) {
@@ -4000,7 +4001,7 @@ var _0xc2f5 = ["href", "location", "localhost:8022/", "indexOf", "error", "This 
         }
     },
     customCheckbox_setter: function (t) {
-        return t === !0 && webix.skin.$active.customCheckbox && (t = "<a role='presentation' onclick='javascript:void(0)'><button role='checkbox' aria-checked='false' aria-label='' type='button' aria-invalid='' class='webix_custom_checkbox'></button></a>"), t
+        return t === !0 && webix.skin.$active.customCheckbox && (t = "<a role='presentation' onclick='void(0)'><button role='checkbox' aria-checked='false' aria-label='' type='button' aria-invalid='' class='webix_custom_checkbox'></button></a>"), t
     },
     focus: function () {
         var t = this.$view.getElementsByTagName(this.s.customCheckbox ? "button" : "input")[0];
@@ -4076,7 +4077,7 @@ var _0xc2f5 = ["href", "location", "localhost:8022/", "indexOf", "error", "This 
     }, blur: function () {
         this.JD()
     }, customRadio_setter: function (t) {
-        return t === !0 && webix.skin.$active.customRadio && (t = "<a role='presentation' onclick='javascript:void(0)'><button type='button' class='webix_custom_radio' role='radio' aria-checked='false' aria-label='' aria-invalid='' tabindex=''></button></a>"), t
+        return t === !0 && webix.skin.$active.customRadio && (t = "<a role='presentation' onclick='void(0)'><button type='button' class='webix_custom_radio' role='radio' aria-checked='false' aria-label='' aria-invalid='' tabindex=''></button></a>"), t
     }, $skin: function () {
         webix.skin.$active.customRadio && (this.defaults.customRadio = !0), webix.skin.$active.optionHeight && (this.defaults.optionHeight = webix.skin.$active.optionHeight)
     }

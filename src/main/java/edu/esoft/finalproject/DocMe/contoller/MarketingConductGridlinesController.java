@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = AppURL.MCG)
@@ -368,5 +369,25 @@ public class MarketingConductGridlinesController {
             modelAndView.addObject(MSG, messageService.getSystemMessage(MessageConstant.DOCUMENT_UPLOAD_FAILD));
         }
         return modelAndView;
+    }
+
+
+
+    @RequestMapping("/report")
+    public ModelAndView agreementReport() {
+        ModelAndView modelAndView = new ModelAndView("/ui/mcg/report");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/reportJSON")
+    public Object msgReportJson() {
+        try {
+            List<McgReportDto> reportDtoList = marketingConductGridlinesService.msgReportJson();
+            return reportDtoList;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return new Object();
+        }
     }
 }
