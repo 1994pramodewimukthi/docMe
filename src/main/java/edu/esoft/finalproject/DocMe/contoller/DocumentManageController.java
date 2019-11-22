@@ -300,9 +300,17 @@ public class DocumentManageController {
     @RequestMapping(value = "/email-send", method = RequestMethod.POST)
     public ModelAndView sendEmail(@ModelAttribute("email") Email email, ModelAndView modelAndView) {
         try {
+            modelAndView.setViewName("/ui/document-send-by-email");
             InputStream inputStream = documentUploadSFTPService.viewUploadedFile(Integer.parseInt(email.getDocId()), AppConstant.MST);
             email.setDocInputStream(IOUtils.toByteArray(inputStream));
             int result = documentUploadService.sendEmail(email);
+            if (result==1) {
+                modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, true);
+                modelAndView.addObject(EmailMessageConstant.MSG, "Email Send Sucsessfully");
+            } else {
+                modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);
+                modelAndView.addObject(EmailMessageConstant.MSG, messageService.getSystemMessage(MessageConstant.ERROR_ADMINISTRATOR_FOR_MORE_DETAIL));
+            }
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             modelAndView.addObject(EmailMessageConstant.IS_SUCSESS, false);

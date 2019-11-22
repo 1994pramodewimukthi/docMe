@@ -546,7 +546,7 @@ public class MCGDocumentUploadServiceImpl implements MCGDocumentUploadService {
 
     public McgDocumentUpdateDto getValidDocument(User user) throws Exception {
         try {
-            MCGDocument doc = mcgDocumentRepository.findDocumentByStatusAndRoleId(VALID, user.getSystemRoleId());
+            MCGDocument doc = mcgDocumentRepository.findDocumentByStatus(VALID);
             McgDocumentUpdateDto mcgDocumentUpdateDto = new McgDocumentUpdateDto();
             if (null != doc) {
                 mcgDocumentUpdateDto.setDocId(doc.getDocId().toString());

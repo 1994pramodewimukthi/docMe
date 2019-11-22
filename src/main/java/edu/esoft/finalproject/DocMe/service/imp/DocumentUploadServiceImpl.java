@@ -41,6 +41,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     private static String TEMP = "TEMP";
     private static String MST = "MST";
     private static String BOTH = "BOTH";
+    private String WITH_FILE = "WITH-FILE";
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(DocumentUploadServiceImpl.class);
     @Autowired
     DocumentUploadMasterRepository documentUploadMasterRepository;
@@ -498,12 +499,13 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         try {
             DocumentUploadMaster dto = documentUploadMasterRepository.findByDocumentUploadMstId(Integer.parseInt(email.getDocId()));
             email.setDocumentNAme(dto.getDocumentName());
+            email.setType(WITH_FILE);
             activeMQEmail.sendFromEmail(email);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 
     private List<DocumentUploadMasterSystemRole> findMasterSystemRolesByDocId(int docId) {

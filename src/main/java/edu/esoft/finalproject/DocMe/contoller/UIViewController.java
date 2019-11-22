@@ -150,7 +150,6 @@ public class UIViewController {
         return new ModelAndView("redirect:/ui/homepage/homepage");
     }
 
-
     @RequestMapping("/send_document")
     public ModelAndView viewDocumentListForSendEmail() {
         ModelAndView modelAndView = new ModelAndView("/ui/document-send-by-email");

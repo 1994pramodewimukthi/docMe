@@ -71,7 +71,7 @@ $(function () {
             {id: "docCategoryMstId", header: [{text: ""}], hidden: true},
             {
                 id: "docCategoryName",
-                header: [{text: "Category"}],
+                header: [{text: "Category"},{content: "textFilter", placeholder: "Search"}],
                 fillspace: true,
                 minWidth: 200,
                 template: "{common.treetable()} #docCategoryName#",
